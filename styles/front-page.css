@@ -118,7 +118,11 @@ button.text-inside-center-box:hover{
   color: rgb(205, 203, 203);
 }
 
+/* https://www.youtube.com/watch?v=iE_6pQ3RlZU */
+
 .popup .overlay {
+  /* This class is for the overlay when the button is clicked */
+
   position: fixed;
   top: 0px;
   left: 0px;
@@ -129,21 +133,27 @@ button.text-inside-center-box:hover{
   display: none;
 }
 
-.popup .content {
+.content {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(0);
-  background: white;
+
+  background: rgb(215, 213, 213);
   width: 450px;
   height: 220px;
   z-index: 2;
   text-align: center;
-  padding: 20px;
+  padding: 0px 20px 20px 0px;
+
   box-sizing: border-box;
+
+  border-radius: 20px;
+
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.popup .close-btn{
+.close-btn{
   position: absolute;
   right: 20px;
   top: 20px;
@@ -157,6 +167,8 @@ button.text-inside-center-box:hover{
   text-align: center;
   border-radius: 50%;
   cursor: pointer;
+
+  font-family: 'Times New Roman', Times, serif;
 }
 
 .popup.active .overlay{
@@ -167,6 +179,33 @@ button.text-inside-center-box:hover{
   transition: all 300ms ease-in-out;
   transform: translate(-50%, -50%) scale(1);
 }
+
+.close-btn.active .content{
+  transition: all 300ms ease-out;
+}
+
+/* Code from YT tutorial - https://www.youtube.com/watch?v=iE_6pQ3RlZU */
+
+h1.content-h1{
+  font-size: 35px;
+
+  margin-top: 20px;
+  margin-bottom: 0px;
+}
+
+.popup-img-container{
+  margin-bottom: 10px;
+
+  height: 150px;
+  width: 450px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* border: black 2px solid; */
+}
+
 
 .charizard-img-container{
   left: 300px;
