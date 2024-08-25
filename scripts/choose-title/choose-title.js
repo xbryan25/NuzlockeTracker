@@ -4,11 +4,17 @@ const emeraldPic = document.querySelector('.js-emerald-pic');
 export let userDecision = '';
 
 platinumPic.addEventListener('click', () => {
-    userDecision = 'platinum';
-    window.location.href = '../../html/track.html';
-})
+    userDecision = 'Platinum';
+    saveDataAndGoToNewTab(userDecision);
+    
+});
 
 emeraldPic.addEventListener('click', () => {
-    userDecision = 'emerald';
-    alert(userDecision)
-})
+    userDecision = 'Emerald';
+    saveDataAndGoToNewTab(userDecision);
+});
+
+function saveDataAndGoToNewTab(userDecision){
+    window.location.href = '../../html/track.html';
+    localStorage.setItem('userDecision', userDecision);
+}
