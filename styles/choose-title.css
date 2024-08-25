@@ -36,7 +36,7 @@ body{
     transform: translate(-50%, -50%);
   
   
-    height: 250px;
+    height: 200px;
     width: 600px;
   
     border: 10px solid rgb(46, 46, 45);
@@ -51,17 +51,26 @@ body{
     position: fixed;
   
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 5px;
+
+    align-items: center;
+    /* justify-content: center; */
   
     height: 190px;
-    width: 400px;
+    width: 600px;
   
     /* border: 2px solid black; */
   
     color: white;
-    padding-left: 25px;
-    padding-top: 10px;
+    padding-left: 10px;
+    padding-top: 0px;
+
+  }
+
+  img.center-box-img:hover{
+    opacity: 60%;
+    cursor: pointer;
   }
   
   .all-links{
