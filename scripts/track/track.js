@@ -18,7 +18,7 @@ function getPokemonEncountersAtEachLocation(location){
     let location_links = [];
     
     // Get from PokeAPI encounter-condition-value
-    const notConsideredEncounterConditions = ["swarm-yes", "radar-on", "slot2-firered", "slot2-none", "slot2-ruby", "slot2-sapphire", "slot2-emerald", "slot2-firered", "slot2-leafgreen", "radio-off","radio-hoenn","radio-sinnoh"]
+    const notConsideredEncounterConditions = ["swarm-yes", "radar-on", "slot2-firered", "slot2-ruby", "slot2-sapphire", "slot2-emerald", "slot2-firered", "slot2-leafgreen","radio-hoenn","radio-sinnoh"]
 
     // Get each sublocation; can be shortened
 
