@@ -19,19 +19,17 @@ sampleRoutes.forEach((sampleRoute) => {
   entireHTML += `<div class="location-row js-location-row">
                   <p class="location-text">${sampleRoute.location}</p>
                   <select name="Route 1" class="every-combobox">
-                    <option value="volvo">Volvo</option>
-                  </select>
-
-                  <select name="Route 1" class="every-combobox">
                     ${availablePokemonHTMLCreator(sampleRoute.availablePokemon)}
                   </select>
 
+                  <input type="text" placeholder="Input nickname" class="input-nickname">
+
                   <select name="Route 1" class="every-combobox">
-                    <option value="volvo">Chagra</option>
+                    <option value="volvo">Status</option>
                   </select>
 
                   <select name="Route 1" class="every-combobox">
-                    <option value="volvo">Chagra</option>
+                    <option value="volvo">Natures</option>
                   </select>
               </div>`;
 });
@@ -48,27 +46,9 @@ function availablePokemonHTMLCreator(availablePokemon){
 
 
 
-// document.querySelector('.js-center-box')
-//     .innerHTML = `<p class="location-text">Route 1</p>
-//                 <select name="Route 1" class="every-combobox">
-//                     <option value="volvo">Volvo</option>
-//                 </select>
-
-//                 <select name="Route 1" class="every-combobox">
-//                         <option value="volvo">Chagra</option>
-//                 </select>
-
-//                 <select name="Route 1" class="every-combobox">
-//                         <option value="volvo">Chagra</option>
-//                 </select>
-
-//                 <select name="Route 1" class="every-combobox">
-//                         <option value="volvo">Chagra</option>
-//                 </select>
-                
-//                 `;
-
 document.querySelector('.js-center-box-container')
     .innerHTML = entireHTML;
 
+//144 is the limit for encounters in Platinum
 
+fetch("https://pokeapi.co/api/v2/location-area/?limit=144").then(response => response.json().then(data => console.log(data))).catch(error => console.error(error()));
