@@ -1,0 +1,117 @@
+[
+    {
+        "location": "Starter",
+        "location-links": []
+    },{
+        "location": "Route 201",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/141/"]
+
+    }, {
+        "location": "Lake Verity",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/135/",
+                            "https://pokeapi.co/api/v2/location-area/136/"]
+    }, {
+        "location": "Route 202",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/142/"]
+    }, {
+        "location": "Route 218",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/168/"]
+    }, {
+        "location": "Route 219",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/169/"]
+    }, {
+        "location": "Twinleaf Town",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/177/"]
+    }, {
+        "location": "Route 204"
+    }, {
+        "location": "Ravaged Path"
+    }, {
+        "location": "Route 203"
+    }, {
+        "location": "Oreburgh Gate"
+    }, {
+        "location": "Oreburgh Mine"
+    }, {
+        "location": "Route 207",
+        "marker": "1st-gym"
+    }, {
+        "location": "Route 205"
+    }, {
+        "location": "Valley Windworks"
+    }, {
+        "location": "Eterna Forest"
+    }, {
+        "location": "Route 211"
+    }, {
+        "location": "Cycle Shop",
+        "marker": "special"
+    }, {
+        "location": "Old Chateau"
+    }, {
+        "location": "Route 206"
+    }, {
+        "location": "Wayward Cave"
+    }, {
+        "location": "Route 208"
+    }, {
+        "location": "Hearthome City"
+    }, {
+        "location": "Route 209"
+    }, {
+        "location": "Lost Tower",
+        "type": "not-on-list"
+    }, {
+        "location": "Route 210"
+    }, {
+        "location": "Route 215"
+    }, {
+        "location": "Veilstone City"
+    }, {
+        "location": "Route 214"
+    }, {
+        "location": "Valor Lakefront"
+    }, {
+        "location": "Route 213"
+    }, {
+        "location": "Pastoria City"
+    }, {
+        "location": "Great Marsh"
+    }, {
+        "location": "Route 212"
+    }, {
+        "location": "Trophy Garden"
+    }, {
+        "location": "Celestic Town"
+    }, {
+        "location": "Fuego Ironworks"
+    }, {
+        "location": "Route 220"
+    }, {
+        "location": "Route 221"
+    }, {
+        "location": "Canalave City"
+    }, {
+        "location": "Iron Island"
+    }, {
+        "location": "Route 216"
+    }, {
+        "location": "Route 217"
+    }, {
+        "location": "Acuity Lakefront"
+    }, {
+        "location": "Lake Acuity"
+    }, {
+        "location": "Mt. Coronet Peak"
+    }, {
+        "location": "Route 222"
+    }, {
+        "location": "Sunyshore City"
+    }, {
+        "location": "Route 223"
+    }, {
+        "location": "Victory Road"
+    }, {
+        "location": "Pokemon League"
+    }
+]
