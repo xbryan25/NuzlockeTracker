@@ -23,7 +23,8 @@
         "location": "Twinleaf Town",
         "location-links": ["https://pokeapi.co/api/v2/location-area/177/"]
     }, {
-        "location": "Route 204"
+        "location": "Route 204",
+        "location-links": [""]
     }, {
         "location": "Ravaged Path"
     }, {
@@ -62,7 +63,9 @@
         "location": "Lost Tower",
         "type": "not-on-list"
     }, {
-        "location": "Route 210"
+        "location": "Route 210",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/157/",
+                            "https://pokeapi.co/api/v2/location-area/158/"]
     }, {
         "location": "Route 215"
     }, {
