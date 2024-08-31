@@ -158,22 +158,17 @@ async function loadHTML(dataFromJSON){
 
     entireHTML += `<div class="location-row js-location-row">
                     <p class="location-text">${encounterRoute.location}</p>
-                    <select name="Route 1" class="every-combobox">
+                    <select name="${encounterRoute.location}" class="every-combobox">
                       ${optionsHTML}
                     </select>
 
                     <input type="text" placeholder="Input nickname" class="input-nickname">
 
-                    <select name="Route 1" class="every-combobox">
-                      <option value="volvo">Status</option>
-                    </select>
+                    ${statusHTMLCreator()}
 
-                    <select name="Route 1" class="every-combobox">
-                      <option value="volvo">Natures</option>
-                    </select>
+                    ${naturesHTMLCreator()}
                 </div>`;
   }
-
 
   document.querySelector('.js-center-box-container')
       .innerHTML = entireHTML;
@@ -191,6 +186,35 @@ async function availablePokemonHTMLCreator(location){
   });
 
   return availablePokemonHTML;
+}
+
+function statusHTMLCreator(){
+
+  return `<select name="Status" class="every-combobox">
+            <option value="none" selected disabled hidden>Status</option>
+            <option value="Alive">Captured</option>
+            <option value="Boxed">Dead</option>
+            <option value="Released">Missed</option>
+            <option value="Released">Received</option>
+          </select>`;
+}
+
+function naturesHTMLCreator(){
+  let naturesHTMLOptions = ''
+
+  let natures = ["Adamant", "Bashful", "Bold", "Brave", "Calm", "Careful", "Docile", "Gentle",
+                  "Hardy", "Hasty", "Impish", "Jolly", "Lax", "Lonely", "Mild", "Modest", "Naive",
+                  "Naughty", "Quiet", "Quirky", "Rash", "Relaxed", "Sassy", "Serious", "Timid"]
+
+  natures.forEach(nature => {
+    naturesHTMLOptions += `<option value="${nature}">${nature}</option>`
+  }) 
+
+
+  return `<select name="Natures" class="every-combobox">
+            <option value="none" selected disabled hidden>Natures</option>
+            ${naturesHTMLOptions}
+          </select>`;
 }
 
 fetchData();

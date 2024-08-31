@@ -72,7 +72,13 @@ body{
   font-size: 20px;
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   width: 190px;
-  text-align: center;
+  text-align: left;
+
+  padding-left: 5px;
+
+  background-color: gray;
+  border-color: white;
+  color: white;
 
   border-radius: 10px;
 }
@@ -86,7 +92,6 @@ body{
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   width: 175px;
   text-align: right;
-
 }
 
 p.location-text{
@@ -96,12 +101,24 @@ p.location-text{
 
 input.input-nickname{
   border-radius: 10px;
-  border: 0px;
+  border: 1px solid white;
+  /* border-color: white; */
+
+  color: white;
+  background-color: gray;
+
+  text-align: left;
 
   font-size: 20px;
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   text-align: center;
   width: 190px;
+}
+
+input.input-nickname::placeholder{
+  color:rgb(190, 188, 188);
+  text-align: left;
+  padding: 5px;
 }
 
 .footer-div-container{
