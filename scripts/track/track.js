@@ -15,38 +15,45 @@ async function fetchData(){
 
 async function getPokemonEncountersAtEachLocation(location){
   try{
-    let availablePokemonArrays = [];
-    let availablePokemon = [];
-    let location_links = [];
+    if ('type' in location && location['type'] === 'gift'){
 
-    const promises = [];
 
-    // Get each sublocation; can be shortened
+      return location['gift_pokemon'];
+    } else{
 
-    location["location-links"].forEach(location_link => location_links.push(location_link));
+      let availablePokemonArrays = [];
+      let availablePokemon = [];
+      let location_links = [];
 
-    // Traverse through each sublocation...
-    for (const location_link of location_links){
-      // ... to fetch the data of each sublocation.
-      // const locationObjectFetch = await fetch(location_link);
+      const promises = [];
 
-      // const locationObject = await locationObjectFetch.json();
-      // promises.push(fetchLocationDataFromApi(location_link));
-      promises.push(fetchLocationDataFromApi(location_link));
-      
-    }
+      // Get each sublocation; can be shortened
 
-    availablePokemonArrays = await Promise.all(promises);
+      location["location-links"].forEach(location_link => location_links.push(location_link));
 
-    availablePokemonArrays.forEach(availablePokemonArray => {
-      availablePokemonArray.forEach(pokemon => {
-        if (!availablePokemon.includes(pokemon)){
-          availablePokemon.push(pokemon.charAt(0).toUpperCase() + pokemon.slice(1));
-        }
+      // Traverse through each sublocation...
+      for (const location_link of location_links){
+        // ... to fetch the data of each sublocation.
+        // const locationObjectFetch = await fetch(location_link);
+
+        // const locationObject = await locationObjectFetch.json();
+        // promises.push(fetchLocationDataFromApi(location_link));
+        promises.push(fetchLocationDataFromApi(location_link));
+        
+      }
+
+      availablePokemonArrays = await Promise.all(promises);
+
+      availablePokemonArrays.forEach(availablePokemonArray => {
+        availablePokemonArray.forEach(pokemon => {
+          if (!availablePokemon.includes(pokemon)){
+            availablePokemon.push(pokemon.charAt(0).toUpperCase() + pokemon.slice(1));
+          }
+        });
       });
-    });
 
-    return availablePokemon;
+      return availablePokemon;
+    }
 
   } catch(error){
     console.error(error);
@@ -138,22 +145,19 @@ async function loadHTML(dataFromJSON){
 
   document.querySelector('.js-heading-text').innerHTML = `Pokemon ${userDecision}`;
 
-  let sampleRoutes = [];
+  let encounterRoutes = [];
 
-  for (let i = 0; i < 51; i++){
-    sampleRoutes.push(dataFromJSON[i]);
+  for (let locationObject of dataFromJSON){
+    encounterRoutes.push(locationObject);
   }
-
-  console.log(sampleRoutes);
 
   let entireHTML = '';
 
-  for (let sampleRoute of sampleRoutes){
-    let optionsHTML = await availablePokemonHTMLCreator(sampleRoute);
-    console.log(optionsHTML);
+  for (let encounterRoute of encounterRoutes){
+    let optionsHTML = await availablePokemonHTMLCreator(encounterRoute);
 
     entireHTML += `<div class="location-row js-location-row">
-                    <p class="location-text">${sampleRoute.location}</p>
+                    <p class="location-text">${encounterRoute.location}</p>
                     <select name="Route 1" class="every-combobox">
                       ${optionsHTML}
                     </select>

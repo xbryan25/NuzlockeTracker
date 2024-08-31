@@ -1,7 +1,9 @@
 [
     {
         "location": "Starter",
-        "location-links": []
+        "location-links": [],
+        "type": "gift",
+        "gift_pokemon": ["Chimchar", "Turtwig", "Piplup"]
     },{
         "location": "Route 201",
         "location-links": ["https://pokeapi.co/api/v2/location-area/141/"]
@@ -86,7 +88,8 @@
     }, {
         "location": "Hearthome City",
         "location-links": [],
-        "type": "gift"
+        "type": "gift",
+        "gift_pokemon": ["Eevee"]
     }, {
         "location": "Route 209",
         "location-links": ["https://pokeapi.co/api/v2/location-area/151/"]
@@ -108,7 +111,8 @@
     }, {
         "location": "Veilstone City",
         "location-links": [],
-        "type": "gift"
+        "type": "gift",
+        "gift_pokemon": ["Porygon"]
     }, {
         "location": "Route 214",
         "location-links": ["https://pokeapi.co/api/v2/location-area/164/"]
