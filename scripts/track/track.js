@@ -165,7 +165,7 @@ async function loadHTML(dataFromJSON){
 
     entireHTML += `<div class="location-row js-location-row">
                     <p class="location-text">${encounterRoute.location}</p>
-                    <select name="${encounterRoute.location}" class="every-combobox">
+                    <select name="${encounterRoute.location}" class="js-encounter-${(encounterRoute.location).split(' ').join('')} every-combobox">
                       ${optionsHTML}
                     </select>
 
@@ -179,6 +179,13 @@ async function loadHTML(dataFromJSON){
 
   document.querySelector('.js-center-box-container')
       .innerHTML = entireHTML;
+
+  console.log(document.querySelector(".js-encounter-Starter"));
+
+  // document.querySelector(".js-encounter-Starter").onchange(() => console.log("hi"));
+
+  document.querySelector(".js-encounter-Starter").addEventListener("change", event => console.log(event.target.value));
+  // document.querySelector(".js-encounter-Starter").addEventListener("click", () => console.log("hi"));
 
 }
 
@@ -225,6 +232,10 @@ function naturesHTMLCreator(){
 }
 
 fetchData();
+
+
+
+
 
 // getPokemonEncountersAtEachLocation({
 //   "location": "Lake Verity",

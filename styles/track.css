@@ -72,8 +72,10 @@ body{
 
 .center-box-container{
   /*TODO: fixed positioning of this element*/
+  border-radius: 10px;
+
   position: relative;
-  top: 1325px;
+  top: 1300px;
   left: 50%;
   transform: translate(-50%, -50%);
 
