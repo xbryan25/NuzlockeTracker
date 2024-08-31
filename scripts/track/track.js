@@ -138,24 +138,9 @@ async function loadHTML(dataFromJSON){
 
   document.querySelector('.js-heading-text').innerHTML = `Pokemon ${userDecision}`;
 
-  // let sampleRoutes = [{
-  //   location: 'Route 1',
-  //   availablePokemon: ['Charmander', 'Squirtle', 'Bulbasaur']
-  // }, {
-  //   location: 'Route 2',
-  //   availablePokemon: ['Pidgey', 'Rattata', 'Mankey']
-  // }]
-
   let sampleRoutes = [];
 
-  // for (let i = 1; i < 100; i++){
-  //   if (dataFromJSON[i]["location"] === "Route 210"){
-  //     sampleRoutes.push(dataFromJSON[i]);
-  //     break;
-  //   }
-  // }
-
-  for (let i = 0; i < 5; i++){
+  for (let i = 0; i < 51; i++){
     sampleRoutes.push(dataFromJSON[i]);
   }
 
@@ -198,7 +183,7 @@ async function availablePokemonHTMLCreator(location){
   let availablePokemonHTML = '<option value="none" selected disabled hidden>Find encounter</option>';
 
   availablePokemon.forEach((pokemon) => {
-    availablePokemonHTML += `<option value="${pokemon}">${pokemon}</option>`
+    availablePokemonHTML += `<option value="${pokemon}" class="encounter-combobox-options">${pokemon}</option>`
   });
 
   return availablePokemonHTML;
