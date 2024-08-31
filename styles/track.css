@@ -7,19 +7,67 @@ body{
   background-color: rgb(93, 91, 91);
 }
 
+.header-div-container{
+  display: flex;
+  justify-content: center;
 
-.heading-text{
-  position: absolute;
+  position: fixed;
+  left: 0;
+  top: 0;
+
+  width: 100%;
+  height:px;
+
+  background-color: rgb(74, 72, 72);
+
+  z-index: 1;
+}
+
+/* .header-div-contents{
+  width: 100%;
+
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  color: white;
+
+  padding-top: 10px;
+} */
+
+
+.header-div-pic{
+  /* position: absolute;
   top: 10%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%); */
+
+  width: 100px;
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+  
+
+}
+
+.header-div-game-title{
+  /* position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, -50%); */
+
+  width: 220px;
+
+  display: flex;
+  justify-content: center;
 
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   font-weight: bold;
-  font-size: 80px;
+  font-size: 25px;
   color: rgb(198, 198, 198);
+  padding-top: 10px;
 
-  margin-bottom: 20px;
 }
 
 .center-box-container{

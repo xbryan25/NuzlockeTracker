@@ -142,8 +142,15 @@ async function fetchLocationDataFromApi(location_link){
 
 async function loadHTML(dataFromJSON){
   let userDecision = localStorage.getItem('userDecision');
+  let userDecisionTitle = userDecision.charAt(0).toUpperCase() + userDecision.slice(1);
 
-  document.querySelector('.js-heading-text').innerHTML = `Pokemon ${userDecision}`;
+  console.log(userDecision);
+
+  document.querySelector('.js-header-div-container').innerHTML = `<div class="js-heading-pic header-div-pic"></div>
+                                                        <div class="js-header-div-game-title header-div-game-title"></div> `;
+
+  document.querySelector('.js-heading-pic').innerHTML = `<img src="../../images/front-page/${userDecision}.png" height="50px">`;
+  document.querySelector('.js-header-div-game-title').innerHTML = `${userDecisionTitle} Nuzlocke`;
 
   let encounterRoutes = [];
 
