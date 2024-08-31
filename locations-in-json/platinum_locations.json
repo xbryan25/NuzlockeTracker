@@ -24,97 +24,177 @@
         "location-links": ["https://pokeapi.co/api/v2/location-area/177/"]
     }, {
         "location": "Route 204",
-        "location-links": [""]
+        "location-links": ["https://pokeapi.co/api/v2/location-area/144/",
+                            "https://pokeapi.co/api/v2/location-area/145/"]
     }, {
-        "location": "Ravaged Path"
+        "location": "Ravaged Path",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/54/"]
     }, {
-        "location": "Route 203"
+        "location": "Route 203",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/143/"]
     }, {
-        "location": "Oreburgh Gate"
+        "location": "Oreburgh Gate",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/55/",
+                            "https://pokeapi.co/api/v2/location-area/56/"]
     }, {
-        "location": "Oreburgh Mine"
+        "location": "Oreburgh Mine",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/6/",
+                            "https://pokeapi.co/api/v2/location-area/7/"]
     }, {
         "location": "Route 207",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/149/"],
         "marker": "1st-gym"
     }, {
-        "location": "Route 205"
+        "location": "Route 205",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/146/",
+                            "https://pokeapi.co/api/v2/location-area/147/"]
     }, {
-        "location": "Valley Windworks"
+        "location": "Valley Windworks",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/8/"]
     }, {
-        "location": "Eterna Forest"
+        "location": "Eterna Forest",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/9/"]
     }, {
-        "location": "Route 211"
+        "location": "Route 211",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/159/",
+                            "https://pokeapi.co/api/v2/location-area/160"]
     }, {
         "location": "Cycle Shop",
+        "location-links": [],
         "marker": "special"
     }, {
-        "location": "Old Chateau"
+        "location": "Old Chateau",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/126/",
+                            "https://pokeapi.co/api/v2/location-area/127/",
+                            "https://pokeapi.co/api/v2/location-area/128/",
+                            "https://pokeapi.co/api/v2/location-area/129/",
+                            "https://pokeapi.co/api/v2/location-area/130/",
+                            "https://pokeapi.co/api/v2/location-area/131/",
+                            "https://pokeapi.co/api/v2/location-area/132/",
+                            "https://pokeapi.co/api/v2/location-area/133/",
+                            "https://pokeapi.co/api/v2/location-area/134/"]
     }, {
-        "location": "Route 206"
+        "location": "Route 206",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/148/"]
     }, {
-        "location": "Wayward Cave"
+        "location": "Wayward Cave",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/113/",
+                            "https://pokeapi.co/api/v2/location-area/114/"]
     }, {
-        "location": "Route 208"
+        "location": "Route 208",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/150/"]
     }, {
-        "location": "Hearthome City"
+        "location": "Hearthome City",
+        "location-links": [],
+        "type": "gift"
     }, {
-        "location": "Route 209"
+        "location": "Route 209",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/151/"]
     }, {
         "location": "Lost Tower",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/152/",
+                            "https://pokeapi.co/api/v2/location-area/153/",
+                            "https://pokeapi.co/api/v2/location-area/154/",
+                            "https://pokeapi.co/api/v2/location-area/155/",
+                            "https://pokeapi.co/api/v2/location-area/156/"],
         "type": "not-on-list"
     }, {
         "location": "Route 210",
         "location-links": ["https://pokeapi.co/api/v2/location-area/157/",
                             "https://pokeapi.co/api/v2/location-area/158/"]
     }, {
-        "location": "Route 215"
+        "location": "Route 215",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/165/"]
     }, {
-        "location": "Veilstone City"
+        "location": "Veilstone City",
+        "location-links": [],
+        "type": "gift"
     }, {
-        "location": "Route 214"
+        "location": "Route 214",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/164/"]
     }, {
-        "location": "Valor Lakefront"
+        "location": "Valor Lakefront",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/139/"]
     }, {
-        "location": "Route 213"
+        "location": "Route 213",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/163/"]
     }, {
-        "location": "Pastoria City"
+        "location": "Pastoria City",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/3/"]
     }, {
-        "location": "Great Marsh"
+        "location": "Great Marsh",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/24/",
+                            "https://pokeapi.co/api/v2/location-area/25/",
+                            "https://pokeapi.co/api/v2/location-area/26/",
+                            "https://pokeapi.co/api/v2/location-area/27/",
+                            "https://pokeapi.co/api/v2/location-area/28/",
+                            "https://pokeapi.co/api/v2/location-area/29/"]
     }, {
-        "location": "Route 212"
+        "location": "Route 212",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/161/",
+                            "https://pokeapi.co/api/v2/location-area/162/"]
     }, {
-        "location": "Trophy Garden"
+        "location": "Trophy Garden",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/118/"]
     }, {
-        "location": "Celestic Town"
+        "location": "Celestic Town",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/178/"]
     }, {
-        "location": "Fuego Ironworks"
+        "location": "Fuego Ironworks",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/10/"]
     }, {
-        "location": "Route 220"
+        "location": "Route 220",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/180/"]
     }, {
-        "location": "Route 221"
+        "location": "Route 221",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/170/"]
     }, {
-        "location": "Canalave City"
+        "location": "Canalave City",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/1/"]
     }, {
-        "location": "Iron Island"
+        "location": "Iron Island",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/119/",
+                            "https://pokeapi.co/api/v2/location-area/120/",
+                            "https://pokeapi.co/api/v2/location-area/121/",
+                            "https://pokeapi.co/api/v2/location-area/122/",
+                            "https://pokeapi.co/api/v2/location-area/123/",
+                            "https://pokeapi.co/api/v2/location-area/124/",
+                            "https://pokeapi.co/api/v2/location-area/125/"]
     }, {
-        "location": "Route 216"
+        "location": "Route 216",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/166/"]
     }, {
-        "location": "Route 217"
+        "location": "Route 217",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/167/"]
     }, {
-        "location": "Acuity Lakefront"
+        "location": "Acuity Lakefront",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/140/"]
     }, {
-        "location": "Lake Acuity"
+        "location": "Lake Acuity",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/138/"]
     }, {
-        "location": "Mt. Coronet Peak"
+        "location": "Mt. Coronet Peak",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/14/",
+                            "https://pokeapi.co/api/v2/location-area/15/"]
     }, {
-        "location": "Route 222"
+        "location": "Route 222",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/171/"]
     }, {
-        "location": "Sunyshore City"
+        "location": "Sunyshore City",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/4/"]
     }, {
-        "location": "Route 223"
+        "location": "Route 223",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/181/"]
     }, {
-        "location": "Victory Road"
+        "location": "Victory Road",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/48/",
+                            "https://pokeapi.co/api/v2/location-area/49/",
+                            "https://pokeapi.co/api/v2/location-area/50/",
+                            "https://pokeapi.co/api/v2/location-area/51/",
+                            "https://pokeapi.co/api/v2/location-area/52/",
+                            "https://pokeapi.co/api/v2/location-area/53/"]
     }, {
-        "location": "Pokemon League"
+        "location": "Pokemon League",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/5/"]
     }
 ]
