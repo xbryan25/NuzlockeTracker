@@ -180,20 +180,71 @@ async function loadHTML(dataFromJSON){
   document.querySelector('.js-center-box-container')
       .innerHTML = entireHTML;
 
+  
+
   encounterRoutes.forEach(encounterRoute => {
-    document.querySelector(`.js-encounter-${(encounterRoute.location).split(' ').join('')}`).addEventListener("change", event => alert(event.target.value));
+    let encounterRouteNoSpace = (encounterRoute.location).split(' ').join('');
+    let encounterRouteClass = `.js-encounter-${encounterRouteNoSpace}`;
+
+    document.querySelector(encounterRouteClass).addEventListener("change", event => displayDupe(event.target.value, encounterRouteNoSpace, encounterRouteClass, encounterRoutes));
   })
 
 }
 
-async function availablePokemonHTMLCreator(location){
+function displayDupe(pokemon, selectedRoute, selectedRouteTemplateString, encounterRoutes){
+  encounterRoutes.forEach(encounterRoute => {
+    let currentRoute = document.querySelector(`.js-encounter-${(encounterRoute.location).split(' ').join('')}`);
+    
+    // Check if null or not
+    if(currentRoute.querySelector(`.${pokemon}`)){
+      currentRoute.querySelector(`.${pokemon}`).innerHTML = pokemon + ' - dupe';
+    }
+  });
 
-  let availablePokemon = await getPokemonEncountersAtEachLocation(location);
+  document.querySelector(selectedRouteTemplateString).innerHTML += `<option value="none" class="js-${selectedRoute}-encounter-display" selected disabled hidden>${pokemon}</option>`;
+
+  // For the display temporary option when a pokemon is selected
+
+  let encounterDisplaysQuery = document.querySelectorAll(`.js-${selectedRoute}-encounter-display`);
+
+  encounterDisplaysQuery.forEach(encounterDisplay => {
+    if (encounterDisplay.textContent !== `${pokemon}`){
+      encounterDisplay.remove();
+      // document.querySelector(selectedRoute).querySelector('.js-encounter-display').innerHTML = '';
+    }
+  });
+
+  // For the dynamic setting of the dupe title
+
+  let encounterOptionsQuery = document.querySelectorAll(`.js-${selectedRoute}-encounter-combobox-options`);
+
+  encounterOptionsQuery.forEach(encounterOption => {
+    
+    // If the encounter.value is not equal to the selected pokemon, remove the ' - dupe' substring
+    if (encounterOption.value !== pokemon){
+      encounterOption.innerHTML = encounterOption.innerHTML.replace(' - dupe', '');
+    }
+
+    console.log(encounterOption)
+    // if (encounterDisplay.textContent !== `${pokemon}`){
+    //   encounterDisplay.remove();
+    // }
+  })
+
+  console.log(encounterOptionsQuery);
+
+}
+
+async function availablePokemonHTMLCreator(locationObject){
+  let locationNoSpace = locationObject.location.split(' ').join('');
+
+  let availablePokemon = await getPokemonEncountersAtEachLocation(locationObject);
 
   let availablePokemonHTML = '<option value="none" selected disabled hidden>Find encounter</option>';
 
   availablePokemon.forEach((pokemon) => {
-    availablePokemonHTML += `<option value="${pokemon}" class="encounter-combobox-options">${pokemon}</option>`
+      //todo: add location in js-encounter-combobox-options
+    availablePokemonHTML += `<option value="${pokemon}" class="encounter-combobox-options ${pokemon} js-${locationNoSpace}-encounter-combobox-options">${pokemon}</option>`
   });
 
   return availablePokemonHTML;
