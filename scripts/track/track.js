@@ -43,11 +43,16 @@ async function getPokemonEncountersAtEachLocation(location){
       }
 
       availablePokemonArrays = await Promise.all(promises);
+      // console.log("---test---")
+      // console.log(availablePokemonArrays)
 
       availablePokemonArrays.forEach(availablePokemonArray => {
         availablePokemonArray.forEach(pokemon => {
-          if (!availablePokemon.includes(pokemon)){
-            availablePokemon.push(pokemon.charAt(0).toUpperCase() + pokemon.slice(1));
+          let pokemonTitleCase = pokemon.charAt(0).toUpperCase() + pokemon.slice(1);
+
+          if (!availablePokemon.includes(pokemonTitleCase)){
+            // console.log(availablePokemon)
+            availablePokemon.push(pokemonTitleCase);
           }
         });
       });
