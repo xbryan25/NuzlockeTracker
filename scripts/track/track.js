@@ -197,10 +197,13 @@ async function loadHTML(dataFromJSON){
 }
 
 async function displayDupe(pokemon, selectedRoute, selectedRouteTemplateString, encounterRoutes){
+  console.log('--------------------------------start---------------------------')
   let activePokemonLocal = [];
+  let activePokemonNoEvolutionLinesLocal = [];
   let activePokemonEvolutionLinesLocal = [];
 
   let tempActivePokemon = [];
+  let tempPokemonNoEvolutionLinesLocal = [];
   let tempActivePokemonEvolutionLines = [];
 
   for (let encounterRoute of encounterRoutes){
@@ -213,12 +216,14 @@ async function displayDupe(pokemon, selectedRoute, selectedRouteTemplateString, 
         let tempPokemonLowerCase = encounter.toLowerCase();
         let getEvolutionLineOfSelectedPokemon = await getEvolutionLine(tempPokemonLowerCase);
 
+
         getEvolutionLineOfSelectedPokemon.forEach(selectedPokemonTemp => {
           activePokemonLocal.push(selectedPokemonTemp);
           // activePokemonLocal.push(selectedPokemonTemp)
         });
 
         activePokemonEvolutionLinesLocal.push(getEvolutionLineOfSelectedPokemon);
+        activePokemonNoEvolutionLinesLocal.push(encounter);
         
         let pokemonOptionsNodeLists = [];
 
@@ -233,44 +238,103 @@ async function displayDupe(pokemon, selectedRoute, selectedRouteTemplateString, 
           })
         })
 
+
         // ---- Make a temporary option string so that the selected pokemon won't have the dupe substring ----
 
         document.querySelector(selectedRouteTemplateString).innerHTML += `<option value="${pokemon}" class="js-${selectedRoute}-encounter-display" selected disabled hidden>${pokemon}</option>`;
 
-    } else if (encounter !== 'none' && activePokemonInCombobox.includes(encounter)){
-      let getEvolutionLineOfSelectedPokemon = activePokemonEvolutionLines[activePokemonInCombobox.indexOf(encounter)]
+    } else if (encounter !== 'none' && activePokemonInCombobox.includes(encounter) && !tempActivePokemon.includes(encounter)){
+
+      let getEvolutionLineOfSelectedPokemon = activePokemonEvolutionLines[activePokemonNoEvolutionLines.indexOf(encounter)]
 
       getEvolutionLineOfSelectedPokemon.forEach(selectedPokemonTemp => {
-        tempActivePokemon.push(selectedPokemonTemp);
+        if (!tempActivePokemon.includes(selectedPokemonTemp)){
+          tempActivePokemon.push(selectedPokemonTemp);
+        }
         // activePokemonLocal.push(selectedPokemonTemp)
       });
 
       tempActivePokemonEvolutionLines.push(getEvolutionLineOfSelectedPokemon);
+      tempPokemonNoEvolutionLinesLocal.push(encounter);
+
+      document.querySelector(selectedRouteTemplateString).innerHTML += `<option value="${pokemon}" class="js-${selectedRoute}-encounter-display" selected disabled hidden>${pokemon}</option>`;
     }
 
 
-    // Reset value of activePokemonInCombobox
-    activePokemonInCombobox = [];
+    // console.log('-----before reset-----');
+    // console.log(activePokemonInCombobox);
 
-    for (let activePokemon of tempActivePokemon){
-      activePokemonInCombobox.push(activePokemon);
-    }
+    // TODO: uncomment starting from the line below
+    // // Reset value of activePokemonInCombobox
+    // activePokemonInCombobox = [];
 
-    for (let activePokemon of activePokemonLocal){
-      activePokemonInCombobox.push(activePokemon);
-    }
+    // // console.log('temp');
+    // // console.log(tempActivePokemon);
 
-    // Reset value of activePokemonEvolutionLines
-    activePokemonEvolutionLines = [];
+    // // console.log('local');
+    // // console.log(activePokemonLocal);
 
-    for (let activePokemonEvolutionLine of tempActivePokemonEvolutionLines){;
-      activePokemonEvolutionLines.push(activePokemonEvolutionLine);
-    }
+    // for (let activePokemon of tempActivePokemon){
+    //   activePokemonInCombobox.push(activePokemon);
+    // }
 
-    for (let activePokemonEvolutionLine of activePokemonEvolutionLinesLocal){
-      activePokemonEvolutionLines.push(activePokemonEvolutionLine);
-    }
+    // for (let activePokemon of activePokemonLocal){
+    //   activePokemonInCombobox.push(activePokemon);
+    // }
+
+    // // Reset value of activePokemonEvolutionLines
+    // activePokemonEvolutionLines = [];
+
+    // for (let activePokemonEvolutionLine of tempActivePokemonEvolutionLines){;
+    //   activePokemonEvolutionLines.push(activePokemonEvolutionLine);
+    // }
+
+    // for (let activePokemonEvolutionLine of activePokemonEvolutionLinesLocal){
+    //   activePokemonEvolutionLines.push(activePokemonEvolutionLine);
+    // }
   }
+
+  // Reset value of activePokemonInCombobox
+  activePokemonInCombobox = [];
+
+  // console.log('temp');
+  // console.log(tempActivePokemon);
+
+  // console.log('local');
+  // console.log(activePokemonLocal);
+
+  for (let activePokemon of tempActivePokemon){
+    activePokemonInCombobox.push(activePokemon);
+  }
+
+  for (let activePokemon of activePokemonLocal){
+    activePokemonInCombobox.push(activePokemon);
+  }
+
+  // Reset value of activePokemonNoEvolutionLines
+  activePokemonNoEvolutionLines = [];
+
+  for (let pokemon of tempPokemonNoEvolutionLinesLocal){
+    activePokemonNoEvolutionLines.push(pokemon);
+  }
+
+  for (let pokemon of activePokemonNoEvolutionLinesLocal){;
+    activePokemonNoEvolutionLines.push(pokemon);
+  }
+
+  // Reset value of activePokemonEvolutionLines
+  activePokemonEvolutionLines = [];
+
+  for (let activePokemonEvolutionLine of tempActivePokemonEvolutionLines){;
+    activePokemonEvolutionLines.push(activePokemonEvolutionLine);
+  }
+
+  for (let activePokemonEvolutionLine of activePokemonEvolutionLinesLocal){
+    activePokemonEvolutionLines.push(activePokemonEvolutionLine);
+  }
+
+  console.log(activePokemonNoEvolutionLines);
+  console.log(activePokemonEvolutionLines);
 
   // ---- For the display temporary option when a pokemon is selected ----
 
@@ -453,6 +517,7 @@ fetchData();
 
 let activePokemonEvolutionLines = [];
 let activePokemonInCombobox = [];
+let activePokemonNoEvolutionLines = [];
 
 // getPokemonEncountersAtEachLocation({
 //   "location": "Lake Verity",
