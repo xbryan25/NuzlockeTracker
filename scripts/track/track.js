@@ -196,17 +196,25 @@ async function loadHTML(dataFromJSON){
 
 }
 
-function displayDupe(pokemon, selectedRoute, selectedRouteTemplateString, encounterRoutes){
+async function displayDupe(pokemon, selectedRoute, selectedRouteTemplateString, encounterRoutes){
+  // Get evolution line of the given pokemon from getEvolutionLine() function 
+  let pokemonLowerCase = pokemon.toLowerCase();
+  let pokemonEvolutionLine = await getEvolutionLine(pokemonLowerCase);
+
   encounterRoutes.forEach(encounterRoute => {
     let currentRoute = document.querySelector(`.js-encounter-${(encounterRoute.location).split(' ').join('')}`);
     
-    // Check if null or not
-    if(currentRoute.querySelector(`.${pokemon}`)){
-      currentRoute.querySelector(`.${pokemon}`).innerHTML = pokemon + ' - dupe';
-    }
+    pokemonEvolutionLine.forEach(pokemonEvolution => {
+      if(currentRoute.querySelector(`.${pokemonEvolution}`)){
+        // TODO: Edit later
+        // temp.push(pokemonEvolution);
+        currentRoute.querySelector(`.${pokemonEvolution}`).innerHTML = pokemonEvolution + ' - dupe';
+      }
+    });
+    
   });
 
-  document.querySelector(selectedRouteTemplateString).innerHTML += `<option value="none" class="js-${selectedRoute}-encounter-display" selected disabled hidden>${pokemon}</option>`;
+  document.querySelector(selectedRouteTemplateString).innerHTML += `<option value="${pokemon}" class="js-${selectedRoute}-encounter-display" selected disabled hidden>${pokemon}</option>`;
 
   // For the display temporary option when a pokemon is selected
 
@@ -219,25 +227,122 @@ function displayDupe(pokemon, selectedRoute, selectedRouteTemplateString, encoun
     }
   });
 
-  // For the dynamic setting of the dupe title
+  // For the dynamic setting of the dupe title, traverse through all the encounter routes
+  // Because if only the selected route is traversed, the " - dupe" substring will only
+  // be removed in the selected route
 
-  let encounterOptionsQuery = document.querySelectorAll(`.js-${selectedRoute}-encounter-combobox-options`);
+  encounterRoutes.forEach(async encounterRoute => {
+    let encounterRouteNoSpace = (encounterRoute.location).split(' ').join('');
 
-  encounterOptionsQuery.forEach(encounterOption => {
+    let activePokemonList = await getSelectedPokemon(encounterRoutes);
+
+    // console.log(encounterRouteSelect.value);
+
+    let encounterOptionsQuery = document.querySelectorAll(`.js-${encounterRouteNoSpace}-encounter-combobox-options`);
     
-    // If the encounter.value is not equal to the selected pokemon, remove the ' - dupe' substring
-    if (encounterOption.value !== pokemon){
-      encounterOption.innerHTML = encounterOption.innerHTML.replace(' - dupe', '');
-    }
 
-    console.log(encounterOption)
-    // if (encounterDisplay.textContent !== `${pokemon}`){
-    //   encounterDisplay.remove();
-    // }
+    encounterOptionsQuery.forEach(encounterOption => {
+      
+      // If the encounter.value is not equal to the selected pokemon and its evolution line, remove the ' - dupe' substring  
+
+      // TODO: locally store the active pokemon so that the program will run faster
+
+      if (!pokemonEvolutionLine.includes(encounterOption.value) && !activePokemonList.includes(encounterOption.value)){
+        encounterOption.innerHTML = encounterOption.innerHTML.replace(' - dupe', '');
+      }
+    });
+  });
+}
+
+async function getSelectedPokemon(encounterRoutes){
+
+  let activePokemonList = [];
+  let activeArrays = [];
+  const promises = [];
+
+  encounterRoutes.forEach(encounterRoute => {
+    promises.push(getSelectedPokemonAtRoute(encounterRoute));
+  });
+
+  activeArrays = await Promise.all(promises);
+
+  activeArrays = activeArrays.filter(element => {
+    return element !== undefined;
   })
 
-  console.log(encounterOptionsQuery);
+  activeArrays.forEach(elementArray => {
+    elementArray.forEach(pokemon => {
+      if (!activePokemonList.includes(pokemon)){
+        activePokemonList.push(pokemon);
+      }
+    });
+  });
 
+
+  return activePokemonList;
+  
+}
+
+async function getSelectedPokemonAtRoute(encounterRoute){
+  let encounterRouteNoSpace = (encounterRoute.location).split(' ').join('');
+
+  // Get the active value of each comboboxes
+  let encounterRouteSelect = document.querySelector(`.js-encounter-${encounterRouteNoSpace}`);
+  let selectedPokemonInRoute = encounterRouteSelect.value;
+
+  if (selectedPokemonInRoute !== 'none'){
+    let selectedPokemonInRouteTitleCase = selectedPokemonInRoute.charAt(0).toLowerCase() + selectedPokemonInRoute.slice(1);
+    let getEvolutionLineSelected = await getEvolutionLine(selectedPokemonInRouteTitleCase);
+    return getEvolutionLineSelected;
+  }
+}
+
+async function getEvolutionLine(pokemon){
+  //  The goal of this function is to return an array that contains the evolution chain of the given pokemon
+  let pokemonInfoResponse = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`);
+  let pokemonInfoResponseJSON = await pokemonInfoResponse.json();
+  let getSpeciesLink = pokemonInfoResponseJSON ['species']['url'];
+  
+  let pokemonSpeciesResponse = await fetch(`${getSpeciesLink}`);
+  let pokemonSpeciesResponseJSON = await pokemonSpeciesResponse.json();
+  let getEvolutionChainLink = pokemonSpeciesResponseJSON['evolution_chain']['url'];
+
+  let pokemonEvolutionChainResponse = await fetch(`${getEvolutionChainLink}`);
+  let pokemonEvolutionChainResponseJSON = await pokemonEvolutionChainResponse.json();
+
+  // pokemonEvolutionChain can also be called baseEvolution
+  let pokemonEvolutionChain = pokemonEvolutionChainResponseJSON['chain']
+
+  let evolutionLine = [];
+
+  // base evolution (not done in a loop because pokemonEvolutionChain is not iterable)
+  evolutionLine.push(pokemonEvolutionChain['species']['name']);
+
+  if (pokemonEvolutionChain['evolves_to'].length !== 0){
+
+    // second evolution
+    let secondEvolutions = pokemonEvolutionChain['evolves_to'];
+
+    secondEvolutions.forEach(secondEvolution => {
+      evolutionLine.push(secondEvolution['species']['name']);
+
+      if (secondEvolution['evolves_to'].length !== 0){
+        let third_evolutions = secondEvolution['evolves_to'];
+
+        third_evolutions.forEach(third_evolution => {
+          evolutionLine.push(third_evolution['species']['name']);
+        });
+
+        // Only stop at third evolution because pokemon can only have two evolutions at maximum 
+      }
+    });
+  }
+
+  let titleCaseEvolutionLine = evolutionLine.map(evolution => {
+                                return evolution.charAt(0).toUpperCase() + evolution.slice(1);
+                              });
+
+  return titleCaseEvolutionLine;
 }
 
 async function availablePokemonHTMLCreator(locationObject){
@@ -248,7 +353,6 @@ async function availablePokemonHTMLCreator(locationObject){
   let availablePokemonHTML = '<option value="none" selected disabled hidden>Find encounter</option>';
 
   availablePokemon.forEach((pokemon) => {
-      //todo: add location in js-encounter-combobox-options
     availablePokemonHTML += `<option value="${pokemon}" class="encounter-combobox-options ${pokemon} js-${locationNoSpace}-encounter-combobox-options">${pokemon}</option>`
   });
 
@@ -285,7 +389,6 @@ function naturesHTMLCreator(){
 }
 
 fetchData();
-
 
 
 
