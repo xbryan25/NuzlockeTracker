@@ -170,7 +170,7 @@ async function loadHTML(dataFromJSON){
 
     entireHTML += `<div class="location-row js-location-row">
                     <p class="location-text">${encounterRoute.location}</p>
-                    <select name="${encounterRoute.location}" class="js-encounter-${(encounterRoute.location).split(' ').join('')} every-combobox">
+                    <select name="${encounterRoute.location}" class="js-encounter-${(encounterRoute.location).split(' ').join('')} every-combobox js-encounter-active">
                       ${optionsHTML}
                     </select>
 
@@ -197,65 +197,112 @@ async function loadHTML(dataFromJSON){
 }
 
 async function displayDupe(pokemon, selectedRoute, selectedRouteTemplateString, encounterRoutes){
-  // Get evolution line of the given pokemon from getEvolutionLine() function 
-  let pokemonLowerCase = pokemon.toLowerCase();
-  let pokemonEvolutionLine = await getEvolutionLine(pokemonLowerCase);
+  let activePokemonLocal = [];
+  let activePokemonEvolutionLinesLocal = [];
 
-  encounterRoutes.forEach(encounterRoute => {
-    let currentRoute = document.querySelector(`.js-encounter-${(encounterRoute.location).split(' ').join('')}`);
-    
-    pokemonEvolutionLine.forEach(pokemonEvolution => {
-      if(currentRoute.querySelector(`.${pokemonEvolution}`)){
-        // TODO: Edit later
-        // temp.push(pokemonEvolution);
-        currentRoute.querySelector(`.${pokemonEvolution}`).innerHTML = pokemonEvolution + ' - dupe';
-      }
-    });
-    
-  });
+  let tempActivePokemon = [];
+  let tempActivePokemonEvolutionLines = [];
 
-  document.querySelector(selectedRouteTemplateString).innerHTML += `<option value="${pokemon}" class="js-${selectedRoute}-encounter-display" selected disabled hidden>${pokemon}</option>`;
+  for (let encounterRoute of encounterRoutes){
+    let encounterRouteNoSpace = (encounterRoute.location).split(' ').join('');
+    let encounterRouteCombobox = document.querySelector(`.js-encounter-${encounterRouteNoSpace}`);
 
-  // For the display temporary option when a pokemon is selected
+    let encounter = encounterRouteCombobox.value;
+
+    if (encounter !== 'none' && !activePokemonInCombobox.includes(encounter)){
+        let tempPokemonLowerCase = encounter.toLowerCase();
+        let getEvolutionLineOfSelectedPokemon = await getEvolutionLine(tempPokemonLowerCase);
+
+        getEvolutionLineOfSelectedPokemon.forEach(selectedPokemonTemp => {
+          activePokemonLocal.push(selectedPokemonTemp);
+          // activePokemonLocal.push(selectedPokemonTemp)
+        });
+
+        activePokemonEvolutionLinesLocal.push(getEvolutionLineOfSelectedPokemon);
+        
+        let pokemonOptionsNodeLists = [];
+
+        getEvolutionLineOfSelectedPokemon.forEach(selectedPokemon => {
+          pokemonOptionsNodeLists.push(document.querySelectorAll(`.js-${selectedPokemon}-option`));
+        });
+
+        
+        pokemonOptionsNodeLists.forEach(pokemonOptions => {
+          pokemonOptions.forEach(pokemonOption => {
+            pokemonOption.innerHTML = pokemonOption.value + ' - dupe'
+          })
+        })
+
+        // ---- Make a temporary option string so that the selected pokemon won't have the dupe substring ----
+
+        document.querySelector(selectedRouteTemplateString).innerHTML += `<option value="${pokemon}" class="js-${selectedRoute}-encounter-display" selected disabled hidden>${pokemon}</option>`;
+
+    } else if (encounter !== 'none' && activePokemonInCombobox.includes(encounter)){
+      let getEvolutionLineOfSelectedPokemon = activePokemonEvolutionLines[activePokemonInCombobox.indexOf(encounter)]
+
+      getEvolutionLineOfSelectedPokemon.forEach(selectedPokemonTemp => {
+        tempActivePokemon.push(selectedPokemonTemp);
+        // activePokemonLocal.push(selectedPokemonTemp)
+      });
+
+      tempActivePokemonEvolutionLines.push(getEvolutionLineOfSelectedPokemon);
+    }
+
+
+    // Reset value of activePokemonInCombobox
+    activePokemonInCombobox = [];
+
+    for (let activePokemon of tempActivePokemon){
+      activePokemonInCombobox.push(activePokemon);
+    }
+
+    for (let activePokemon of activePokemonLocal){
+      activePokemonInCombobox.push(activePokemon);
+    }
+
+    // Reset value of activePokemonEvolutionLines
+    activePokemonEvolutionLines = [];
+
+    for (let activePokemonEvolutionLine of tempActivePokemonEvolutionLines){;
+      activePokemonEvolutionLines.push(activePokemonEvolutionLine);
+    }
+
+    for (let activePokemonEvolutionLine of activePokemonEvolutionLinesLocal){
+      activePokemonEvolutionLines.push(activePokemonEvolutionLine);
+    }
+  }
+
+  // ---- For the display temporary option when a pokemon is selected ----
 
   let encounterDisplaysQuery = document.querySelectorAll(`.js-${selectedRoute}-encounter-display`);
 
   encounterDisplaysQuery.forEach(encounterDisplay => {
     if (encounterDisplay.textContent !== `${pokemon}`){
       encounterDisplay.remove();
-      // document.querySelector(selectedRoute).querySelector('.js-encounter-display').innerHTML = '';
     }
   });
+
+
+  // ---- To update the dupe substring ----
 
   // For the dynamic setting of the dupe title, traverse through all the encounter routes
   // Because if only the selected route is traversed, the " - dupe" substring will only
   // be removed in the selected route
 
-  encounterRoutes.forEach(async encounterRoute => {
+  for (let encounterRoute of encounterRoutes){
     let encounterRouteNoSpace = (encounterRoute.location).split(' ').join('');
-
-    let activePokemonList = await getSelectedPokemon(encounterRoutes);
-
-    // console.log(encounterRouteSelect.value);
-
     let encounterOptionsQuery = document.querySelectorAll(`.js-${encounterRouteNoSpace}-encounter-combobox-options`);
-    
 
     encounterOptionsQuery.forEach(encounterOption => {
-      
-      // If the encounter.value is not equal to the selected pokemon and its evolution line, remove the ' - dupe' substring  
 
-      // TODO: locally store the active pokemon so that the program will run faster
-
-      if (!pokemonEvolutionLine.includes(encounterOption.value) && !activePokemonList.includes(encounterOption.value)){
+      if (!activePokemonInCombobox.includes(encounterOption.value)){
         encounterOption.innerHTML = encounterOption.innerHTML.replace(' - dupe', '');
       }
     });
-  });
+  }
 }
 
 async function getSelectedPokemon(encounterRoutes){
-
   let activePokemonList = [];
   let activeArrays = [];
   const promises = [];
@@ -293,8 +340,11 @@ async function getSelectedPokemonAtRoute(encounterRoute){
   if (selectedPokemonInRoute !== 'none'){
     let selectedPokemonInRouteTitleCase = selectedPokemonInRoute.charAt(0).toLowerCase() + selectedPokemonInRoute.slice(1);
     let getEvolutionLineSelected = await getEvolutionLine(selectedPokemonInRouteTitleCase);
+    
+    // TODO: Update the activePokemonSelected
+
     return getEvolutionLineSelected;
-  }
+  } 
 }
 
 async function getEvolutionLine(pokemon){
@@ -338,6 +388,11 @@ async function getEvolutionLine(pokemon){
     });
   }
 
+
+  // for (let evolution of evolutionLine){
+  //   titleCaseEvolutionLine.push(evolution.charAt(0).toUpperCase() + evolution.slice(1));
+  // }
+
   let titleCaseEvolutionLine = evolutionLine.map(evolution => {
                                 return evolution.charAt(0).toUpperCase() + evolution.slice(1);
                               });
@@ -353,7 +408,7 @@ async function availablePokemonHTMLCreator(locationObject){
   let availablePokemonHTML = '<option value="none" selected disabled hidden>Find encounter</option>';
 
   availablePokemon.forEach((pokemon) => {
-    availablePokemonHTML += `<option value="${pokemon}" class="encounter-combobox-options ${pokemon} js-${locationNoSpace}-encounter-combobox-options">${pokemon}</option>`
+    availablePokemonHTML += `<option value="${pokemon}" class="encounter-combobox-options js-${pokemon}-option js-${locationNoSpace}-encounter-combobox-options">${pokemon}</option>`
   });
 
   return availablePokemonHTML;
@@ -388,10 +443,16 @@ function naturesHTMLCreator(){
           </select>`;
 }
 
+// function temp(){
+//   let encounterRouteSelect = document.querySelectorAll(`.js-encounter-active`);
+//   console.log(encounterRouteSelect);
+// }
+
 fetchData();
 
 
-
+let activePokemonEvolutionLines = [];
+let activePokemonInCombobox = [];
 
 // getPokemonEncountersAtEachLocation({
 //   "location": "Lake Verity",
