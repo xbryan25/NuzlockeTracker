@@ -260,38 +260,6 @@ async function displayDupe(pokemon, selectedRoute, selectedRouteTemplateString, 
       document.querySelector(selectedRouteTemplateString).innerHTML += `<option value="${pokemon}" class="js-${selectedRoute}-encounter-display" selected disabled hidden>${pokemon}</option>`;
     }
 
-
-    // console.log('-----before reset-----');
-    // console.log(activePokemonInCombobox);
-
-    // TODO: uncomment starting from the line below
-    // // Reset value of activePokemonInCombobox
-    // activePokemonInCombobox = [];
-
-    // // console.log('temp');
-    // // console.log(tempActivePokemon);
-
-    // // console.log('local');
-    // // console.log(activePokemonLocal);
-
-    // for (let activePokemon of tempActivePokemon){
-    //   activePokemonInCombobox.push(activePokemon);
-    // }
-
-    // for (let activePokemon of activePokemonLocal){
-    //   activePokemonInCombobox.push(activePokemon);
-    // }
-
-    // // Reset value of activePokemonEvolutionLines
-    // activePokemonEvolutionLines = [];
-
-    // for (let activePokemonEvolutionLine of tempActivePokemonEvolutionLines){;
-    //   activePokemonEvolutionLines.push(activePokemonEvolutionLine);
-    // }
-
-    // for (let activePokemonEvolutionLine of activePokemonEvolutionLinesLocal){
-    //   activePokemonEvolutionLines.push(activePokemonEvolutionLine);
-    // }
   }
 
   // Reset value of activePokemonInCombobox
@@ -506,11 +474,6 @@ function naturesHTMLCreator(){
             ${naturesHTMLOptions}
           </select>`;
 }
-
-// function temp(){
-//   let encounterRouteSelect = document.querySelectorAll(`.js-encounter-active`);
-//   console.log(encounterRouteSelect);
-// }
 
 fetchData();
 
