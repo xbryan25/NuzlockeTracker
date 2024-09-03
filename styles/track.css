@@ -144,6 +144,10 @@ body{
   text-align: left;
 }
 
+.selected-encounter{
+  background-color: rgb(93, 91, 91);
+}
+
 .location-text{
   font-size: 20px;
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -177,6 +181,8 @@ input.input-nickname::placeholder{
   text-align: left;
   padding: 5px;
 }
+
+
 
 .footer-div-container{
   position: fixed;

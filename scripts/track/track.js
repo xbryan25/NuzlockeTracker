@@ -206,6 +206,10 @@ async function displayDupe(pokemon, selectedRoute, selectedRouteTemplateString, 
   let tempPokemonNoEvolutionLinesLocal = [];
   let tempActivePokemonEvolutionLines = [];
 
+  // To change the color of the selected select tag
+  let currentSelect = document.querySelector(`.js-encounter-${selectedRoute}`);
+  currentSelect.classList.add("selected-encounter");
+
   for (let encounterRoute of encounterRoutes){
     let encounterRouteNoSpace = (encounterRoute.location).split(' ').join('');
     let encounterRouteCombobox = document.querySelector(`.js-encounter-${encounterRouteNoSpace}`);
@@ -258,9 +262,11 @@ async function displayDupe(pokemon, selectedRoute, selectedRouteTemplateString, 
       tempPokemonNoEvolutionLinesLocal.push(encounter);
 
       document.querySelector(selectedRouteTemplateString).innerHTML += `<option value="${pokemon}" class="js-${selectedRoute}-encounter-display" selected disabled hidden>${pokemon}</option>`;
+      
     }
 
   }
+
 
   // Reset value of activePokemonInCombobox
   activePokemonInCombobox = [];
