@@ -170,7 +170,7 @@ async function loadHTML(dataFromJSON){
 
     entireHTML += `<div class="location-row js-location-row">
                     <p class="location-text">${encounterRoute.location}</p>
-                    <select name="${encounterRoute.location}" class="js-encounter-${(encounterRoute.location).split(' ').join('')} every-combobox js-encounter-active">
+                    <select name="${encounterRoute.location}" class="js-encounter-${(encounterRoute.location).split(' ').join('')} encounter-combobox js-encounter-active">
                       ${optionsHTML}
                     </select>
 
@@ -448,7 +448,7 @@ async function availablePokemonHTMLCreator(locationObject){
 
 function statusHTMLCreator(){
 
-  return `<select name="Status" class="every-combobox">
+  return `<select name="Status" class="status-and-natures-combobox">
             <option value="none" selected disabled hidden>Status</option>
             <option value="Alive">Captured</option>
             <option value="Boxed">Dead</option>
@@ -469,7 +469,7 @@ function naturesHTMLCreator(){
   }) 
 
 
-  return `<select name="Natures" class="every-combobox">
+  return `<select name="Natures" class="status-and-natures-combobox">
             <option value="none" selected disabled hidden>Natures</option>
             ${naturesHTMLOptions}
           </select>`;

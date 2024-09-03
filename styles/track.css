@@ -118,10 +118,9 @@ body{
   padding-top: 10px;
 }
 
-.every-combobox, .encounter-combobox-options{
+.encounter-combobox, .encounter-combobox-optionsl, .status-and-natures-combobox{
   font-size: 20px;
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  width: 210px;
   text-align: left;
 
   padding-left: 5px;
@@ -131,6 +130,14 @@ body{
   color: white;
 
   border-radius: 10px;
+}
+
+.encounter-combobox, .encounter-combobox-options{
+  width: 210px;
+}
+
+.status-and-natures-combobox{
+  width: 190px;
 }
 
 .encounter-combobox-options{
