@@ -312,6 +312,8 @@ async function displayDupe(pokemon, selectedRoute, selectedRouteTemplateString, 
 
   // ---- For the display temporary option when a pokemon is selected ----
 
+
+  // TODO: The encounter displays of the selected pokemon will stack up; fix this
   let encounterDisplaysQuery = document.querySelectorAll(`.js-${selectedRoute}-encounter-display`);
 
   encounterDisplaysQuery.forEach(encounterDisplay => {
@@ -338,6 +340,46 @@ async function displayDupe(pokemon, selectedRoute, selectedRouteTemplateString, 
       }
     });
   }
+
+  allDupeInRouteChecker(encounterRoutes);
+}
+
+function allDupeInRouteChecker(encounterRoutes){
+
+  encounterRoutes.forEach(encounterRoute => {
+    let encounterRouteNoSpace = (encounterRoute.location).split(' ').join('');
+
+    let allOptions = document.querySelectorAll(`.js-${encounterRouteNoSpace}-encounter-combobox-options`);
+
+    let allOptionsAreDupes = true;
+
+    // If the an option in an encounterRoute is not in the activePokemonInCombobox,
+    // it means that not all pokemon are dupes, therefore allOptionsAreNotDupes will be true
+
+    for (let anOption of allOptions){
+      if (!activePokemonInCombobox.includes(anOption.value)){
+        allOptionsAreDupes = false;
+        break;
+      }
+    }
+
+    // If getLocationEncounterDisplay is active, then the combobox of the current location won't be disabled
+    let getLocationEncounterDisplay = document.querySelector(`.js-${encounterRouteNoSpace}-encounter-display`);
+
+    if (allOptionsAreDupes && !getLocationEncounterDisplay){
+      let getLocationCombobox = document.querySelector(`.js-encounter-${encounterRouteNoSpace}`);
+      getLocationCombobox.disabled = true;
+
+      let getPlaceholderOption = getLocationCombobox.querySelector(`.js-combobox-placeholder`);
+      getPlaceholderOption.innerHTML = "--- All dupes ---";
+    } else{
+      let getLocationCombobox = document.querySelector(`.js-encounter-${encounterRouteNoSpace}`);
+      getLocationCombobox.disabled = false;
+
+      let getPlaceholderOption = getLocationCombobox.querySelector(`.js-combobox-placeholder`);
+      getPlaceholderOption.innerHTML = "Find encounter";
+    }
+  })
 }
 
 async function getSelectedPokemon(encounterRoutes){
@@ -443,10 +485,10 @@ async function availablePokemonHTMLCreator(locationObject){
 
   let availablePokemon = await getPokemonEncountersAtEachLocation(locationObject);
 
-  let availablePokemonHTML = '<option value="none" selected disabled hidden>Find encounter</option>';
+  let availablePokemonHTML = '<option value="none" class="js-combobox-placeholder"selected disabled hidden>Find encounter</option>';
 
   availablePokemon.forEach((pokemon) => {
-    availablePokemonHTML += `<option value="${pokemon}" class="encounter-combobox-options js-${pokemon}-option js-${locationNoSpace}-encounter-combobox-options">${pokemon}</option>`
+    availablePokemonHTML += `<option value="${pokemon}" class="encounter-combobox-options js-${pokemon}-option js-${locationNoSpace}-encounter-combobox-options" data-img-width="16px">${pokemon}</option>`
   });
 
   return availablePokemonHTML;
