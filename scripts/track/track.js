@@ -154,8 +154,14 @@ async function loadHTML(dataFromJSON){
   document.querySelector('.js-header-div-container').innerHTML = `<div class="js-heading-pic header-div-pic"></div>
                                                         <div class="js-header-div-game-title header-div-game-title"></div> `;
 
+
+
   document.querySelector('.js-heading-pic').innerHTML = `<img src="../../images/front-page/${userDecision}.png" height="50px">`;
   document.querySelector('.js-header-div-game-title').innerHTML = `${userDecisionTitle} Nuzlocke`;
+
+
+  // add event listener to picture
+  returnToMainScreen();
 
   let encounterRoutes = [];
 
@@ -523,7 +529,20 @@ function naturesHTMLCreator(){
           </select>`;
 }
 
+function returnToMainScreen(){
+  let headingPic = document.querySelector('.js-heading-pic');
+  console.log(headingPic)
+
+  headingPic.addEventListener("click", () => {
+    window.location.href = '../../html/front-page.html';
+    console.log("hei");
+  });
+  // localStorage.setItem('userDecision', userDecision);
+}
+
 fetchData();
+
+
 
 
 let activePokemonEvolutionLines = [];
