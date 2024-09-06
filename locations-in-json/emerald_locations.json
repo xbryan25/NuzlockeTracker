@@ -1,0 +1,212 @@
+[
+    {
+        "location": "Starter",
+        "location-links": [],
+        "type": "gift",
+        "gift_pokemon": ["Torchic", "Treecko", "Mudkip"]
+    },{
+        "location": "Route 101",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/393/"]
+
+    }, {
+        "location": "Route 103",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/395/"]
+    }, {
+        "location": "Route 102",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/394/"]
+    }, {
+        "location": "Petalburg City",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/350/"]
+    }, {
+        "location": "Route 104",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/396/"]
+    }, {
+        "location": "Petalburg Woods",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/365/"]
+    }, {
+        "location": "Route 105",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/397/"]
+    }, {
+        "location": "Route 116",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/408/"]
+    }, {
+        "location": "Rusturf Tunnel",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/360/"]
+    }, {
+        "location": "Dewford Town",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/433/"]
+    }, {
+        "location": "Route 106",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/398/"]
+    }, {
+        "location": "Granite Cave",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/361/",
+                            "https://pokeapi.co/api/v2/location-area/362/",
+                            "https://pokeapi.co/api/v2/location-area/363/",
+                            "https://pokeapi.co/api/v2/location-area/364/"]
+    }, {
+        "location": "Route 107",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/399/"]
+    }, {
+        "location": "Slateport City",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/351/"]
+    }, {
+        "location": "Route 110",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/402/"]
+    }, {
+        "location": "Route 117",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/409/"]
+    }, {
+        "location": "Route 112",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/404/"]
+    }, {
+        "location": "Route 113",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/405/"]
+    }, {
+        "location": "Route 114",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/406/"]
+    }, {
+        "location": "Desert Underpass",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/439/"]
+    }, {
+        "location": "Meteor Falls",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/356/",
+                            "https://pokeapi.co/api/v2/location-area/357/",
+                            "https://pokeapi.co/api/v2/location-area/358/",
+                            "https://pokeapi.co/api/v2/location-area/359/"]
+    }, {
+        "location": "Route 115",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/407/"]
+    }, {
+        "location": "Jagged Pass",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/366/"]
+    }, {
+        "location": "Fiery Path",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/367/"]
+    }, {
+        "location": "Mirage Tower",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/438/"]
+    }, {
+        "location": "New Mauville",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/387/",
+                            "https://pokeapi.co/api/v2/location-area/388/"]
+    }, {
+        "location": "Route 118",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/410/"]
+    },  {
+        "location": "Route 119",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/411/"]
+    }, {
+        "location": "Route 120",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/412/"]
+    }, {
+        "location": "Route 121",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/413/"]
+    }, {
+        "location": "Safari Zone",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/429/",
+                            "https://pokeapi.co/api/v2/location-area/430/",
+                            "https://pokeapi.co/api/v2/location-area/431/",
+                            "https://pokeapi.co/api/v2/location-area/432/"]
+    }, {
+        "location": "Route 122",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/414/"]
+    }, {
+        "location": "Mt Pyre",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/368/",
+                            "https://pokeapi.co/api/v2/location-area/369/",
+                            "https://pokeapi.co/api/v2/location-area/370/",
+                            "https://pokeapi.co/api/v2/location-area/371/",
+                            "https://pokeapi.co/api/v2/location-area/372/",
+                            "https://pokeapi.co/api/v2/location-area/373/",
+                            "https://pokeapi.co/api/v2/location-area/374/",
+                            "https://pokeapi.co/api/v2/location-area/375/"]
+    }, {
+        "location": "Route 123",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/415/"]
+    }, {
+        "location": "Magma Hideout",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/437/"]
+    }, {
+        "location": "Lilycove City",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/352/"]
+    }, {
+        "location": "Route 124",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/417/"]
+    }, {
+        "location": "Mossdeep City",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/353/"]
+    }, {
+        "location": "Route 125",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/418/"]
+    }, {
+        "location": "Shoal Cave",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/385/",
+                            "https://pokeapi.co/api/v2/location-area/386/"]
+    }, {
+        "location": "Route 127",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/421/"]
+    }, {
+        "location": "Route 128",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/422/"]
+    }, {
+        "location": "Seafloor Cavern",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/376/"]
+    }, {
+        "location": "Route 126",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/420/"]
+    }, {
+        "location": "Sootopolis City",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/354/"]
+    }, {
+        "location": "Cave of Origin",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/377/",
+                            "https://pokeapi.co/api/v2/location-area/378/",
+                            "https://pokeapi.co/api/v2/location-area/379/",
+                            "https://pokeapi.co/api/v2/location-area/380/",
+                            "https://pokeapi.co/api/v2/location-area/381/"]
+    }, {
+        "location": "Route 129",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/423/"]
+    }, {
+        "location": "Route 130",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/424/"]
+    }, {
+        "location": "Route 131",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/425/"]
+    }, {
+        "location": "Sky Pillar",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/390/",
+                            "https://pokeapi.co/api/v2/location-area/391/",
+                            "https://pokeapi.co/api/v2/location-area/392/"]
+    }, {
+        "location": "Pacifidlog Town",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/434/"]
+    }, {
+        "location": "Route 108",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/400/"]
+    }, {
+        "location": "Abandoned Ship",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/389/"]
+    }, {
+        "location": "Route 109",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/401/"]
+    }, {
+        "location": "Route 132",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/426/"]
+    }, {
+        "location": "Route 133",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/427/"]
+    }, {
+        "location": "Route 134",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/428/"]
+    }, {
+        "location": "Ever Grande City",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/355/"]
+    }, {
+        "location": "Victory Road",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/382/",
+                            "https://pokeapi.co/api/v2/location-area/383/",
+                            "https://pokeapi.co/api/v2/location-area/384/"]
+    }
+]

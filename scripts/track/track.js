@@ -2,12 +2,14 @@
 // Kraazy, async/await raman diay gamiton instead nga solo fetch
 async function fetchData(){
   try{
-    const response = await fetch("../locations-in-json/platinum_locations.json");
+    let userDecision = localStorage.getItem('userDecision');
+
+    const response = await fetch(`../locations-in-json/${userDecision}_locations.json`);
 
     // Data is an array of location objects from the local .json file
     const data = await response.json();
 
-    loadHTML(data);
+    loadHTML(data, userDecision);
   } catch(error){
     console.error(error);
   }
@@ -145,7 +147,7 @@ async function fetchLocationDataFromApi(location_link){
   return availablePokemonAtLocationLink;
 }
 
-async function loadHTML(dataFromJSON){
+async function loadHTML(dataFromJSON, gameVersion){
   let userDecision = localStorage.getItem('userDecision');
   let userDecisionTitle = userDecision.charAt(0).toUpperCase() + userDecision.slice(1);
 
@@ -190,12 +192,19 @@ async function loadHTML(dataFromJSON){
 
   document.querySelector('.js-center-box-container')
       .innerHTML = entireHTML;
+  
+  
+  if (gameVersion === 'Emerald'){
+    console.log('reach here');
+    document.querySelector('.js-center-box-container').classList.add('emerald-center-box-container');
+  }
 
   
 
   encounterRoutes.forEach(encounterRoute => {
     let encounterRouteNoSpace = (encounterRoute.location).split(' ').join('');
     let encounterRouteClass = `.js-encounter-${encounterRouteNoSpace}`;
+    // console.log(encounterRouteNoSpace);
 
     document.querySelector(encounterRouteClass).addEventListener("change", event => displayDupe(event.target.value, encounterRouteNoSpace, encounterRouteClass, encounterRoutes));
   })
@@ -573,3 +582,5 @@ let activePokemonNoEvolutionLines = [];
 //144 is the limit for encounters in Platinum
 
 // fetch("https://pokeapi.co/api/v2/location-area/?limit=144").then(response => response.json().then(data => console.log(data))).catch(error => console.error(error()));
+
+// for locations in emerald "...location-area?limit=144&offset=305"
