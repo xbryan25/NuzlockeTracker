@@ -154,7 +154,8 @@ async function loadHTML(dataFromJSON, gameVersion){
   console.log(userDecision);
 
   document.querySelector('.js-header-div-container').innerHTML = `<div class="js-heading-pic header-div-pic"></div>
-                                                        <div class="js-header-div-game-title header-div-game-title"></div> `;
+                                                        <div class="js-header-div-game-title header-div-game-title"></div>
+                                                        <button class="js-clear-all-encounters-button clear-all-encounters-button">Clear all encounters</button> `;
 
 
 
@@ -218,6 +219,8 @@ async function loadHTML(dataFromJSON, gameVersion){
       element.addEventListener("change", event => activeStatusOrNature(locationNoSpace));
     });
   })
+
+  document.querySelector(`.js-clear-all-encounters-button`).addEventListener("click", event => clearAllEncounters(encounterRouteObjects));
 
 }
 
@@ -608,8 +611,36 @@ async function clearEncounter(location, encounterRouteObjects){
 
   // Index 0 is for the status combobox, index 1 is for the natures combobox
   // Setting the comboboxes to none will revert the value back to its preselected form
-  statusAndNaturesComboboxes[0].value = "none";
-  statusAndNaturesComboboxes[1].value = "none";
+  // statusAndNaturesComboboxes[0].value = "none";
+  // statusAndNaturesComboboxes[1].value = "none";
+
+}
+
+function clearAllEncounters(encounterRouteObjects){
+
+  if (confirm("Are you sure you want to erase your inputs?")){
+    activePokemonEvolutionLines = [];
+    activePokemonInCombobox = [];
+    activePokemonNoEvolutionLines = [];
+
+    encounterRouteObjects.forEach(encounterRouteObject => {
+      let locationNoSpace = (encounterRouteObject.location).split(' ').join('');
+
+      document.querySelector(`.js-encounter-${locationNoSpace}`).value = "none";
+      document.querySelector(`.js-encounter-${locationNoSpace}`).classList.remove("selected-encounter");
+
+      document.querySelector(`.js-${locationNoSpace}-nickname`).value = '';
+
+      let statusAndNaturesComboboxes = document.querySelectorAll(`.js-${locationNoSpace}-status-and-nature-combobox`);
+
+      statusAndNaturesComboboxes.forEach(element => {
+        element.value = "none";
+        element.classList.remove("selected-status-or-nature");
+      });
+
+      updateDupeSubstring(encounterRouteObjects);
+    });
+  }
 
 }
 
