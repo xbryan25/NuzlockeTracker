@@ -210,7 +210,29 @@ input.input-nickname::placeholder{
   padding: 5px;
 }
 
+.clear-encounter-button{
+  width: 40px;
 
+  font-size: 20px;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+
+  background-color: gray;
+  border: 1px solid white;
+  border-radius: 10px;
+
+  color: white;
+
+  cursor: pointer;
+}
+
+button.clear-encounter-button:active{
+  background-color: rgb(90, 89, 89);
+}
+
+.clear-encounter-button-text{
+  padding-bottom: 10px;
+}
 
 .footer-div-container{
   position: fixed;

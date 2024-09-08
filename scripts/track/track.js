@@ -165,28 +165,32 @@ async function loadHTML(dataFromJSON, gameVersion){
   // add event listener to picture
   returnToMainScreen();
 
-  let encounterRoutes = [];
+  let encounterRouteObjects = [];
 
   for (let locationObject of dataFromJSON){
-    encounterRoutes.push(locationObject);
+    encounterRouteObjects.push(locationObject);
   }
 
   let entireHTML = '';
 
-  for (let encounterRoute of encounterRoutes){
-    let optionsHTML = await availablePokemonHTMLCreator(encounterRoute);
+  for (let encounterRouteObject of encounterRouteObjects){
+    let optionsHTML = await availablePokemonHTMLCreator(encounterRouteObject);
+    let location = encounterRouteObject.location;
+    let locationNoSpace = location.split(' ').join('');
 
     entireHTML += `<div class="location-row js-location-row">
-                    <p class="location-text">${encounterRoute.location}</p>
-                    <select name="${encounterRoute.location}" class="js-encounter-${(encounterRoute.location).split(' ').join('')} encounter-combobox js-encounter-active">
+                    <p class="location-text">${location}</p>
+                    <select name="${locationNoSpace}" class="js-encounter-${locationNoSpace} encounter-combobox js-encounter-active">
                       ${optionsHTML}
                     </select>
 
-                    <input type="text" placeholder="Input nickname" class="input-nickname">
+                    <input type="text" placeholder="Input nickname" class="input-nickname js-${locationNoSpace}-nickname">
 
-                    ${statusHTMLCreator()}
+                    ${statusHTMLCreator(locationNoSpace)}
 
-                    ${naturesHTMLCreator()}
+                    ${naturesHTMLCreator(locationNoSpace)}
+
+                    ${clearEncounterHTMLCreator(locationNoSpace)}
                 </div>`;
   }
 
@@ -199,14 +203,15 @@ async function loadHTML(dataFromJSON, gameVersion){
     document.querySelector('.js-center-box-container').classList.add('emerald-center-box-container');
   }
 
-  
+  encounterRouteObjects.forEach(encounterRouteObject => {
+    let locationNoSpace = (encounterRouteObject.location).split(' ').join('');
 
-  encounterRoutes.forEach(encounterRoute => {
-    let encounterRouteNoSpace = (encounterRoute.location).split(' ').join('');
-    let encounterRouteClass = `.js-encounter-${encounterRouteNoSpace}`;
-    // console.log(encounterRouteNoSpace);
+    let locationClass = `.js-encounter-${locationNoSpace}`;
+    let locationClearEncounterButton = `.js-clear-encounter-${locationNoSpace}`;
 
-    document.querySelector(encounterRouteClass).addEventListener("change", event => displayDupe(event.target.value, encounterRouteNoSpace, encounterRouteClass, encounterRoutes));
+    document.querySelector(locationClass).addEventListener("change", event => displayDupe(event.target.value, locationNoSpace, locationClass, encounterRouteObjects));
+
+    document.querySelector(locationClearEncounterButton).addEventListener("click", event => clearEncounter(locationNoSpace, encounterRouteObjects));
   })
 
 }
@@ -344,6 +349,12 @@ async function displayDupe(pokemon, selectedRoute, selectedRouteTemplateString, 
   // Because if only the selected route is traversed, the " - dupe" substring will only
   // be removed in the selected route
 
+  updateDupeSubstring(encounterRoutes);
+
+  allDupeInRouteChecker(encounterRoutes);
+}
+
+function updateDupeSubstring(encounterRoutes){
   for (let encounterRoute of encounterRoutes){
     let encounterRouteNoSpace = (encounterRoute.location).split(' ').join('');
     let encounterOptionsQuery = document.querySelectorAll(`.js-${encounterRouteNoSpace}-encounter-combobox-options`);
@@ -355,8 +366,6 @@ async function displayDupe(pokemon, selectedRoute, selectedRouteTemplateString, 
       }
     });
   }
-
-  allDupeInRouteChecker(encounterRoutes);
 }
 
 function allDupeInRouteChecker(encounterRoutes){
@@ -385,13 +394,13 @@ function allDupeInRouteChecker(encounterRoutes){
       let getLocationCombobox = document.querySelector(`.js-encounter-${encounterRouteNoSpace}`);
       getLocationCombobox.disabled = true;
 
-      let getPlaceholderOption = getLocationCombobox.querySelector(`.js-combobox-placeholder`);
+      let getPlaceholderOption = getLocationCombobox.querySelector(`.js-${encounterRouteNoSpace}-placeholder`);
       getPlaceholderOption.innerHTML = "--- All dupes ---";
     } else{
       let getLocationCombobox = document.querySelector(`.js-encounter-${encounterRouteNoSpace}`);
       getLocationCombobox.disabled = false;
 
-      let getPlaceholderOption = getLocationCombobox.querySelector(`.js-combobox-placeholder`);
+      let getPlaceholderOption = getLocationCombobox.querySelector(`.js-${encounterRouteNoSpace}-placeholder`);
       getPlaceholderOption.innerHTML = "Find encounter";
     }
   })
@@ -500,7 +509,7 @@ async function availablePokemonHTMLCreator(locationObject){
 
   let availablePokemon = await getPokemonEncountersAtEachLocation(locationObject);
 
-  let availablePokemonHTML = '<option value="none" class="js-combobox-placeholder"selected disabled hidden>Find encounter</option>';
+  let availablePokemonHTML = `<option value="none" class="js-${locationNoSpace}-placeholder"selected disabled hidden>Find encounter</option>`;
 
   availablePokemon.forEach((pokemon) => {
     availablePokemonHTML += `<option value="${pokemon}" class="encounter-combobox-options js-${pokemon}-option js-${locationNoSpace}-encounter-combobox-options" data-img-width="16px">${pokemon}</option>`
@@ -509,9 +518,9 @@ async function availablePokemonHTMLCreator(locationObject){
   return availablePokemonHTML;
 }
 
-function statusHTMLCreator(){
+function statusHTMLCreator(location){
 
-  return `<select name="Status" class="status-and-natures-combobox">
+  return `<select name="Status" class="status-and-natures-combobox js-${location}-status-and-natures-combobox">
             <option value="none" selected disabled hidden>Status</option>
             <option value="Alive">Captured</option>
             <option value="Boxed">Dead</option>
@@ -520,7 +529,7 @@ function statusHTMLCreator(){
           </select>`;
 }
 
-function naturesHTMLCreator(){
+function naturesHTMLCreator(location){
   let naturesHTMLOptions = ''
 
   let natures = ["Adamant", "Bashful", "Bold", "Brave", "Calm", "Careful", "Docile", "Gentle",
@@ -532,10 +541,67 @@ function naturesHTMLCreator(){
   }) 
 
 
-  return `<select name="Natures" class="status-and-natures-combobox">
-            <option value="none" selected disabled hidden>Natures</option>
+  return `<select name="Natures" class="status-and-natures-combobox js-${location}-status-and-natures-combobox">
+            <option value="none" selected disabled hidden>Nature</option>
             ${naturesHTMLOptions}
           </select>`;
+}
+
+function clearEncounterHTMLCreator(location){
+  return `<button class="clear-encounter-button js-clear-encounter-${location}" title="Clear Encounter"><div class="clear-encounter-button-text">✖</div></button>`;
+
+}
+
+async function clearEncounter(location, encounterRouteObjects){
+  // ----- For the combobox
+
+  // Removes the CSS class that changes the color of the combobox
+  let locationEncounterCombobox = document.querySelector(`.js-encounter-${location}`);
+  locationEncounterCombobox.classList.remove("selected-encounter");
+
+  let locationEncounterComboboxActive = locationEncounterCombobox.querySelector(`.js-${location}-encounter-display`);
+
+  // If a pokemon is selected in the combobox 
+  if (locationEncounterComboboxActive){ 
+    let getSelectedPokemon = locationEncounterComboboxActive.value;
+    let getSelectedPokemonLowercase = getSelectedPokemon.toLowerCase();
+    
+    let selectedPokemonEvolutionLine = await getEvolutionLine(getSelectedPokemonLowercase);
+    let selectedPokemonEvolutionLineLength = selectedPokemonEvolutionLine.length;
+
+    // Get the index of the base evolution of a pokemon species
+    let selectedPokemonBaseEvolutionIndex = activePokemonInCombobox.indexOf(selectedPokemonEvolutionLine[0]);
+
+    // This one is for the index of the evolution lines, since the evolution lines is per species already
+    // This one is also for the index of activePokemonNoEvolutionLines
+    let selectedPokemonIndex = activePokemonNoEvolutionLines.indexOf(getSelectedPokemon);
+
+    activePokemonInCombobox.splice(selectedPokemonBaseEvolutionIndex, selectedPokemonEvolutionLineLength);
+    activePokemonNoEvolutionLines.splice(selectedPokemonIndex, 1);
+    activePokemonEvolutionLines.splice(selectedPokemonIndex, 1);
+
+    locationEncounterComboboxActive.remove();
+
+    locationEncounterCombobox.value = "none";
+
+    updateDupeSubstring(encounterRouteObjects);
+  }
+
+  // ----- For the input tag
+
+  let locationNickname = document.querySelector(`.js-${location}-nickname`);
+  locationNickname.value = '';
+
+  // ----- For the status and natures comboboxes
+
+  let statusAndNaturesComboboxes = document.querySelectorAll(`.js-${location}-status-and-natures-combobox`);
+
+  // Index 0 is for the status combobox, index 1 is for the natures combobox
+  // Setting the comboboxes to none will revert the value back to its preselected form
+  statusAndNaturesComboboxes[0].value = "none";
+  statusAndNaturesComboboxes[1].value = "none";
+
+
 }
 
 function returnToMainScreen(){
