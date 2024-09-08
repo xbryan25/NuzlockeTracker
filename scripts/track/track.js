@@ -208,10 +208,15 @@ async function loadHTML(dataFromJSON, gameVersion){
 
     let locationClass = `.js-encounter-${locationNoSpace}`;
     let locationClearEncounterButton = `.js-clear-encounter-${locationNoSpace}`;
+    let locationStatusAndNature = `.js-${locationNoSpace}-status-and-nature-combobox`;
 
     document.querySelector(locationClass).addEventListener("change", event => displayDupe(event.target.value, locationNoSpace, locationClass, encounterRouteObjects));
 
     document.querySelector(locationClearEncounterButton).addEventListener("click", event => clearEncounter(locationNoSpace, encounterRouteObjects));
+
+    document.querySelectorAll(locationStatusAndNature).forEach(element => {
+      element.addEventListener("change", event => activeStatusOrNature(locationNoSpace));
+    });
   })
 
 }
@@ -520,7 +525,7 @@ async function availablePokemonHTMLCreator(locationObject){
 
 function statusHTMLCreator(location){
 
-  return `<select name="Status" class="status-and-natures-combobox js-${location}-status-and-natures-combobox">
+  return `<select name="Status" class="status-and-natures-combobox js-${location}-status-and-nature-combobox">
             <option value="none" selected disabled hidden>Status</option>
             <option value="Alive">Captured</option>
             <option value="Boxed">Dead</option>
@@ -541,7 +546,7 @@ function naturesHTMLCreator(location){
   }) 
 
 
-  return `<select name="Natures" class="status-and-natures-combobox js-${location}-status-and-natures-combobox">
+  return `<select name="Natures" class="status-and-natures-combobox js-${location}-status-and-nature-combobox">
             <option value="none" selected disabled hidden>Nature</option>
             ${naturesHTMLOptions}
           </select>`;
@@ -594,14 +599,35 @@ async function clearEncounter(location, encounterRouteObjects){
 
   // ----- For the status and natures comboboxes
 
-  let statusAndNaturesComboboxes = document.querySelectorAll(`.js-${location}-status-and-natures-combobox`);
+  let statusAndNaturesComboboxes = document.querySelectorAll(`.js-${location}-status-and-nature-combobox`);
+
+  statusAndNaturesComboboxes.forEach(element => {
+    element.value = "none";
+    element.classList.remove("selected-status-or-nature")
+  })
 
   // Index 0 is for the status combobox, index 1 is for the natures combobox
   // Setting the comboboxes to none will revert the value back to its preselected form
   statusAndNaturesComboboxes[0].value = "none";
   statusAndNaturesComboboxes[1].value = "none";
 
+}
 
+function activeStatusOrNature(location){
+  let statusAndNatureComboboxes = document.querySelectorAll(`.js-${location}-status-and-nature-combobox`);
+
+  // Index 0 is for the status combobox, index 1 is for the natures combobox
+  let statusCombobox = statusAndNatureComboboxes[0];
+  let natureCombobox = statusAndNatureComboboxes[1];
+
+  if (statusCombobox.value !== 'none'){
+    statusCombobox.classList.add("selected-status-or-nature");
+  } 
+
+  if (natureCombobox.value !== 'none'){
+    natureCombobox.classList.add("selected-status-or-nature");
+  } 
+  
 }
 
 function returnToMainScreen(){
