@@ -204,10 +204,10 @@ async function loadHTML(dataFromJSON, gameVersion){
 
   
   
-  if (gameVersion === 'Emerald'){
-    console.log('reach here');
-    document.querySelector('.js-center-box-container').classList.add('emerald-center-box-container');
-  }
+  // if (gameVersion === 'Emerald'){
+  //   console.log('reach here');
+  //   document.querySelector('.js-center-box-container').classList.add('emerald-center-box-container');
+  // }
 
   // Add event listeners to elements
 
