@@ -72,28 +72,56 @@ body{
 
 }
 
+.wrapper-for-center-box{
+  position: relative;
+
+  /* display: flex; */
+
+  top: 100px;
+  left: 25vh;
+  /* transform: translate(-50%, -50%); */
+
+  width: 1400px;
+  height: 2400px;
+
+  padding-top: 10px;
+  padding-bottom: 75px;
+
+  /* TODO: set height to auto; figure it out */
+
+  /* border: 2px yellow solid; */
+}
+
 .center-box-container{
   /*TODO: fixed positioning of this element*/
   border-radius: 10px;
 
+  display: flex; 
+  flex-direction: column;
+
   position: relative;
-  top: 1300px;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  overflow: auto;
+  /* z-index: 2; */
+  /* position: fixed; */
+  
+  top: 0px;
+  left: 150px;
+  /* transform: translate(-50%, -50%); */
 
   height: auto;
   width: 1100px;
 
   align-items: center;
 
-  margin-bottom: 100px;
+  /* margin-bottom: 100px; */
   
   /* border: 10px solid rgb(46, 46, 45);
   border-radius: 20px; */
 
-  background-color: gray;
+  background-color: gray; 
 
-  padding-bottom: 60px;
+  margin-top: 10px;
+  padding-bottom: 20px;
 
   z-index: 0;
 }
@@ -196,7 +224,7 @@ input.input-nickname{
   color: white;
   background-color: gray;
 
-  text-align: left;
+  /* text-align: left; */
 
   font-size: 20px;
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -251,6 +279,7 @@ input.input-nickname::placeholder{
   cursor: pointer;
 
   border: 1px solid white;
+  border-radius: 10px;
 }
 
 button.clear-all-encounters-button:active{
@@ -264,6 +293,36 @@ button.clear-encounter-button:active{
 
 .clear-encounter-button-text{
   padding-bottom: 10px;
+}
+
+.search-input{
+  position: relative;
+
+  margin-top: 10px;
+  left: 70px;
+  padding-bottom: 10px;
+
+  width: 200px;
+  height: 10px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-weight: bold;
+  font-size: 20px;
+  color: rgb(217, 217, 217);
+  padding-top: 10px;
+
+  background-color: rgb(74, 72, 72);
+
+  border: 1px solid white;
+  border-radius: 10px;
+}
+
+input.search-input::placeholder{
+  color: rgb(198, 198, 198);
 }
 
 .footer-div-container{

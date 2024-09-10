@@ -155,7 +155,10 @@ async function loadHTML(dataFromJSON, gameVersion){
 
   document.querySelector('.js-header-div-container').innerHTML = `<div class="js-heading-pic header-div-pic"></div>
                                                         <div class="js-header-div-game-title header-div-game-title"></div>
-                                                        <button class="js-clear-all-encounters-button clear-all-encounters-button">Clear all encounters</button> `;
+
+                                                        <button class="js-clear-all-encounters-button clear-all-encounters-button">Clear all encounters</button>
+                                                        
+                                                        <input type="text" placeholder="Search..." class="search-input js-search-input">`;
 
 
 
@@ -179,7 +182,7 @@ async function loadHTML(dataFromJSON, gameVersion){
     let location = encounterRouteObject.location;
     let locationNoSpace = location.split(' ').join('');
 
-    entireHTML += `<div class="location-row js-location-row">
+    entireHTML += `<div class="location-row js-location-${locationNoSpace}-row">
                     <p class="location-text">${location}</p>
                     <select name="${locationNoSpace}" class="js-encounter-${locationNoSpace} encounter-combobox js-encounter-active">
                       ${optionsHTML}
@@ -198,11 +201,15 @@ async function loadHTML(dataFromJSON, gameVersion){
   document.querySelector('.js-center-box-container')
       .innerHTML = entireHTML;
   
+
+  
   
   if (gameVersion === 'Emerald'){
     console.log('reach here');
     document.querySelector('.js-center-box-container').classList.add('emerald-center-box-container');
   }
+
+  // Add event listeners to elements
 
   encounterRouteObjects.forEach(encounterRouteObject => {
     let locationNoSpace = (encounterRouteObject.location).split(' ').join('');
@@ -219,6 +226,8 @@ async function loadHTML(dataFromJSON, gameVersion){
       element.addEventListener("change", event => activeStatusOrNature(locationNoSpace));
     });
   })
+
+  document.querySelector('.js-search-input').addEventListener("input", event => searchForPokemonOrLocation(encounterRouteObjects));
 
   document.querySelector(`.js-clear-all-encounters-button`).addEventListener("click", event => clearAllEncounters(encounterRouteObjects));
 
@@ -661,6 +670,36 @@ function activeStatusOrNature(location){
   
 }
 
+function searchForPokemonOrLocation(encounterRouteObjects){
+  let getSearchInputValue = document.querySelector('.js-search-input').value.toLowerCase();
+
+  let hasMatch = false;
+
+  encounterRouteObjects.forEach(encounterRouteObject => {
+    let locationLowerCase = encounterRouteObject.location.toLowerCase();
+    let locationNoSpace = encounterRouteObject.location.split(' ').join('');
+
+    let getSelectedPokemon = document.querySelector(`.js-encounter-${locationNoSpace}`).value.toLowerCase();
+
+    if (locationLowerCase.includes(getSearchInputValue) || getSelectedPokemon.includes(getSearchInputValue)){
+      document.querySelector(`.js-location-${locationNoSpace}-row`).style.display = "flex";
+      hasMatch = true;
+    } else{
+      document.querySelector(`.js-location-${locationNoSpace}-row`).style.display = "none";
+    }
+  })
+
+  if (!hasMatch){
+    document.querySelector(`.js-center-box-container`).style.display = "none";
+  } else{
+    document.querySelector(`.js-center-box-container`).style.display = "flex";
+  }
+
+  let centerBoxHeight = document.querySelector('.js-center-box-container').offsetHeight;
+
+  document.querySelector('.js-wrapper-for-center-box').setAttribute("style", `height:${centerBoxHeight}px`);
+}
+
 function returnToMainScreen(){
   let headingPic = document.querySelector('.js-heading-pic');
   console.log(headingPic)
@@ -680,6 +719,8 @@ fetchData();
 let activePokemonEvolutionLines = [];
 let activePokemonInCombobox = [];
 let activePokemonNoEvolutionLines = [];
+
+// let searchInputString = [];
 
 // getPokemonEncountersAtEachLocation({
 //   "location": "Lake Verity",
