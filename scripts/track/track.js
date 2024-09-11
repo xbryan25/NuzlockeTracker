@@ -147,7 +147,16 @@ async function fetchLocationDataFromApi(location_link){
   return availablePokemonAtLocationLink;
 }
 
+function activateLoadingScreen(){
+  let centerBox = document.querySelector('.js-center-box-container');
+
+  centerBox.innerHTML += '<div class="loader js-loader"></div>';
+  centerBox.setAttribute("style", `height:${225}px`);
+}
+
 async function loadHTML(dataFromJSON, gameVersion){
+  activateLoadingScreen();
+
   let userDecision = localStorage.getItem('userDecision');
   let userDecisionTitle = userDecision.charAt(0).toUpperCase() + userDecision.slice(1);
 
@@ -198,18 +207,16 @@ async function loadHTML(dataFromJSON, gameVersion){
                 </div>`;
   }
 
+  // Remove the loading screen when the html is about to be added
+  
+  document.querySelector('.js-loader').remove();
+
+  document.querySelector('.js-center-box-container').setAttribute("style", `height:auto`);
+
   document.querySelector('.js-center-box-container')
       .innerHTML = entireHTML;
-  
 
-  
-  
-  // if (gameVersion === 'Emerald'){
-  //   console.log('reach here');
-  //   document.querySelector('.js-center-box-container').classList.add('emerald-center-box-container');
-  // }
 
-  // Add event listeners to elements
 
   encounterRouteObjects.forEach(encounterRouteObject => {
     let locationNoSpace = (encounterRouteObject.location).split(' ').join('');
@@ -695,9 +702,11 @@ function searchForPokemonOrLocation(encounterRouteObjects){
     document.querySelector(`.js-center-box-container`).style.display = "flex";
   }
 
-  let centerBoxHeight = document.querySelector('.js-center-box-container').offsetHeight;
 
+  // Use value of center box to set the value of the wrapper container
+  let centerBoxHeight = document.querySelector('.js-center-box-container').offsetHeight;
   document.querySelector('.js-wrapper-for-center-box').setAttribute("style", `height:${centerBoxHeight}px`);
+
 }
 
 function returnToMainScreen(){
@@ -712,6 +721,7 @@ function returnToMainScreen(){
 }
 
 fetchData();
+
 
 
 

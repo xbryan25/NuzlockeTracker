@@ -82,7 +82,7 @@ body{
   /* transform: translate(-50%, -50%); */
 
   width: 1400px;
-  height: 2400px;
+  height: auto;
 
   padding-top: 10px;
   padding-bottom: 75px;
@@ -299,10 +299,11 @@ button.clear-encounter-button:active{
 
   margin-top: 10px;
   left: 70px;
-  padding-bottom: 10px;
+  padding-bottom: 5px;
+  padding-top: 5px;
 
   width: 200px;
-  height: 10px;
+  height: 20px;
 
   display: flex;
   justify-content: center;
@@ -312,7 +313,7 @@ button.clear-encounter-button:active{
   font-weight: bold;
   font-size: 20px;
   color: rgb(217, 217, 217);
-  padding-top: 10px;
+  
 
   background-color: rgb(74, 72, 72);
 
@@ -322,6 +323,21 @@ button.clear-encounter-button:active{
 
 input.search-input::placeholder{
   color: rgb(198, 198, 198);
+}
+
+/* From w3schools, loading bar */
+.loader {
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid rgb(74, 72, 72);
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 .footer-div-container{
