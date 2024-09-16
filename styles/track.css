@@ -237,6 +237,12 @@ input.input-nickname::placeholder{
   padding: 5px;
 }
 
+/* For the day appearance of the input nickname prompt */
+
+input.day-input-nickname::placeholder{
+  color:rgb(0, 0, 0);
+}
+
 .clear-encounter-button{
   width: 40px;
 
@@ -325,6 +331,10 @@ input.search-input::placeholder{
   color: rgb(198, 198, 198);
 }
 
+input.day-search-input::placeholder{
+  color: #535454;
+}
+
 /* From w3schools, loading bar */
 .loader {
   border: 16px solid #f3f3f3; /* Light grey */
@@ -338,6 +348,28 @@ input.search-input::placeholder{
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+.change-day-night-look{
+  left: 90px;
+  margin-top: 5px;
+
+  position: relative;
+
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 30px;
+
+  width: 35px;
+  height: 35px;
+
+  /* border: 1px solid yellow; */
+
+  cursor: pointer;
 }
 
 .footer-div-container{
