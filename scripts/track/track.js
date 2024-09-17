@@ -208,6 +208,8 @@ async function loadHTML(dataFromJSON, gameVersion){
                     ${naturesHTMLCreator(locationNoSpace)}
 
                     ${clearEncounterHTMLCreator(locationNoSpace)}
+
+                    <button class="death-button js-death-${locationNoSpace}-button" title="Kill encounter">🕱</button>
                 </div>`;
   }
 
@@ -220,22 +222,29 @@ async function loadHTML(dataFromJSON, gameVersion){
   document.querySelector('.js-center-box-container')
       .innerHTML = entireHTML;
 
-
-
   encounterRouteObjects.forEach(encounterRouteObject => {
     let locationNoSpace = (encounterRouteObject.location).split(' ').join('');
 
     let locationClass = `.js-encounter-${locationNoSpace}`;
     let locationClearEncounterButton = `.js-clear-encounter-${locationNoSpace}`;
     let locationStatusAndNature = `.js-${locationNoSpace}-status-and-nature-combobox`;
+    let killButton = `.js-death-${locationNoSpace}-button`;
 
     document.querySelector(locationClass).addEventListener("change", event => displayDupe(event.target.value, locationNoSpace, locationClass, encounterRouteObjects));
 
+    document.querySelector(locationClass).addEventListener("change", event => showKillPokemonButton(locationNoSpace));
+
+    // document.querySelector(locationClass).addEventListener("change", event => showKillPokemonButton(locationNoSpace));
+
     document.querySelector(locationClearEncounterButton).addEventListener("click", event => clearEncounter(locationNoSpace, encounterRouteObjects));
+
+    document.querySelector(killButton).addEventListener("click", event => changeStatusToDead(locationNoSpace));
 
     document.querySelectorAll(locationStatusAndNature).forEach(element => {
       element.addEventListener("change", event => activeStatusOrNature(locationNoSpace));
+      element.addEventListener("change", event => showKillPokemonButton(locationNoSpace));
     });
+
   })
 
   document.querySelector('.js-search-input').addEventListener("input", event => searchForPokemonOrLocation(encounterRouteObjects));
@@ -552,10 +561,10 @@ function statusHTMLCreator(location){
 
   return `<select name="Status" class="status-and-natures-combobox js-${location}-status-and-nature-combobox">
             <option value="none" selected disabled hidden>Status</option>
-            <option value="Alive">Captured</option>
-            <option value="Boxed">Dead</option>
-            <option value="Released">Missed</option>
-            <option value="Released">Received</option>
+            <option value="Captured">Captured</option>
+            <option value="Dead">Dead</option>
+            <option value="Missed">Missed</option>
+            <option value="Received">Received</option>
           </select>`;
 }
 
@@ -578,7 +587,7 @@ function naturesHTMLCreator(location){
 }
 
 function clearEncounterHTMLCreator(location){
-  return `<button class="clear-encounter-button js-clear-encounter-${location}" title="Clear Encounter"><div class="clear-encounter-button-text">✖</div></button>`;
+  return `<button class="clear-encounter-button js-clear-encounter-${location}" title="Clear encounter"><div class="clear-encounter-button-text">✖</div></button>`;
 
 }
 
@@ -635,6 +644,9 @@ async function clearEncounter(location, encounterRouteObjects){
   // Setting the comboboxes to none will revert the value back to its preselected form
   // statusAndNaturesComboboxes[0].value = "none";
   // statusAndNaturesComboboxes[1].value = "none";
+
+  let locationKillButton = document.querySelector(`.js-death-${location}-button`);
+  locationKillButton.style.display = "none";
 
 }
 
@@ -713,6 +725,22 @@ function searchForPokemonOrLocation(encounterRouteObjects){
   let centerBoxHeight = document.querySelector('.js-center-box-container').offsetHeight;
   document.querySelector('.js-wrapper-for-center-box').setAttribute("style", `height:${centerBoxHeight}px`);
 
+}
+
+function showKillPokemonButton(location){
+  let targetStatusCombobox = document.querySelectorAll(`.js-${location}-status-and-nature-combobox`)[0];
+  let targetEncounterCombobox = document.querySelector(`.js-encounter-${location}`);
+
+  if (targetStatusCombobox.value === "Captured" && targetEncounterCombobox.value !== "none"){
+    document.querySelector(`.js-death-${location}-button`).style.display = "flex";
+  }
+
+  console.log(targetStatusCombobox.value);
+  console.log(targetEncounterCombobox.value);
+}
+
+function changeStatusToDead(location){
+  document.querySelectorAll(`.js-${location}-status-and-nature-combobox`)[0].value = "Dead";
 }
 
 function changeDayNightLook(encounterRouteObjects){
