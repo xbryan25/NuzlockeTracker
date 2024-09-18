@@ -210,6 +210,7 @@ async function loadHTML(dataFromJSON, gameVersion){
                     ${clearEncounterHTMLCreator(locationNoSpace)}
 
                     <button class="death-button js-death-${locationNoSpace}-button" title="Kill encounter">🕱</button>
+                    <button class="death-button js-evolve-${locationNoSpace}-button" title="Evovle encounter">▲</button>
                 </div>`;
   }
 
@@ -232,7 +233,10 @@ async function loadHTML(dataFromJSON, gameVersion){
 
     document.querySelector(locationClass).addEventListener("change", event => displayDupe(event.target.value, locationNoSpace, locationClass, encounterRouteObjects));
 
-    document.querySelector(locationClass).addEventListener("change", event => showKillPokemonButton(locationNoSpace));
+    document.querySelector(locationClass).addEventListener("change", async event => {
+      showKillPokemonButton(locationNoSpace);
+      showEvolvePokemonButton(locationNoSpace);
+    });
 
     // document.querySelector(locationClass).addEventListener("change", event => showKillPokemonButton(locationNoSpace));
 
@@ -242,7 +246,11 @@ async function loadHTML(dataFromJSON, gameVersion){
 
     document.querySelectorAll(locationStatusAndNature).forEach(element => {
       element.addEventListener("change", event => activeStatusOrNature(locationNoSpace));
-      element.addEventListener("change", event => showKillPokemonButton(locationNoSpace));
+      element.addEventListener("change", async event => {
+        showKillPokemonButton(locationNoSpace);
+        showEvolvePokemonButton(locationNoSpace);
+      });
+
     });
 
   })
@@ -256,6 +264,8 @@ async function loadHTML(dataFromJSON, gameVersion){
 }
 
 async function displayDupe(pokemon, selectedRoute, selectedRouteTemplateString, encounterRoutes){
+  // TODO: Issue when selecting the pre evolution after the evolution has been selected
+
   console.log('--------------------------------start---------------------------')
   let activePokemonLocal = [];
   let activePokemonNoEvolutionLinesLocal = [];
@@ -308,7 +318,17 @@ async function displayDupe(pokemon, selectedRoute, selectedRouteTemplateString, 
 
     } else if (encounter !== 'none' && activePokemonInCombobox.includes(encounter) && !tempActivePokemon.includes(encounter)){
 
-      let getEvolutionLineOfSelectedPokemon = activePokemonEvolutionLines[activePokemonNoEvolutionLines.indexOf(encounter)]
+      let getEvolutionLineOfSelectedPokemon;
+
+      for (let evolutionLine of activePokemonEvolutionLines){
+        if (evolutionLine.includes(encounter)){
+          getEvolutionLineOfSelectedPokemon = evolutionLine;
+        }
+      }
+
+      // let getEvolutionLineOfSelectedPokemon = activePokemonEvolutionLines[activePokemonNoEvolutionLines.indexOf(encounter)]
+
+      console.log("-----here-----")
 
       getEvolutionLineOfSelectedPokemon.forEach(selectedPokemonTemp => {
         if (!tempActivePokemon.includes(selectedPokemonTemp)){
@@ -648,6 +668,9 @@ async function clearEncounter(location, encounterRouteObjects){
   let locationKillButton = document.querySelector(`.js-death-${location}-button`);
   locationKillButton.style.display = "none";
 
+  let locationEvolveButton = document.querySelector(`.js-evolve-${location}-button`);
+  locationEvolveButton.style.display = "none";
+
 }
 
 function clearAllEncounters(encounterRouteObjects){
@@ -734,10 +757,48 @@ function showKillPokemonButton(location){
   if (targetStatusCombobox.value === "Captured" && targetEncounterCombobox.value !== "none"){
     document.querySelector(`.js-death-${location}-button`).style.display = "flex";
   }
-
-  console.log(targetStatusCombobox.value);
-  console.log(targetEncounterCombobox.value);
 }
+
+async function showEvolvePokemonButton(location){
+  let selectedPokemonInEncounterCombobox = document.querySelector(`.js-encounter-${location}`).value;
+
+
+  // Check if the pokemon's evolution line is stored
+
+  let getEvolutionLineOfSelectedPokemon;
+
+  for (let evolutionLine of activePokemonEvolutionLines){
+    if (evolutionLine.includes(selectedPokemonInEncounterCombobox)){
+      getEvolutionLineOfSelectedPokemon = evolutionLine;
+    }
+  }
+
+  // If not, use PokeAPI
+
+  if (!getEvolutionLineOfSelectedPokemon){
+    getEvolutionLineOfSelectedPokemon = await getEvolutionLine(selectedPokemonInEncounterCombobox.toLowerCase());
+    console.log("RAHHH")
+  }
+  
+  let selectedPokemonIndex = getEvolutionLineOfSelectedPokemon.indexOf(selectedPokemonInEncounterCombobox);
+
+  let targetStatusCombobox = document.querySelectorAll(`.js-${location}-status-and-nature-combobox`)[0];
+  let targetEncounterCombobox = document.querySelector(`.js-encounter-${location}`);
+
+  // For the last condition, if the selectedPokemonIndex is less than the length of the evolution line, it must mean that
+  // the selected pokemon can still evolve
+
+  console.log(selectedPokemonIndex);
+  console.log(getEvolutionLineOfSelectedPokemon.length - 1);
+
+  if (targetStatusCombobox.value === "Captured" && targetEncounterCombobox.value !== "none" && selectedPokemonIndex < getEvolutionLineOfSelectedPokemon.length - 1){
+    document.querySelector(`.js-evolve-${location}-button`).style.display = "flex";
+  } else{
+    document.querySelector(`.js-evolve-${location}-button`).style.display = "none";
+  }
+}
+
+
 
 function changeStatusToDead(location){
   document.querySelectorAll(`.js-${location}-status-and-nature-combobox`)[0].value = "Dead";
