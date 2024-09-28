@@ -310,6 +310,7 @@ async function displayDupe(pokemon, selectedRoute, selectedRouteTemplateString, 
         pokemonOptionsNodeLists.forEach(pokemonOptions => {
           pokemonOptions.forEach(pokemonOption => {
             pokemonOption.innerHTML = pokemonOption.value + ' - dupe'
+            pokemonOption.value = pokemonOption.value + ' - dupe';
           })
         })
 
@@ -424,6 +425,7 @@ function updateDupeSubstring(encounterRoutes){
 
       if (!activePokemonInCombobox.includes(encounterOption.value)){
         encounterOption.innerHTML = encounterOption.innerHTML.replace(' - dupe', '');
+        encounterOption.innerHTML = encounterOption.value.replace(' - dupe', '');
       }
     });
   }
@@ -768,6 +770,10 @@ async function showEvolvePokemonButton(location){
 
   let getEvolutionLineOfSelectedPokemon;
 
+  let evolveHandler = function(){
+    evolvePokemon(selectedPokemonInEncounterCombobox, getEvolutionLineOfSelectedPokemon, location, evolveHandler);
+  }
+
   for (let evolutionLine of activePokemonEvolutionLines){
     if (evolutionLine.includes(selectedPokemonInEncounterCombobox)){
       getEvolutionLineOfSelectedPokemon = evolutionLine;
@@ -794,21 +800,31 @@ async function showEvolvePokemonButton(location){
 
   let evolveButton = `.js-evolve-${location}-button`;
 
+
+
   if (targetStatusCombobox.value === "Captured" && targetEncounterCombobox.value !== "none" && selectedPokemonIndex < getEvolutionLineOfSelectedPokemon.length - 1){
     document.querySelector(evolveButton).style.display = "flex";
+    
     // Add event listener to evolve button if it's to be shown
-    document.querySelector(evolveButton).addEventListener("click", event => evolvePokemon(selectedPokemonInEncounterCombobox, getEvolutionLineOfSelectedPokemon, location));
-
+    document.querySelector(evolveButton).addEventListener("click", event => evolvePokemon(getEvolutionLineOfSelectedPokemon, location));
   } else{
     document.querySelector(`.js-evolve-${location}-button`).style.display = "none";
   }
 }
 
-function evolvePokemon(pokemon, evolutionLine, location){
+function evolvePokemon(evolutionLine, location){
+
   let targetEncounterCombobox = document.querySelector(`.js-encounter-${location}`);
+  let currentPokemonInCombobox = targetEncounterCombobox.value;
+
   let evolveButton = `.js-evolve-${location}-button`;
 
   let isBranchedEvolution = false;
+
+  // Modify the function variable
+  // evolveHandler = function(){
+  //   evolvePokemon(targetEncounterCombobox.value, evolutionLine, location, evolveHandler);
+  // }
 
   // TODO: Put in a JSON file later; about pokemon with branched evolution lines
   let branchedEvolutionLines = [["Oddish", "Gloom", "Vileplume", "Bellossom"],
@@ -822,25 +838,38 @@ function evolvePokemon(pokemon, evolutionLine, location){
                               ["Snorunt", "Glalie", "Froslass"],
                               ["Clamperl", "Huntail", "Gorebyss"]]
 
-  for (let branchedEvolutionLine in branchedEvolutionLines){
-    if (branchedEvolutionLine.includes(branchedEvolutionLine)){
-      isBranchedEvolution = true;
-    }
-  }
+  // for (let branchedEvolutionLine in branchedEvolutionLines){
+  //   if (branchedEvolutionLine.includes(branchedEvolutionLine)){
+  //     isBranchedEvolution = true;
+  //   }
+  // }
+
+  console.log(evolutionLine[evolutionLine.indexOf(currentPokemonInCombobox) + 1]);
+
 
   // This means that an evolution still exists
-  if (evolutionLine[evolutionLine.indexOf(pokemon) + 1]){
-    let evolutionOfCurrentPokemon = evolutionLine[evolutionLine.indexOf(pokemon) + 1];
+  if (evolutionLine[evolutionLine.indexOf(currentPokemonInCombobox) + 1]){
+    let evolutionOfCurrentPokemon = evolutionLine[evolutionLine.indexOf(currentPokemonInCombobox) + 1];
 
     targetEncounterCombobox.innerHTML += `<option value="${evolutionOfCurrentPokemon}" class="js-${location}-encounter-display" selected disabled hidden>${evolutionOfCurrentPokemon}</option>`;
 
     // Update the eventListener's parameters
-    document.querySelector(evolveButton).removeEventListener("click", event => evolvePokemon(pokemon, evolutionLine, location));
+    // document.querySelector(evolveButton).removeEventListener("click", evolveHandler);
 
     targetEncounterCombobox.value = evolutionOfCurrentPokemon;
 
-    document.querySelector(evolveButton).addEventListener("click", event => evolvePokemon(targetEncounterCombobox.value, evolutionLine, location));
+    if (!evolutionLine[evolutionLine.indexOf(targetEncounterCombobox.value) + 1]){
+      document.querySelector(`.js-evolve-${location}-button`).style.display = "none";
+    }
+
+    // document.querySelector(evolveButton).addEventListener("click", evolveHandler);
+
+    // document.querySelector(evolveButton).addEventListener("click", event => evolvePokemon(targetEncounterCombobox.value, evolutionLine, location));
   } 
+  
+  // else if (!evolutionLine[evolutionLine.indexOf(currentPokemonInCombobox) + 1]){
+  //   document.querySelector(`.js-evolve-${location}-button`).style.display = "none";
+  // }
 }
 
 function changeStatusToDead(location){
@@ -973,13 +1002,10 @@ function returnToMainScreen(){
 
 fetchData();
 
-
-
-
-
 let activePokemonEvolutionLines = [];
 let activePokemonInCombobox = [];
 let activePokemonNoEvolutionLines = [];
+
 
 // let searchInputString = [];
 
