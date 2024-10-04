@@ -317,7 +317,23 @@ async function displayDupe(pokemon, selectedRoute, selectedRouteTemplateString, 
 
         // ---- Make a temporary option string so that the selected pokemon won't have the dupe substring ----
 
-        document.querySelector(selectedRouteTemplateString).innerHTML += `<option value="${pokemon}" class="js-${selectedRoute}-encounter-display" selected disabled hidden>${pokemon}</option>`;
+        // let selectedRouteCombobox = document.querySelector(selectedRouteTemplateString);
+        // let tempOptionTag = `<option value="${pokemon}" class="js-${selectedRoute}-encounter-display" selected disabled hidden>${pokemon}</option>`;
+
+        // if (!selectedRouteCombobox.innerHTML.includes(tempOptionTag)){
+        //   selectedRouteCombobox.innerHTML += tempOptionTag;
+        // }
+
+        let selectedRouteEncounterDisplay = document.querySelector(`.js-${selectedRoute}-encounter-display`);
+
+        if (selectedRouteEncounterDisplay){
+          selectedRouteEncounterDisplay.value = pokemon;
+          selectedRouteEncounterDisplay.innerHTML = pokemon;
+        } else{
+          let selectedRouteCombobox = document.querySelector(selectedRouteTemplateString);
+          selectedRouteCombobox.innerHTML += `<option value="${pokemon}" class="js-${selectedRoute}-encounter-display" selected disabled hidden>${pokemon}</option>`;
+        }
+        
 
     } else if (encounter !== 'none' && activePokemonInCombobox.includes(encounter) && !tempActivePokemon.includes(encounter)){
 
@@ -343,7 +359,18 @@ async function displayDupe(pokemon, selectedRoute, selectedRouteTemplateString, 
       tempActivePokemonEvolutionLines.push(getEvolutionLineOfSelectedPokemon);
       tempPokemonNoEvolutionLinesLocal.push(encounter);
 
-      document.querySelector(selectedRouteTemplateString).innerHTML += `<option value="${pokemon}" class="js-${selectedRoute}-encounter-display" selected disabled hidden>${pokemon}</option>`;
+      let selectedRouteEncounterDisplay = document.querySelector(`.js-${selectedRoute}-encounter-display`);
+
+      if (selectedRouteEncounterDisplay){
+        selectedRouteEncounterDisplay.value = pokemon;
+        selectedRouteEncounterDisplay.innerHTML = pokemon;
+      } else{
+        let selectedRouteCombobox = document.querySelector(selectedRouteTemplateString);
+        selectedRouteCombobox.innerHTML += `<option value="${pokemon}" class="js-${selectedRoute}-encounter-display" selected disabled hidden>${pokemon}</option>`;
+      }
+
+
+      // document.querySelector(selectedRouteTemplateString).innerHTML += `<option value="${pokemon}" class="js-${selectedRoute}-encounter-display" selected disabled hidden>${pokemon}</option>`;
       
     }
 
@@ -395,14 +422,32 @@ async function displayDupe(pokemon, selectedRoute, selectedRouteTemplateString, 
   // ---- For the display temporary option when a pokemon is selected ----
 
 
-  // TODO: The encounter displays of the selected pokemon will stack up; fix this
-  let encounterDisplaysQuery = document.querySelectorAll(`.js-${selectedRoute}-encounter-display`);
+  // // TODO: The encounter displays of the selected pokemon will stack up; fix this
+  // let encounterDisplaysQuery = document.querySelectorAll(`.js-${selectedRoute}-encounter-display`);
 
-  encounterDisplaysQuery.forEach(encounterDisplay => {
-    if (encounterDisplay.textContent !== `${pokemon}`){
-      encounterDisplay.remove();
-    }
-  });
+
+  // // Removes other pokemon
+  // encounterDisplaysQuery.forEach(encounterDisplay => {
+  //   if (encounterDisplay.textContent !== `${pokemon}`){
+  //     encounterDisplay.remove();
+  //   }
+  // });
+
+  // Removes duplicates of the same pokemon
+
+  // let tempArray = Array.prototype.slice.call(encounterDisplaysQuery);
+
+
+  // encounterDisplaysQuery.forEach(encounterDisplay => {
+  //   if (tempArray.indexOf(encounterDisplay) > 0){
+  //     encounterDisplay.remove();
+  //   }
+  // });
+
+  // console.log(encounterDisplaysQuery);
+
+  
+
 
 
   // ---- To update the dupe substring ----
