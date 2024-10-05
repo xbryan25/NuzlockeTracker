@@ -826,13 +826,7 @@ async function showEvolvePokemonButton(location){
   if (targetStatusCombobox.value === "Captured" && targetEncounterCombobox.value !== "none" && selectedPokemonIndex < getEvolutionLineOfSelectedPokemon.length - 1){
     evolveButton.style.display = "flex";
     
-    // Add event listener to evolve button if it's to be shown
-    // TODO: This really has to be deleted to make way for another eventListener
-    // evolveButton.addEventListener("click", event => evolvePokemon(getEvolutionLineOfSelectedPokemon, location));
 
-    // evolveButton.removeEventListener("click", evolvePokemon, true);
-
-    
   } else{
     evolveButton.style.display = "none";
   }
@@ -857,6 +851,8 @@ async function evolvePokemon(location){
     // }
 
     // TODO: Put in a JSON file later; about pokemon with branched evolution lines
+
+    // TODO: Make a pop up tab if branched evolution
     let branchedEvolutionLines = [["Oddish", "Gloom", "Vileplume", "Bellossom"],
                                 ["Poliwag", "Poliwhirl", "Poliwrath", "Politoed"],
                                 ["Slowpoke", "Slowbro", "Slowking"],

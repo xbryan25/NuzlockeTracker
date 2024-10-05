@@ -1,0 +1,8 @@
+[
+    {
+        "location": "Starter",
+        "location-links": [],
+        "type": "gift",
+        "gift_pokemon": ["Charmander", "Bulbasaur", "Squirtle"]
+    }
+]
