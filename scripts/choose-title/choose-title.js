@@ -7,13 +7,13 @@ const emeraldPic = document.querySelector('.js-emerald-pic');
 export let userDecision = '';
 
 fireredPic.addEventListener('click', () => {
-    userDecision = 'Firered';
+    userDecision = 'Fire Red';
     saveDataAndGoToNewTab(userDecision);
     
 });
 
 leafgreenPic.addEventListener('click', () => {
-    userDecision = 'Leafgreen';
+    userDecision = 'Leaf Green';
     saveDataAndGoToNewTab(userDecision);
     
 });

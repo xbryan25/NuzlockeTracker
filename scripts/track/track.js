@@ -3,6 +3,9 @@
 async function fetchData(){
   try{
     let userDecision = localStorage.getItem('userDecision');
+    
+    userDecision = userDecision.replace(" ", "_");
+    userDecision = userDecision.toLowerCase();
 
     const response = await fetch(`../locations-in-json/${userDecision}_locations.json`);
 
@@ -158,6 +161,7 @@ async function loadHTML(dataFromJSON, gameVersion){
   activateLoadingScreen();
 
   let userDecision = localStorage.getItem('userDecision');
+  let userDecisionForPic = userDecision.replace(" ", "_");
   let userDecisionTitle = userDecision.charAt(0).toUpperCase() + userDecision.slice(1);
 
   console.log(userDecision);
@@ -175,7 +179,7 @@ async function loadHTML(dataFromJSON, gameVersion){
 
 
 
-  document.querySelector('.js-heading-pic').innerHTML = `<img src="../../images/front-page/${userDecision}.png" height="50px">`;
+  document.querySelector('.js-heading-pic').innerHTML = `<img src="../../images/front-page/${userDecisionForPic}.png" height="50px">`;
   document.querySelector('.js-header-div-game-title').innerHTML = `${userDecisionTitle} Nuzlocke`;
 
 
