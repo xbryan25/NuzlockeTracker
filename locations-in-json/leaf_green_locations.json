@@ -4,5 +4,195 @@
         "location-links": [],
         "type": "gift",
         "gift_pokemon": ["Charmander", "Bulbasaur", "Squirtle"]
+    },
+    {
+        "location": "Pallet Town",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/285/"]
+    },
+    {
+        "location": "Route 1",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/295/"]
+    },
+    {
+        "location": "Viridian City",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/280/"]
+    },
+    {
+        "location": "Route 22",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/313/"]
+    },
+    {
+        "location": "Route 2",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/296/",
+                        "https://pokeapi.co/api/v2/location-area/320/"]
+    },
+    {
+        "location": "Viridian Forest",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/321/"]
+    },
+    {
+        "location": "Route 3",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/297/"]
+    },
+    {
+        "location": "Mt Moon",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/326/",
+                        "https://pokeapi.co/api/v2/location-area/327/"]
+    },
+    {
+        "location": "Mt Moon",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/298/"]
+    },
+    {
+        "location": "Cerulean City",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/281/"]
+    },
+    {
+        "location": "Route 24",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/314/"]
+    },
+    {
+        "location": "Route 25",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/315/"]
+    },
+    {
+        "location": "Route 5",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/299/"]
+    },
+    {
+        "location": "Route 6",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/300/"]
+    },
+    {
+        "location": "Vermillion City",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/282/"]
+    },
+    {
+        "location": "Digletts Cave",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/317/"]
+    },
+    {
+        "location": "Route 11",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/305/"]
+    },
+    {
+        "location": "Route 9",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/303/"]
+    },
+    {
+        "location": "Route 10",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/304/"]
+    },
+    {
+        "location": "Rock Tunnel",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/292/",
+                        "https://pokeapi.co/api/v2/location-area/293/",
+                        "https://pokeapi.co/api/v2/location-area/328/"]
+    },
+    {
+        "location": "Pokemon Tower",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/334/",
+                        "https://pokeapi.co/api/v2/location-area/335/",
+                        "https://pokeapi.co/api/v2/location-area/336/",
+                        "https://pokeapi.co/api/v2/location-area/337/",
+                        "https://pokeapi.co/api/v2/location-area/338/",
+                        "https://pokeapi.co/api/v2/location-area/339/",
+                        "https://pokeapi.co/api/v2/location-area/340/"]
+    },
+    {
+        "location": "Route 12",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/306/"]
+    },
+    {
+        "location": "Route 8",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/302/"]
+    },
+    {
+        "location": "Route 7",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/301/"]
+    },
+    {
+        "location": "Celadon City",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/283/"]
+    },
+    {
+        "location": "Route 16",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/309/"]
+    },
+    {
+        "location": "Route 17",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/310/"]
+    },
+    {
+        "location": "Route 18",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/311/"]
+    },
+    {
+        "location": "Fuchsia City",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/284/"]
+    },
+    {
+        "location": "Safari Zone",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/345/",
+                        "https://pokeapi.co/api/v2/location-area/346/",
+                        "https://pokeapi.co/api/v2/location-area/347/",
+                        "https://pokeapi.co/api/v2/location-area/348/"]
+    },
+    {
+        "location": "Route 19",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/277/"]
+    },
+    {
+        "location": "Route 15",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/308/"]
+    },
+    {
+        "location": "Route 14",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/307/"]
+    },
+    {
+        "location": "Route 13",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/306/"]
+    },
+    {
+        "location": "Route 21",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/312/"]
+    },
+    {
+        "location": "Cinnabar Island",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/279/"]
+    },
+    {
+        "location": "Pokemon Mansion",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/341/",
+                        "https://pokeapi.co/api/v2/location-area/342/",
+                        "https://pokeapi.co/api/v2/location-area/343/",
+                        "https://pokeapi.co/api/v2/location-area/344/"]
+    },
+    {
+        "location": "Route 20",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/278/"]
+    },
+    {
+        "location": "Seafoam Islands",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/258/",
+                        "https://pokeapi.co/api/v2/location-area/259/",
+                        "https://pokeapi.co/api/v2/location-area/260/",
+                        "https://pokeapi.co/api/v2/location-area/261/",
+                        "https://pokeapi.co/api/v2/location-area/262/"]
+    },
+    {
+        "location": "Power Plant",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/330/"]
+    },
+    {
+        "location": "Power Plant",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/329/"]
+    },
+    {
+        "location": "Victory Road",
+        "location-links": ["https://pokeapi.co/api/v2/location-area/331/",
+                        "https://pokeapi.co/api/v2/location-area/332/",
+                        "https://pokeapi.co/api/v2/location-area/333/"]
     }
 ]
