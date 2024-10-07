@@ -1,3 +1,5 @@
+// TODO: DISPLAY DUPE DOESNT WORK IN FR/LG
+
 
 // Kraazy, async/await raman diay gamiton instead nga solo fetch
 async function fetchData(){
@@ -72,6 +74,8 @@ async function getPokemonEncountersAtEachLocation(location){
 
 async function fetchLocationDataFromApi(location_link){
 
+  let gameVersion = localStorage.getItem('userDecision').toLowerCase().replace(" ", "");
+
   const fetcher = async function (location_link){
     const locationObjectFetch = await fetch(location_link);
     const locObj = await locationObjectFetch.json();
@@ -93,59 +97,131 @@ async function fetchLocationDataFromApi(location_link){
   const locationObjectPokemonEncounters = locationObject["pokemon_encounters"];
 
   for (const pokemonEncounter of locationObjectPokemonEncounters){
-    // This means pokemon is present in Diamond, Pearl, and Platinum
-    // In this case, we get the last element
-    if (pokemonEncounter["version_details"].length === 3){
-      // Mali ni
-      if (pokemonEncounter["version_details"][2]["encounter_details"][0]["condition_values"].length === 0){
+    let versionsAvailableOfPokemon = pokemonEncounter.version_details;
+    let versionIndex;
 
-        if (encounterMethods.includes(pokemonEncounter["version_details"][0]["encounter_details"][0]["method"]["name"])){
+    for (const version of versionsAvailableOfPokemon){
+      if (version["version"]["name"] === gameVersion){
 
-          let current_pokemon = pokemonEncounter["pokemon"]["name"];
-
-          if (!availablePokemonAtLocationLink.includes(current_pokemon)){
-            availablePokemonAtLocationLink.push(current_pokemon);
-          }
-        } else{
-          continue;
-        }
-         
-      } else if (notConsideredEncounterConditions.includes(pokemonEncounter["version_details"][2]["encounter_details"][0]["condition_values"][0]["name"])){
-        // Bro that is unreadable..
-        continue;
-      } else {
-        let current_pokemon = pokemonEncounter["pokemon"]["name"];
-
-        if (!availablePokemonAtLocationLink.includes(current_pokemon)){
-          availablePokemonAtLocationLink.push(current_pokemon);
-        }
+        // Get index of version name
+        versionIndex = versionsAvailableOfPokemon.indexOf(version);
+        break;
       }
+    }
 
-    } else if (pokemonEncounter["version_details"].length === 1){
-      if (pokemonEncounter["version_details"][0]["encounter_details"][0]["condition_values"].length === 0){
+    if (versionIndex === undefined){
+      continue;
+    }
 
-        if (encounterMethods.includes(pokemonEncounter["version_details"][0]["encounter_details"][0]["method"]["name"])){
+    // Version index should not be undefined
+    if (pokemonEncounter["version_details"][versionIndex]["encounter_details"][0]["condition_values"].length === 0){
+      if (encounterMethods.includes(pokemonEncounter["version_details"][0]["encounter_details"][0]["method"]["name"])){
 
-          let current_pokemon = pokemonEncounter["pokemon"]["name"];
-
-          if (!availablePokemonAtLocationLink.includes(current_pokemon)){
-            availablePokemonAtLocationLink.push(current_pokemon);
-          }
-        } else{
-          continue;
-        }
-         
-      } else if (notConsideredEncounterConditions.includes(pokemonEncounter["version_details"][0]["encounter_details"][0]["condition_values"][0]["name"])){
-        continue;
-      } else {
         let current_pokemon = pokemonEncounter["pokemon"]["name"];
 
         if (!availablePokemonAtLocationLink.includes(current_pokemon)){
           availablePokemonAtLocationLink.push(current_pokemon);
         }
+      } else{
+        continue;
+      }
+      
+    } else if (notConsideredEncounterConditions.includes(pokemonEncounter["version_details"][versionIndex]["encounter_details"][0]["condition_values"][0]["name"])){
+      // Check the notConsideredEncounterConditions to understand what this else if block means
+      // Bro that is unreadable..
+      continue;
+    } 
+    else {
+      let current_pokemon = pokemonEncounter["pokemon"]["name"];
+
+      if (!availablePokemonAtLocationLink.includes(current_pokemon)){
+        availablePokemonAtLocationLink.push(current_pokemon);
       }
     }
   }
+
+    
+
+  //   } else if (pokemonEncounter["version_details"].length === 1){
+  //     if (pokemonEncounter["version_details"][0]["encounter_details"][0]["condition_values"].length === 0){
+
+  //       if (encounterMethods.includes(pokemonEncounter["version_details"][0]["encounter_details"][0]["method"]["name"])){
+
+  //         let current_pokemon = pokemonEncounter["pokemon"]["name"];
+
+  //         if (!availablePokemonAtLocationLink.includes(current_pokemon)){
+  //           availablePokemonAtLocationLink.push(current_pokemon);
+  //         }
+  //       } else{
+  //         continue;
+  //       }
+         
+  //     } else if (notConsideredEncounterConditions.includes(pokemonEncounter["version_details"][0]["encounter_details"][0]["condition_values"][0]["name"])){
+  //       continue;
+  //     } else {
+  //       let current_pokemon = pokemonEncounter["pokemon"]["name"];
+
+  //       if (!availablePokemonAtLocationLink.includes(current_pokemon)){
+  //         availablePokemonAtLocationLink.push(current_pokemon);
+  //       }
+  //     }
+  //   }
+  // }
+
+  // for (const pokemonEncounter of locationObjectPokemonEncounters){
+  //   // This means pokemon is present in Diamond, Pearl, and Platinum
+  //   // In this case, we get the last element
+  //   if (pokemonEncounter["version_details"].length === 3){
+  //     // Mali ni
+  //     if (pokemonEncounter["version_details"][2]["encounter_details"][0]["condition_values"].length === 0){
+
+  //       if (encounterMethods.includes(pokemonEncounter["version_details"][0]["encounter_details"][0]["method"]["name"])){
+
+  //         let current_pokemon = pokemonEncounter["pokemon"]["name"];
+
+  //         if (!availablePokemonAtLocationLink.includes(current_pokemon)){
+  //           availablePokemonAtLocationLink.push(current_pokemon);
+  //         }
+  //       } else{
+  //         continue;
+  //       }
+         
+  //     } else if (notConsideredEncounterConditions.includes(pokemonEncounter["version_details"][2]["encounter_details"][0]["condition_values"][0]["name"])){
+  //       // Bro that is unreadable..
+  //       continue;
+  //     } else {
+  //       let current_pokemon = pokemonEncounter["pokemon"]["name"];
+
+  //       if (!availablePokemonAtLocationLink.includes(current_pokemon)){
+  //         availablePokemonAtLocationLink.push(current_pokemon);
+  //       }
+  //     }
+
+  //   } else if (pokemonEncounter["version_details"].length === 1){
+  //     if (pokemonEncounter["version_details"][0]["encounter_details"][0]["condition_values"].length === 0){
+
+  //       if (encounterMethods.includes(pokemonEncounter["version_details"][0]["encounter_details"][0]["method"]["name"])){
+
+  //         let current_pokemon = pokemonEncounter["pokemon"]["name"];
+
+  //         if (!availablePokemonAtLocationLink.includes(current_pokemon)){
+  //           availablePokemonAtLocationLink.push(current_pokemon);
+  //         }
+  //       } else{
+  //         continue;
+  //       }
+         
+  //     } else if (notConsideredEncounterConditions.includes(pokemonEncounter["version_details"][0]["encounter_details"][0]["condition_values"][0]["name"])){
+  //       continue;
+  //     } else {
+  //       let current_pokemon = pokemonEncounter["pokemon"]["name"];
+
+  //       if (!availablePokemonAtLocationLink.includes(current_pokemon)){
+  //         availablePokemonAtLocationLink.push(current_pokemon);
+  //       }
+  //     }
+  //   }
+  // }
 
   return availablePokemonAtLocationLink;
 }
