@@ -1,7 +1,5 @@
-// TODO: DISPLAY DUPE DOESNT WORK IN FR/LG
 
 
-// Kraazy, async/await raman diay gamiton instead nga solo fetch
 async function fetchData(){
   try{
     let userDecision = localStorage.getItem('userDecision');
@@ -233,7 +231,7 @@ function activateLoadingScreen(){
   centerBox.setAttribute("style", `height:${225}px`);
 }
 
-async function loadHTML(dataFromJSON, gameVersion){
+async function loadHTML(dataFromJSON){
   activateLoadingScreen();
 
   let userDecision = localStorage.getItem('userDecision');
@@ -346,7 +344,6 @@ async function loadHTML(dataFromJSON, gameVersion){
 }
 
 async function displayDupe(pokemon, selectedRoute, selectedRouteTemplateString, encounterRoutes){
-  // TODO: Issue when selecting the pre evolution after the evolution has been selected
 
   console.log('--------------------------------start---------------------------')
   let activePokemonLocal = [];
@@ -385,7 +382,6 @@ async function displayDupe(pokemon, selectedRoute, selectedRouteTemplateString, 
         getEvolutionLineOfSelectedPokemon.forEach(selectedPokemon => {
           pokemonOptionsNodeLists.push(document.querySelectorAll(`.js-${selectedPokemon}-option`));
         });
-
         
         pokemonOptionsNodeLists.forEach(pokemonOptions => {
           pokemonOptions.forEach(pokemonOption => {
@@ -453,9 +449,7 @@ async function displayDupe(pokemon, selectedRoute, selectedRouteTemplateString, 
       // document.querySelector(selectedRouteTemplateString).innerHTML += `<option value="${pokemon}" class="js-${selectedRoute}-encounter-display" selected disabled hidden>${pokemon}</option>`;
       
     }
-
   }
-
 
   // Reset value of activePokemonInCombobox
   activePokemonInCombobox = [];
@@ -547,8 +541,13 @@ function updateDupeSubstring(encounterRoutes){
     let encounterOptionsQuery = document.querySelectorAll(`.js-${encounterRouteNoSpace}-encounter-combobox-options`);
 
     encounterOptionsQuery.forEach(encounterOption => {
+      let encounterOptionValue = encounterOption.value;
 
-      if (!activePokemonInCombobox.includes(encounterOption.value)){
+      if (encounterOptionValue.includes(" - dupe")){
+        encounterOptionValue = encounterOptionValue.replace(' - dupe', '');
+      }
+
+      if (!activePokemonInCombobox.includes(encounterOptionValue)){
         encounterOption.innerHTML = encounterOption.innerHTML.replace(' - dupe', '');
         encounterOption.value = encounterOption.value.replace(' - dupe', '');
       }

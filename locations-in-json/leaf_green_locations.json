@@ -40,7 +40,7 @@
                         "https://pokeapi.co/api/v2/location-area/327/"]
     },
     {
-        "location": "Mt Moon",
+        "location": "Route 4",
         "location-links": ["https://pokeapi.co/api/v2/location-area/298/"]
     },
     {
@@ -186,7 +186,7 @@
         "location-links": ["https://pokeapi.co/api/v2/location-area/330/"]
     },
     {
-        "location": "Power Plant",
+        "location": "Route 23",
         "location-links": ["https://pokeapi.co/api/v2/location-area/329/"]
     },
     {
