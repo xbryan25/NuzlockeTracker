@@ -1,4 +1,5 @@
-
+// TODO: BRANCHED EVOLUTIONS
+// TODO: FIX DISPLAY DUPE
 
 async function fetchData(){
   try{
@@ -310,7 +311,10 @@ async function loadHTML(dataFromJSON){
     let killButton = `.js-death-${locationNoSpace}-button`;
     let evolveButton = `.js-evolve-${locationNoSpace}-button`;
 
-    document.querySelector(locationClass).addEventListener("change", event => displayDupe(event.target.value, locationNoSpace, locationClass, encounterRouteObjects));
+    document.querySelector(locationClass).addEventListener("change", event => {
+      removeEncounterDisplays(locationNoSpace);
+      displayDupe(event.target.value, locationNoSpace, locationClass, encounterRouteObjects)
+    });
 
     document.querySelector(locationClass).addEventListener("change", async event => {
       showKillPokemonButton(locationNoSpace);
@@ -328,6 +332,7 @@ async function loadHTML(dataFromJSON){
       element.addEventListener("change", event => activeStatusOrNature(locationNoSpace));
       element.addEventListener("change", async event => {
         showKillPokemonButton(locationNoSpace);
+
         showEvolvePokemonButton(locationNoSpace);
       });
 
@@ -341,6 +346,14 @@ async function loadHTML(dataFromJSON){
 
   document.querySelector('.js-change-day-night-look').addEventListener("click", event => changeDayNightLook(encounterRouteObjects));
 
+}
+
+function removeEncounterDisplays(location){
+  let encounterDisplaysQuery = document.querySelectorAll(`.js-${location}-encounter-display`);
+
+  encounterDisplaysQuery.forEach(encounterDisplay => {
+    encounterDisplay.remove();
+  })
 }
 
 async function displayDupe(pokemon, selectedRoute, selectedRouteTemplateString, encounterRoutes){
@@ -901,6 +914,7 @@ async function showEvolvePokemonButton(location){
 
   // For the last condition, if the selectedPokemonIndex is less than the length of the evolution line, it must mean that
   // the selected pokemon can still evolve
+
 
   if (targetStatusCombobox.value === "Captured" && targetEncounterCombobox.value !== "none" && selectedPokemonIndex < getEvolutionLineOfSelectedPokemon.length - 1){
     evolveButton.style.display = "flex";
