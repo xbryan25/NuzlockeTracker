@@ -78,7 +78,7 @@ body{
   /* display: flex; */
 
   top: 100px;
-  left: 25vh;
+  left: 6%;
   /* transform: translate(-50%, -50%); */
 
   width: 1400px;
@@ -109,7 +109,7 @@ body{
   /* transform: translate(-50%, -50%); */
 
   height: auto;
-  width: 1300px;
+  width: 1200px;
 
   align-items: center;
 

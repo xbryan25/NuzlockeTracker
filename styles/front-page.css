@@ -8,23 +8,32 @@ body{
 }
 
 .pokeball-img-container{
-  position: fixed;
-  top: 30%;
-  left: 26%;
-  transform: translate(-50%, -50%);
+  position: absolute;
+
+  top: 28%;
+
+  /* transform: translate(-50%, -50%); */
 
 }
 
 .heading-text{
-  position: fixed;
-  top: 30%;
+  width: 1100px;
+  height: 200px;
+
+  position: relative;
+  top: 0%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, 20%);
 
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   font-weight: bold;
   font-size: 100px;
   color: rgb(198, 198, 198);
+  
+  padding-top: 100px;
+
+  text-align: center;
+  
 
   margin-bottom: 20px
 }
