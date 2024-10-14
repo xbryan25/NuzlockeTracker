@@ -1,6 +1,4 @@
 // TODO: BRANCHED EVOLUTIONS
-// TODO: ALL DUPES NOT WORKING
-// TODO: WHEN A DUPE IS CLICKED, REMOVE DUPE TEXT
 
 async function fetchData(){
   try{
@@ -309,8 +307,10 @@ async function loadHTML(dataFromJSON){
     let locationClass = `.js-encounter-${locationNoSpace}`;
     let locationClearEncounterButton = `.js-clear-encounter-${locationNoSpace}`;
     let locationStatusAndNature = `.js-${locationNoSpace}-status-and-nature-combobox`;
+
     let killButton = `.js-death-${locationNoSpace}-button`;
     let evolveButton = `.js-evolve-${locationNoSpace}-button`;
+    const popUpExitButton = document.querySelector('.js-close-btn');
 
     document.querySelector(locationClass).addEventListener("change", event => {
       removeEncounterDisplays(locationNoSpace);
@@ -319,6 +319,7 @@ async function loadHTML(dataFromJSON){
 
     document.querySelector(locationClass).addEventListener("change", async event => {
       showKillPokemonButton(locationNoSpace);
+      
       showEvolvePokemonButton(locationNoSpace);
     });
 
@@ -333,13 +334,23 @@ async function loadHTML(dataFromJSON){
       element.addEventListener("change", event => activeStatusOrNature(locationNoSpace));
       element.addEventListener("change", async event => {
         showKillPokemonButton(locationNoSpace);
-
         showEvolvePokemonButton(locationNoSpace);
       });
 
     });
+    
+    document.querySelector(evolveButton).addEventListener('click', () => {
+      // set .active to on
+      document.getElementById("js-popup-1").classList.add("active");
+    });
+
+    popUpExitButton.addEventListener('click', () => {
+      // set .active to off
+      document.getElementById("js-popup-1").classList.remove("active");
+    });
 
   })
+
 
   document.querySelector('.js-search-input').addEventListener("input", event => searchForPokemonOrLocation(encounterRouteObjects));
 
@@ -912,7 +923,7 @@ async function evolvePokemon(location){
 
     let evolutionLine = await retrieveEvolutionLine(location);
 
-    let evolveButton = `.js-evolve-${location}-button`;
+    let evolveButton = document.querySelector(`.js-evolve-${location}-button`);
 
     let isBranchedEvolution = false;
 
@@ -935,17 +946,18 @@ async function evolvePokemon(location){
                                 ["Snorunt", "Glalie", "Froslass"],
                                 ["Clamperl", "Huntail", "Gorebyss"]]
 
-    // for (let branchedEvolutionLine in branchedEvolutionLines){
-    //   if (branchedEvolutionLine.includes(branchedEvolutionLine)){
-    //     isBranchedEvolution = true;
-    //   }
-    // }
+    for (let branchedEvolutionLine in branchedEvolutionLines){
+      if (branchedEvolutionLines[branchedEvolutionLine].includes(currentPokemonInCombobox)){
+        isBranchedEvolution = true;
+        break;
+      }
+    }    
 
     console.log(evolutionLine[evolutionLine.indexOf(currentPokemonInCombobox) + 1]);
 
 
     // This means that an evolution still exists
-    if (evolutionLine[evolutionLine.indexOf(currentPokemonInCombobox) + 1]){
+    if (evolutionLine[evolutionLine.indexOf(currentPokemonInCombobox) + 1] && !isBranchedEvolution){
       let evolutionOfCurrentPokemon = evolutionLine[evolutionLine.indexOf(currentPokemonInCombobox) + 1];
 
       targetEncounterCombobox.innerHTML += `<option value="${evolutionOfCurrentPokemon}" class="js-${location}-encounter-display" selected disabled hidden>${evolutionOfCurrentPokemon}</option>`;
@@ -962,7 +974,9 @@ async function evolvePokemon(location){
       // document.querySelector(evolveButton).addEventListener("click", evolveHandler);
 
       // document.querySelector(evolveButton).addEventListener("click", event => evolvePokemon(targetEncounterCombobox.value, evolutionLine, location));
-    } 
+    } else if (evolutionLine[evolutionLine.indexOf(currentPokemonInCombobox) + 1] && isBranchedEvolution){
+      alert("Part of branched evolution");
+    }
     
     // else if (!evolutionLine[evolutionLine.indexOf(currentPokemonInCombobox) + 1]){
     //   document.querySelector(`.js-evolve-${location}-button`).style.display = "none";
