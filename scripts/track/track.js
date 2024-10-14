@@ -1,5 +1,6 @@
 // TODO: BRANCHED EVOLUTIONS
-// TODO: FIX DISPLAY DUPE
+// TODO: ALL DUPES NOT WORKING
+// TODO: WHEN A DUPE IS CLICKED, REMOVE DUPE TEXT
 
 async function fetchData(){
   try{
@@ -400,6 +401,9 @@ async function displayDupe(pokemon, selectedRoute, selectedRouteTemplateString, 
           pokemonOptions.forEach(pokemonOption => {
             pokemonOption.innerHTML = pokemonOption.value + ' - dupe'
             pokemonOption.value = pokemonOption.value + ' - dupe';
+
+            pokemonOption.classList.add("dupe-option");
+            pokemonOption.disabled = true;
           })
         })
 
@@ -503,40 +507,6 @@ async function displayDupe(pokemon, selectedRoute, selectedRouteTemplateString, 
     activePokemonEvolutionLines.push(activePokemonEvolutionLine);
   }
 
-  console.log(activePokemonNoEvolutionLines);
-  console.log(activePokemonEvolutionLines);
-
-  // ---- For the display temporary option when a pokemon is selected ----
-
-
-  // // TODO: The encounter displays of the selected pokemon will stack up; fix this
-  // let encounterDisplaysQuery = document.querySelectorAll(`.js-${selectedRoute}-encounter-display`);
-
-
-  // // Removes other pokemon
-  // encounterDisplaysQuery.forEach(encounterDisplay => {
-  //   if (encounterDisplay.textContent !== `${pokemon}`){
-  //     encounterDisplay.remove();
-  //   }
-  // });
-
-  // Removes duplicates of the same pokemon
-
-  // let tempArray = Array.prototype.slice.call(encounterDisplaysQuery);
-
-
-  // encounterDisplaysQuery.forEach(encounterDisplay => {
-  //   if (tempArray.indexOf(encounterDisplay) > 0){
-  //     encounterDisplay.remove();
-  //   }
-  // });
-
-  // console.log(encounterDisplaysQuery);
-
-  
-
-
-
   // ---- To update the dupe substring ----
 
   // For the dynamic setting of the dupe title, traverse through all the encounter routes
@@ -563,6 +533,8 @@ function updateDupeSubstring(encounterRoutes){
       if (!activePokemonInCombobox.includes(encounterOptionValue)){
         encounterOption.innerHTML = encounterOption.innerHTML.replace(' - dupe', '');
         encounterOption.value = encounterOption.value.replace(' - dupe', '');
+        encounterOption.disabled = false;
+        encounterOption.classList.remove("dupe-option");
       }
     });
   }
@@ -581,7 +553,13 @@ function allDupeInRouteChecker(encounterRoutes){
     // it means that not all pokemon are dupes, therefore allOptionsAreNotDupes will be true
 
     for (let anOption of allOptions){
-      if (!activePokemonInCombobox.includes(anOption.value)){
+      let optionValue = anOption.value;
+
+      if (optionValue.includes(' - dupe')){
+        optionValue = optionValue.replace(' - dupe', '');
+      }
+
+      if (!activePokemonInCombobox.includes(optionValue)){
         allOptionsAreDupes = false;
         break;
       }

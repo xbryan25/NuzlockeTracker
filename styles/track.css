@@ -126,30 +126,10 @@ body{
   z-index: 0;
 }
 
-/* .emerald-center-box-container{
- 
-  border-radius: 10px;
-
-  position: relative;
-  top: 1500px;
-  left: 50%;
-  transform: translate(-50%, -50%);
-
-  height: auto;
-  width: 1100px;
-
-  align-items: center;
-
-  margin-bottom: 100px;
-  
-
-  background-color: gray;
-
-  padding-bottom: 60px;
-
-  z-index: 0;
-} 
-*/
+.dupe-option{
+  background-color :rgb(67, 65, 65);
+  color: rgb(168, 165, 165);
+}
 
 .location-row{
   position: relative;
