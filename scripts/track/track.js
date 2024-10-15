@@ -1,4 +1,6 @@
 // TODO: BRANCHED EVOLUTIONS
+// TODO: POP UP ANIMATION IS GONE; FIX
+// TODO: GET PICTURE OF THE POKEMON IN POP UP WINDOW
 
 async function fetchData(){
   try{
@@ -310,7 +312,7 @@ async function loadHTML(dataFromJSON){
 
     let killButton = `.js-death-${locationNoSpace}-button`;
     let evolveButton = `.js-evolve-${locationNoSpace}-button`;
-    const popUpExitButton = document.querySelector('.js-close-btn');
+    
 
     document.querySelector(locationClass).addEventListener("change", event => {
       removeEncounterDisplays(locationNoSpace);
@@ -341,15 +343,10 @@ async function loadHTML(dataFromJSON){
     
     document.querySelector(evolveButton).addEventListener('click', () => {
       // set .active to on
-      document.getElementById("js-popup-1").classList.add("active");
+      document.querySelector(".js-popup-1").classList.add("active");
     });
 
-    popUpExitButton.addEventListener('click', () => {
-      // set .active to off
-      document.getElementById("js-popup-1").classList.remove("active");
-    });
-
-  })
+  });
 
 
   document.querySelector('.js-search-input').addEventListener("input", event => searchForPokemonOrLocation(encounterRouteObjects));
@@ -923,6 +920,7 @@ async function evolvePokemon(location){
 
     let evolutionLine = await retrieveEvolutionLine(location);
 
+
     let evolveButton = document.querySelector(`.js-evolve-${location}-button`);
 
     let isBranchedEvolution = false;
@@ -959,6 +957,25 @@ async function evolvePokemon(location){
     // This means that an evolution still exists
     if (evolutionLine[evolutionLine.indexOf(currentPokemonInCombobox) + 1] && !isBranchedEvolution){
       let evolutionOfCurrentPokemon = evolutionLine[evolutionLine.indexOf(currentPokemonInCombobox) + 1];
+
+      document.querySelector(".js-popup-1").innerHTML = `<div class="overlay"></div>
+			<div class="content">
+				<div class="close-btn js-close-btn">&times;</div>
+				<h1 class="content-h1">Evolve ${currentPokemonInCombobox}?</h1>
+
+				<div class="popup-img-container">
+					${evolutionOfCurrentPokemon}
+				</div>
+				
+			</div>`;
+
+      // For the exit button of the popup screen
+
+      const popUpExitButton = document.querySelector('.js-close-btn');
+      popUpExitButton.addEventListener('click', () => {
+        // set .active to off
+        document.querySelector(".js-popup-1").classList.remove("active");
+      });
 
       targetEncounterCombobox.innerHTML += `<option value="${evolutionOfCurrentPokemon}" class="js-${location}-encounter-display" selected disabled hidden>${evolutionOfCurrentPokemon}</option>`;
 
