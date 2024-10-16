@@ -948,7 +948,7 @@ async function evolvePokemon(location){
     }    
 
 
-    // This means that an evolution still exists
+    // This means that an evolution still exists and is not a branch evolution
     if (evolutionLine[evolutionLine.indexOf(currentPokemonInCombobox) + 1] && !isBranchedEvolution){
       let evolutionOfCurrentPokemon = evolutionLine[evolutionLine.indexOf(currentPokemonInCombobox) + 1];
 
@@ -961,8 +961,8 @@ async function evolvePokemon(location){
 				<h1 class="content-h1">Evolve ${currentPokemonInCombobox}?</h1>
 
 				<div class="popup-img-container">
-					<img src="${pokemonPicLink}" title="${currentPokemonInCombobox}"height="110px">
-          <img src="${pokemonNextEvoPicLink}" title="Evolve ${currentPokemonInCombobox} into ${evolutionOfCurrentPokemon}" height="110px">
+					<img src="${pokemonPicLink}" title="${currentPokemonInCombobox}" height="110px" class="preevo-animation-img">
+          <img src="${pokemonNextEvoPicLink}" title="Evolve ${currentPokemonInCombobox} into ${evolutionOfCurrentPokemon}" height="110px" class="nextevo-animation-img">
 				</div>
 				
 			</div>`;
