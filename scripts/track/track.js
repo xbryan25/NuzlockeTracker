@@ -344,8 +344,8 @@ async function loadHTML(dataFromJSON){
     document.querySelector(evolveButton).addEventListener('click', () => {
       // set .active to on
       document.querySelector(".js-popup-1").classList.add("active");
+      console.log(document.querySelector(".js-popup-1").innerHTML);
     });
-
   });
 
 
@@ -920,9 +920,6 @@ async function evolvePokemon(location){
 
     let evolutionLine = await retrieveEvolutionLine(location);
 
-
-    let evolveButton = document.querySelector(`.js-evolve-${location}-button`);
-
     let isBranchedEvolution = false;
 
     // Modify the function variable
@@ -951,8 +948,6 @@ async function evolvePokemon(location){
       }
     }    
 
-    console.log(evolutionLine[evolutionLine.indexOf(currentPokemonInCombobox) + 1]);
-
 
     // This means that an evolution still exists
     if (evolutionLine[evolutionLine.indexOf(currentPokemonInCombobox) + 1] && !isBranchedEvolution){
@@ -968,6 +963,8 @@ async function evolvePokemon(location){
 				</div>
 				
 			</div>`;
+
+      // document.querySelector(".js-popup-1").classList.remove("active");
 
       // For the exit button of the popup screen
 

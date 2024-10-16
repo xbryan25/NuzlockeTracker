@@ -85,7 +85,7 @@ body{
   left: 6%;
   /* transform: translate(-50%, -50%); */
 
-  width: 1400px;
+  width: 80%;
   height: auto;
 
   padding-top: 10px;
@@ -113,7 +113,7 @@ body{
   /* transform: translate(-50%, -50%); */
 
   height: auto;
-  width: 1200px;
+  width: 100%;
 
   align-items: center;
 
@@ -439,9 +439,22 @@ input.day-search-input::placeholder{
   display: block;
 }
 
+
 .popup.active .content{
-  transition: all 300ms ease-in-out;
+  /* transition: all 300ms ease-in-out; */
+  animation: change-height 300ms ease 1 forwards;
   transform: translate(-50%, -50%) scale(1);
+}
+
+@keyframes change-height {
+  0%{
+      max-height: 0px;
+      opacity: 0;
+  }
+  100%{
+      max-height: 220px;
+      opacity: 1;
+  }
 }
 
 .close-btn.active .content{
