@@ -1,5 +1,4 @@
 // TODO: BRANCHED EVOLUTIONS
-// TODO: POP UP ANIMATION IS GONE; FIX
 // TODO: GET PICTURE OF THE POKEMON IN POP UP WINDOW
 
 async function fetchData(){
@@ -953,13 +952,17 @@ async function evolvePokemon(location){
     if (evolutionLine[evolutionLine.indexOf(currentPokemonInCombobox) + 1] && !isBranchedEvolution){
       let evolutionOfCurrentPokemon = evolutionLine[evolutionLine.indexOf(currentPokemonInCombobox) + 1];
 
+      let pokemonPicLink = await retrieveFrontDefaultSprite(currentPokemonInCombobox);
+      let pokemonNextEvoPicLink = await retrieveFrontDefaultSprite(evolutionOfCurrentPokemon)
+
       document.querySelector(".js-popup-1").innerHTML = `<div class="overlay"></div>
 			<div class="content">
 				<div class="close-btn js-close-btn">&times;</div>
 				<h1 class="content-h1">Evolve ${currentPokemonInCombobox}?</h1>
 
 				<div class="popup-img-container">
-					${evolutionOfCurrentPokemon}
+					<img src="${pokemonPicLink}" title="${currentPokemonInCombobox}"height="110px">
+          <img src="${pokemonNextEvoPicLink}" title="Evolve ${currentPokemonInCombobox} into ${evolutionOfCurrentPokemon}" height="110px">
 				</div>
 				
 			</div>`;
@@ -996,6 +999,13 @@ async function evolvePokemon(location){
     //   document.querySelector(`.js-evolve-${location}-button`).style.display = "none";
     // }
   };
+}
+
+async function retrieveFrontDefaultSprite(pokemon){
+  let pokemonResponse = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.toLowerCase()}`);
+  let pokemonResponseJSON = await pokemonResponse.json();
+
+  return pokemonResponseJSON["sprites"]["front_default"];
 }
 
 async function retrieveEvolutionLine(location){
