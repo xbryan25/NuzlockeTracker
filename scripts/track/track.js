@@ -1,5 +1,7 @@
 // TODO: BRANCHED EVOLUTIONS
-// TODO: GET PICTURE OF THE POKEMON IN POP UP WINDOW
+// TODO: ADD LABEL TO EVOLUTION IN POPUP WINDOW
+// TODO: DELETE POPUP WINDOW
+// TODO: ADD EVENT LISTENER TO EVOLUTION IN POPUP WINDOWS
 
 async function fetchData(){
   try{
@@ -953,9 +955,9 @@ async function evolvePokemon(location){
       let evolutionOfCurrentPokemon = evolutionLine[evolutionLine.indexOf(currentPokemonInCombobox) + 1];
 
       let pokemonPicLink = await retrieveFrontDefaultSprite(currentPokemonInCombobox);
-      let pokemonNextEvoPicLink = await retrieveFrontDefaultSprite(evolutionOfCurrentPokemon)
+      let pokemonNextEvoPicLink = await retrieveFrontDefaultSprite(evolutionOfCurrentPokemon);
 
-      document.querySelector(".js-popup-1").innerHTML = `<div class="overlay"></div>
+      let popupButtonContent = `<div class="overlay"></div>
 			<div class="content">
 				<div class="close-btn js-close-btn">&times;</div>
 				<h1 class="content-h1">Evolve ${currentPokemonInCombobox}?</h1>
@@ -967,6 +969,8 @@ async function evolvePokemon(location){
 				
 			</div>`;
 
+      document.querySelector(".js-popup-1").innerHTML = popupButtonContent;
+
       // document.querySelector(".js-popup-1").classList.remove("active");
 
       // For the exit button of the popup screen
@@ -975,6 +979,10 @@ async function evolvePokemon(location){
       popUpExitButton.addEventListener('click', () => {
         // set .active to off
         document.querySelector(".js-popup-1").classList.remove("active");
+
+        // Reset innerHTML everytime the popup window is closed
+        document.querySelector(".js-popup-1").innerHTML = "";
+        
       });
 
       targetEncounterCombobox.innerHTML += `<option value="${evolutionOfCurrentPokemon}" class="js-${location}-encounter-display" selected disabled hidden>${evolutionOfCurrentPokemon}</option>`;
