@@ -472,9 +472,10 @@ h1.content-h1{
 }
 
 .popup-img-container{
+  margin-top: 10px;
   margin-bottom: 10px;
 
-  height: 150px;
+  height: 100px;
   width: auto;
 
   display: flex;
@@ -523,6 +524,21 @@ h1.content-h1{
   100%{
     transform: scale(1);
   }
+}
+
+.preevo-container, .nextevo-container{
+  padding-top: 20px;
+  height: 150px;
+}
+
+
+p.preevo-text, p.nextevo-text {
+  margin: 0px;
+
+  font-size: 18px;
+  font-weight: 400;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
 }
 
 /* -----End----- */

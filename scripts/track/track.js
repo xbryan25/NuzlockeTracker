@@ -1,6 +1,5 @@
 // TODO: BRANCHED EVOLUTIONS
 // TODO: ADD LABEL TO EVOLUTION IN POPUP WINDOW
-// TODO: DELETE POPUP WINDOW
 // TODO: ADD EVENT LISTENER TO EVOLUTION IN POPUP WINDOWS
 
 async function fetchData(){
@@ -963,9 +962,22 @@ async function evolvePokemon(location){
 				<h1 class="content-h1">Evolve ${currentPokemonInCombobox}?</h1>
 
 				<div class="popup-img-container">
-					<img src="${pokemonPicLink}" title="${currentPokemonInCombobox}" height="110px" class="preevo-animation-img">
-          <img src="${pokemonNextEvoPicLink}" title="Evolve ${currentPokemonInCombobox} into ${evolutionOfCurrentPokemon}" height="110px" class="nextevo-animation-img">
+          <div class="preevo-container">
+            <img src="${pokemonPicLink}" title="${currentPokemonInCombobox}" height="110px" class="preevo-animation-img">
+
+            <p class="preevo-text">${currentPokemonInCombobox}</p>
+          </div>
+
+          <div class="arrow-container"> ---> </div>
+
+          <div class="nextevo-container">
+            <img src="${pokemonNextEvoPicLink}" title="Evolve ${currentPokemonInCombobox} into ${evolutionOfCurrentPokemon}" height="110px" class="nextevo-animation-img">
+
+            <p class="nextevo-text">${evolutionOfCurrentPokemon}</p>
+          </div>
 				</div>
+
+        
 				
 			</div>`;
 
