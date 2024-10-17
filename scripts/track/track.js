@@ -1,6 +1,5 @@
-// TODO: BRANCHED EVOLUTIONS
-// TODO: ADD LABEL TO EVOLUTION IN POPUP WINDOW
-// TODO: ADD EVENT LISTENER TO EVOLUTION IN POPUP WINDOWS
+// TODO: BRANCHED EVOLUTIONS (huge feature)
+// TODO: SEPARATE FUNCTIONS INTO DIFFERENT FILES
 
 async function fetchData(){
   try{
@@ -971,7 +970,7 @@ async function evolvePokemon(location){
           <div class="arrow-container"> ---> </div>
 
           <div class="nextevo-container">
-            <img src="${pokemonNextEvoPicLink}" title="Evolve ${currentPokemonInCombobox} into ${evolutionOfCurrentPokemon}" height="110px" class="nextevo-animation-img">
+            <img src="${pokemonNextEvoPicLink}" title="Evolve ${currentPokemonInCombobox} into ${evolutionOfCurrentPokemon}" height="110px" class="js-nextevo-img nextevo-animation-img">
 
             <p class="nextevo-text">${evolutionOfCurrentPokemon}</p>
           </div>
@@ -989,6 +988,8 @@ async function evolvePokemon(location){
 
       const popUpExitButton = document.querySelector('.js-close-btn');
       popUpExitButton.addEventListener('click', () => {
+        // TODO: Make this into a function
+
         // set .active to off
         document.querySelector(".js-popup-1").classList.remove("active");
 
@@ -997,16 +998,31 @@ async function evolvePokemon(location){
         
       });
 
-      targetEncounterCombobox.innerHTML += `<option value="${evolutionOfCurrentPokemon}" class="js-${location}-encounter-display" selected disabled hidden>${evolutionOfCurrentPokemon}</option>`;
+      const nextevoImage = document.querySelector('.js-nextevo-img');
+      nextevoImage.addEventListener('click', () => {
+        targetEncounterCombobox.innerHTML += `<option value="${evolutionOfCurrentPokemon}" class="js-${location}-encounter-display" selected disabled hidden>${evolutionOfCurrentPokemon}</option>`;
 
-      // Update the eventListener's parameters
-      // document.querySelector(evolveButton).removeEventListener("click", evolveHandler);
+        targetEncounterCombobox.value = evolutionOfCurrentPokemon;
 
-      targetEncounterCombobox.value = evolutionOfCurrentPokemon;
+        if (!evolutionLine[evolutionLine.indexOf(targetEncounterCombobox.value) + 1]){
+          document.querySelector(`.js-evolve-${location}-button`).style.display = "none";
+        }
 
-      if (!evolutionLine[evolutionLine.indexOf(targetEncounterCombobox.value) + 1]){
-        document.querySelector(`.js-evolve-${location}-button`).style.display = "none";
-      }
+        // TODO: Make this into a function
+        // set .active to off
+        document.querySelector(".js-popup-1").classList.remove("active");
+
+        // Reset innerHTML everytime the popup window is closed
+        document.querySelector(".js-popup-1").innerHTML = "";
+      });
+
+      // targetEncounterCombobox.innerHTML += `<option value="${evolutionOfCurrentPokemon}" class="js-${location}-encounter-display" selected disabled hidden>${evolutionOfCurrentPokemon}</option>`;
+
+      // targetEncounterCombobox.value = evolutionOfCurrentPokemon;
+
+      // if (!evolutionLine[evolutionLine.indexOf(targetEncounterCombobox.value) + 1]){
+      //   document.querySelector(`.js-evolve-${location}-button`).style.display = "none";
+      // }
 
       // document.querySelector(evolveButton).addEventListener("click", evolveHandler);
 
