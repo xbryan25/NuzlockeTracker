@@ -1,5 +1,5 @@
-// TODO: BRANCHED EVOLUTIONS (huge feature)
-// TODO: SEPARATE FUNCTIONS INTO DIFFERENT FILES
+// TODO: BRANCHED EVOLUTIONS FOR WURMPLE, TYROGUE, AND EEVEE
+// TODO: SEPARATE FUNCTIONS INTO DIFFERENT FILES; CLEAN UP
 
 async function fetchData(){
   try{
@@ -900,8 +900,16 @@ async function showEvolvePokemonButton(location){
   // For the last condition, if the selectedPokemonIndex is less than the length of the evolution line, it must mean that
   // the selected pokemon can still evolve
 
+  let fromBranchedEvolution = false;
+  let fromBranchedEvolutions = ["Vileplume", "Bellossom", "Poliwrath", "Politoed", "Slowbro", "Slowking",
+      "Gardevoir", "Gallade", "Ninjask", "Shedinja", "Huntail", "Gorebyss"]
 
-  if (targetStatusCombobox.value === "Captured" && targetEncounterCombobox.value !== "none" && selectedPokemonIndex < getEvolutionLineOfSelectedPokemon.length - 1){
+  if (fromBranchedEvolutions.includes(selectedPokemonInEncounterCombobox)){
+    fromBranchedEvolution = true;
+  }
+
+
+  if (targetStatusCombobox.value === "Captured" && targetEncounterCombobox.value !== "none" && selectedPokemonIndex < getEvolutionLineOfSelectedPokemon.length - 1 && !fromBranchedEvolution){
     evolveButton.style.display = "flex";
     
 
@@ -919,7 +927,9 @@ async function evolvePokemon(location){
 
     let evolutionLine = await retrieveEvolutionLine(location);
 
-    let isBranchedEvolution = false;
+    let hasBranchedEvolution = false;
+    
+
 
     // Modify the function variable
     // evolveHandler = function(){
@@ -929,27 +939,28 @@ async function evolvePokemon(location){
     // TODO: Put in a JSON file later; about pokemon with branched evolution lines
 
     // TODO: Make a pop up tab if branched evolution
-    let branchedEvolutionLines = [["Oddish", "Gloom", "Vileplume", "Bellossom"],
-                                ["Poliwag", "Poliwhirl", "Poliwrath", "Politoed"],
-                                ["Slowpoke", "Slowbro", "Slowking"],
-                                ["Eevee", "Vaporeon", "Jolteon", "Flareon", "Espeon", "Umbreon", "Leafeon", "Glaceon", "Sylveon"],
-                                ["Tyrogue", "Hitmonlee", "Hitmonchan", "Hitmontop"],
-                                ["Wurmple", "Silcoon", "Cascoon", "Beautifly", "Dustox"],
-                                ["Ralts", "Kirlia", "Gardevoir", "Gallade"],
-                                ["Nincada", "Ninjask", "Shedinja"],
-                                ["Snorunt", "Glalie", "Froslass"],
-                                ["Clamperl", "Huntail", "Gorebyss"]]
+    // let branchedEvolutionLines = [["Oddish", "Gloom", "Vileplume", "Bellossom"],
+    //                             ["Poliwag", "Poliwhirl", "Poliwrath", "Politoed"],
+    //                             ["Slowpoke", "Slowbro", "Slowking"],
+    //                             ["Eevee", "Vaporeon", "Jolteon", "Flareon", "Espeon", "Umbreon", "Leafeon", "Glaceon", "Sylveon"],
+    //                             ["Tyrogue", "Hitmonlee", "Hitmonchan", "Hitmontop"],
+    //                             ["Wurmple", "Silcoon", "Cascoon", "Beautifly", "Dustox"],
+    //                             ["Ralts", "Kirlia", "Gardevoir", "Gallade"],
+    //                             ["Nincada", "Ninjask", "Shedinja"],
+    //                             ["Snorunt", "Glalie", "Froslass"],
+    //                             ["Clamperl", "Huntail", "Gorebyss"]]
 
-    for (let branchedEvolutionLine in branchedEvolutionLines){
-      if (branchedEvolutionLines[branchedEvolutionLine].includes(currentPokemonInCombobox)){
-        isBranchedEvolution = true;
-        break;
-      }
-    }    
 
+
+    let branchedEvolutionMarkers = ["Oddish", "Poliwhirl", "Slowpoke", "Tyrogue", "Kirlia", "Nincada", 
+                                    "Snorunt", "Clamperl"]
+                                  
+    if (branchedEvolutionMarkers.includes(currentPokemonInCombobox)){
+      hasBranchedEvolution = true;
+    }
 
     // This means that an evolution still exists and is not a branch evolution
-    if (evolutionLine[evolutionLine.indexOf(currentPokemonInCombobox) + 1] && !isBranchedEvolution){
+    if (evolutionLine[evolutionLine.indexOf(currentPokemonInCombobox) + 1] && !hasBranchedEvolution){
       let evolutionOfCurrentPokemon = evolutionLine[evolutionLine.indexOf(currentPokemonInCombobox) + 1];
 
       let pokemonPicLink = await retrieveFrontDefaultSprite(currentPokemonInCombobox);
@@ -1016,25 +1027,154 @@ async function evolvePokemon(location){
         document.querySelector(".js-popup-1").innerHTML = "";
       });
 
-      // targetEncounterCombobox.innerHTML += `<option value="${evolutionOfCurrentPokemon}" class="js-${location}-encounter-display" selected disabled hidden>${evolutionOfCurrentPokemon}</option>`;
+    } else if (evolutionLine[evolutionLine.indexOf(currentPokemonInCombobox) + 1] && evolutionLine[evolutionLine.indexOf(currentPokemonInCombobox) + 1] && hasBranchedEvolution){
+      // Evolutions with two branches
 
-      // targetEncounterCombobox.value = evolutionOfCurrentPokemon;
+      let evolutionOfCurrentPokemonFirst = evolutionLine[evolutionLine.indexOf(currentPokemonInCombobox) + 1];
+      let evolutionOfCurrentPokemonSecond = evolutionLine[evolutionLine.indexOf(currentPokemonInCombobox) + 2];
 
-      // if (!evolutionLine[evolutionLine.indexOf(targetEncounterCombobox.value) + 1]){
-      //   document.querySelector(`.js-evolve-${location}-button`).style.display = "none";
-      // }
+      let pokemonPicLink = await retrieveFrontDefaultSprite(currentPokemonInCombobox);
 
-      // document.querySelector(evolveButton).addEventListener("click", evolveHandler);
+      let pokemonNextEvoPicFirstLink = await retrieveFrontDefaultSprite(evolutionOfCurrentPokemonFirst);
+      let pokemonNextEvoPicSecondLink = await retrieveFrontDefaultSprite(evolutionOfCurrentPokemonSecond);
 
-      // document.querySelector(evolveButton).addEventListener("click", event => evolvePokemon(targetEncounterCombobox.value, evolutionLine, location));
-    } else if (evolutionLine[evolutionLine.indexOf(currentPokemonInCombobox) + 1] && isBranchedEvolution){
-      alert("Part of branched evolution");
+      let popupButtonContent = `<div class="overlay"></div>
+			<div class="content-branch">
+				<div class="close-btn js-close-btn">&times;</div>
+				<h1 class="content-h1">Evolve ${currentPokemonInCombobox}?</h1>
+
+				<div class="popup-img-container-branch">
+          <div class="preevo-container-branch">
+            <img src="${pokemonPicLink}" title="${currentPokemonInCombobox}" height="110px" class="preevo-animation-img">
+
+            <p class="preevo-text">${currentPokemonInCombobox}</p>
+          </div>
+
+          <div class="arrow-container"> ---> </div>
+
+          <div class="nextevo-container-branch">
+            <div class="nextevo-container-first">
+              <img src="${pokemonNextEvoPicFirstLink}" title="Evolve ${currentPokemonInCombobox} into ${evolutionOfCurrentPokemonFirst}" height="110px" class="js-nextevo-img-first nextevo-animation-img">
+
+              <p class="nextevo-text">${evolutionOfCurrentPokemonFirst}</p>
+            </div>
+
+            <div class="nextevo-container-second">
+              <img src="${pokemonNextEvoPicSecondLink}" title="Evolve ${currentPokemonInCombobox} into ${evolutionOfCurrentPokemonSecond}" height="110px" class="js-nextevo-img-second nextevo-animation-img">
+
+              <p class="nextevo-text">${evolutionOfCurrentPokemonSecond}</p>
+            </div>
+            
+          </div>  
+				</div>
+
+        
+				
+			</div>`;
+
+      document.querySelector(".js-popup-1").innerHTML = popupButtonContent;
+
+      // document.querySelector(".js-popup-1").classList.remove("active");
+
+      // For the exit button of the popup screen
+
+      const popUpExitButton = document.querySelector('.js-close-btn');
+      popUpExitButton.addEventListener('click', () => {
+        // TODO: Make this into a function
+
+        // set .active to off
+        document.querySelector(".js-popup-1").classList.remove("active");
+
+        // Reset innerHTML everytime the popup window is closed
+        document.querySelector(".js-popup-1").innerHTML = "";
+        
+      });
+
+      const nextevoImageFirst = document.querySelector('.js-nextevo-img-first');
+      nextevoImageFirst.addEventListener('click', () => {
+        targetEncounterCombobox.innerHTML += `<option value="${evolutionOfCurrentPokemonFirst}" class="js-${location}-encounter-display" selected disabled hidden>${evolutionOfCurrentPokemonFirst}</option>`;
+
+        targetEncounterCombobox.value = evolutionOfCurrentPokemonFirst;
+
+        if (!evolutionLine[evolutionLine.indexOf(targetEncounterCombobox.value) + 1]){
+          document.querySelector(`.js-evolve-${location}-button`).style.display = "none";
+        }
+
+        // TODO: Make this into a function
+        // set .active to off
+        document.querySelector(".js-popup-1").classList.remove("active");
+
+        // Reset innerHTML everytime the popup window is closed
+        document.querySelector(".js-popup-1").innerHTML = "";
+
+        checkIfFromBranchedEvolution(location);
+      });
+
+      const nextevoImageSecond = document.querySelector('.js-nextevo-img-second');
+      nextevoImageSecond.addEventListener('click', () => {
+        targetEncounterCombobox.innerHTML += `<option value="${evolutionOfCurrentPokemonSecond}" class="js-${location}-encounter-display" selected disabled hidden>${evolutionOfCurrentPokemonSecond}</option>`;
+
+        targetEncounterCombobox.value = evolutionOfCurrentPokemonSecond;
+
+        if (!evolutionLine[evolutionLine.indexOf(targetEncounterCombobox.value) + 1]){
+          document.querySelector(`.js-evolve-${location}-button`).style.display = "none";
+        }
+
+        // TODO: Make this into a function
+        // set .active to off
+        document.querySelector(".js-popup-1").classList.remove("active");
+
+        // Reset innerHTML everytime the popup window is closed
+        document.querySelector(".js-popup-1").innerHTML = "";
+
+        checkIfFromBranchedEvolution(location);
+      });
+    } 
+
+    let evolveButton = document.querySelector(`.js-evolve-${location}-button`);
+
+    // Get updated value of combobox
+    currentPokemonInCombobox = targetEncounterCombobox.value;
+
+    let fromBranchedEvolution = false;
+    let fromBranchedEvolutions = ["Vileplume", "Bellossom", "Poliwrath", "Politoed", "Slowbro", "Slowking",
+      "Gardevoir", "Gallade", "Ninjask", "Shedinja", "Huntail", "Gorebyss"];
+
+    if (fromBranchedEvolutions.includes(currentPokemonInCombobox)){
+      fromBranchedEvolution = true;
     }
+
+
+    if (fromBranchedEvolution){
+      evolveButton.style.display = "none";
+    } 
     
     // else if (!evolutionLine[evolutionLine.indexOf(currentPokemonInCombobox) + 1]){
     //   document.querySelector(`.js-evolve-${location}-button`).style.display = "none";
     // }
   };
+}
+
+function checkIfFromBranchedEvolution(location){
+  // Function purpose: Stop the evolution of branched evolution
+
+  let evolveButton = document.querySelector(`.js-evolve-${location}-button`);
+
+  // Value of combobox
+  let targetEncounterCombobox = document.querySelector(`.js-encounter-${location}`);
+  let currentPokemonInCombobox = targetEncounterCombobox.value;
+
+  let fromBranchedEvolution = false;
+  let fromBranchedEvolutions = ["Vileplume", "Bellossom", "Poliwrath", "Politoed", "Slowbro", "Slowking",
+    "Gardevoir", "Gallade", "Ninjask", "Shedinja", "Huntail", "Gorebyss"];
+
+  if (fromBranchedEvolutions.includes(currentPokemonInCombobox)){
+    fromBranchedEvolution = true;
+  }
+
+  if (fromBranchedEvolution){
+    evolveButton.style.display = "none";
+  } 
 }
 
 async function retrieveFrontDefaultSprite(pokemon){
