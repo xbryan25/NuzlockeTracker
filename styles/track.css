@@ -395,14 +395,14 @@ input.day-search-input::placeholder{
   display: none;
 }
 
-.content, .content-branch{
+.content, .content-branch, .content-tyrogue{
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(0);
 
   background: rgb(215, 213, 213);
-  width: auto ;
+  width: auto;
   height: 220px;
   z-index: 2;
   text-align: center;
@@ -417,6 +417,10 @@ input.day-search-input::placeholder{
 
 .content-branch{
   height: 400px;
+}
+
+.content-tyrogue{
+  height: 550px;
 }
 
 .close-btn{
@@ -454,6 +458,12 @@ input.day-search-input::placeholder{
   transform: translate(-50%, -50%) scale(1);
 }
 
+.popup.active .content-tyrogue{
+  /* transition: all 300ms ease-in-out; */
+  animation: change-height-tyrogue 300ms ease 1 forwards;
+  transform: translate(-50%, -50%) scale(1);
+}
+
 
 @keyframes change-height {
   0%{
@@ -477,8 +487,26 @@ input.day-search-input::placeholder{
   }
 }
 
+@keyframes change-height-tyrogue {
+  0%{
+      max-height: 0px;
+      opacity: 0;
+  }
+  100%{
+      max-height: 550px;
+      opacity: 1;
+  }
+}
+
 .close-btn.active .content{
   transition: all 300ms ease-out;
+}
+
+.arrow-container-tyrogue{
+  position: relative;
+
+  height: 50px;
+  top: 30%;
 }
 
 /* Code from YT tutorial - https://www.youtube.com/watch?v=iE_6pQ3RlZU */
@@ -570,12 +598,21 @@ h1.content-h1{
   align-items: center;
 }
 
+.preevo-container-tyrogue{
+  position: relative;
+  top: 87%; 
+
+  /* padding-top: 200px; */
+  height: 500px;
+  align-items: center;
+}
+
 .nextevo-container-branch{
   padding-top: 10px;
   height: 300px;
 }
 
-.nextevo-container-first, .nextevo-container-second{
+.nextevo-container-first, .nextevo-container-second, .nextevo-container-third{
   padding-top: 10px;
 }
 
