@@ -1,3 +1,5 @@
+// TODO: BRANCHED EVOLUTIONS FOR WURMPLE, TYROGUE, AND EEVEE
+
 import { retrieveEvolutionLine, retrieveFrontDefaultSprite } from "./utils.js";
 
 export async function evolvePokemon(location){
@@ -10,7 +12,19 @@ export async function evolvePokemon(location){
     let evolutionLine = await retrieveEvolutionLine(location);
 
     let hasBranchedEvolution = false;
+    let isSilcoonOrCascoon = false;
     
+    // Swap Beautifly with Cascoon
+    if (currentPokemonInCombobox === "Wurmple"){
+      let tempPokemonHolder = evolutionLine[3];
+
+      evolutionLine[3] = evolutionLine[2];
+      evolutionLine[2] = tempPokemonHolder;
+    }
+
+    if (currentPokemonInCombobox === "Silcoon" || currentPokemonInCombobox == "Cascoon"){
+      isSilcoonOrCascoon = true;
+    }
 
 
     // Modify the function variable
@@ -20,7 +34,6 @@ export async function evolvePokemon(location){
 
     // TODO: Put in a JSON file later; about pokemon with branched evolution lines
 
-    // TODO: Make a pop up tab if branched evolution
     // let branchedEvolutionLines = [["Oddish", "Gloom", "Vileplume", "Bellossom"],
     //                             ["Poliwag", "Poliwhirl", "Poliwrath", "Politoed"],
     //                             ["Slowpoke", "Slowbro", "Slowking"],
@@ -33,8 +46,7 @@ export async function evolvePokemon(location){
     //                             ["Clamperl", "Huntail", "Gorebyss"]]
 
 
-
-    let branchedEvolutionMarkers = ["Oddish", "Poliwhirl", "Slowpoke", "Tyrogue", "Kirlia", "Nincada", 
+    let branchedEvolutionMarkers = ["Oddish", "Poliwhirl", "Slowpoke", "Tyrogue", "Wurmple", "Kirlia", "Nincada", 
                                     "Snorunt", "Clamperl"]
                                   
     if (branchedEvolutionMarkers.includes(currentPokemonInCombobox)){
@@ -43,7 +55,13 @@ export async function evolvePokemon(location){
 
     // This means that an evolution still exists and is not a branch evolution
     if (evolutionLine[evolutionLine.indexOf(currentPokemonInCombobox) + 1] && !hasBranchedEvolution){
-      let evolutionOfCurrentPokemon = evolutionLine[evolutionLine.indexOf(currentPokemonInCombobox) + 1];
+      let evolutionOfCurrentPokemon;
+
+      if (!isSilcoonOrCascoon){
+        evolutionOfCurrentPokemon = evolutionLine[evolutionLine.indexOf(currentPokemonInCombobox) + 1];
+      } else{
+        evolutionOfCurrentPokemon = evolutionLine[evolutionLine.indexOf(currentPokemonInCombobox) + 2];
+      }
 
       let pokemonPicLink = await retrieveFrontDefaultSprite(currentPokemonInCombobox);
       let pokemonNextEvoPicLink = await retrieveFrontDefaultSprite(evolutionOfCurrentPokemon);
@@ -60,7 +78,7 @@ export async function evolvePokemon(location){
             <p class="preevo-text">${currentPokemonInCombobox}</p>
           </div>
 
-          <div class="arrow-container"> ---> </div>
+          <div class="arrow-container"> ➤➤➤ </div>
 
           <div class="nextevo-container">
             <img src="${pokemonNextEvoPicLink}" title="Evolve ${currentPokemonInCombobox} into ${evolutionOfCurrentPokemon}" height="110px" class="js-nextevo-img nextevo-animation-img">
@@ -132,7 +150,7 @@ export async function evolvePokemon(location){
             <p class="preevo-text">${currentPokemonInCombobox}</p>
           </div>
 
-          <div class="arrow-container"> ---> </div>
+          <div class="arrow-container"> ➤➤➤ </div>
 
           <div class="nextevo-container-branch">
             <div class="nextevo-container-first">
@@ -211,7 +229,7 @@ export async function evolvePokemon(location){
 
         checkIfFromBranchedEvolution(location);
       });
-    } 
+    }
 
     let evolveButton = document.querySelector(`.js-evolve-${location}-button`);
 
