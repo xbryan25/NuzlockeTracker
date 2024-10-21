@@ -1,6 +1,6 @@
 // TODO: Make the operations of the close button a function
 
-import { retrieveEvolutionLine, retrieveFrontDefaultSprite } from "./utils.js";
+import { retrieveEvolutionLine, retrieveFrontDefaultSprite, addEventListenerToExitButton, removePopupUponSelectingAnEvolution } from "./utils.js";
 
 export async function evolvePokemon(location){
   // This function returns a function, this is because it will be added to an eventListener
@@ -83,17 +83,7 @@ export async function evolvePokemon(location){
 
       // For the exit button of the popup screen
 
-      const popUpExitButton = document.querySelector('.js-close-btn');
-      popUpExitButton.addEventListener('click', () => {
-        // TODO: Make this into a function
-
-        // set .active to off
-        document.querySelector(".js-popup-1").classList.remove("active");
-
-        // Reset innerHTML everytime the popup window is closed
-        document.querySelector(".js-popup-1").innerHTML = "";
-        
-      });
+      addEventListenerToExitButton();
 
       const nextevoImage = document.querySelector('.js-nextevo-img');
       nextevoImage.addEventListener('click', () => {
@@ -105,12 +95,7 @@ export async function evolvePokemon(location){
           document.querySelector(`.js-evolve-${location}-button`).style.display = "none";
         }
 
-        // TODO: Make this into a function
-        // set .active to off
-        document.querySelector(".js-popup-1").classList.remove("active");
-
-        // Reset innerHTML everytime the popup window is closed
-        document.querySelector(".js-popup-1").innerHTML = "";
+        removePopupUponSelectingAnEvolution();
       });
 
     } else if (evolutionLine[evolutionLine.indexOf(currentPokemonInCombobox) + 1] && evolutionLine[evolutionLine.indexOf(currentPokemonInCombobox) + 1] && hasBranchedEvolution){
@@ -176,12 +161,7 @@ export async function evolvePokemon(location){
             document.querySelector(`.js-evolve-${location}-button`).style.display = "none";
           }
 
-          // TODO: Make this into a function
-          // set .active to off
-          document.querySelector(".js-popup-1").classList.remove("active");
-
-          // Reset innerHTML everytime the popup window is closed
-          document.querySelector(".js-popup-1").innerHTML = "";
+          removePopupUponSelectingAnEvolution();
 
           checkIfFromBranchedEvolution(location);
         });
@@ -196,12 +176,7 @@ export async function evolvePokemon(location){
             document.querySelector(`.js-evolve-${location}-button`).style.display = "none";
           }
 
-          // TODO: Make this into a function
-          // set .active to off
-          document.querySelector(".js-popup-1").classList.remove("active");
-
-          // Reset innerHTML everytime the popup window is closed
-          document.querySelector(".js-popup-1").innerHTML = "";
+          removePopupUponSelectingAnEvolution();
 
           checkIfFromBranchedEvolution(location);
         });
@@ -216,12 +191,7 @@ export async function evolvePokemon(location){
             document.querySelector(`.js-evolve-${location}-button`).style.display = "none";
           }
 
-          // TODO: Make this into a function
-          // set .active to off
-          document.querySelector(".js-popup-1").classList.remove("active");
-
-          // Reset innerHTML everytime the popup window is closed
-          document.querySelector(".js-popup-1").innerHTML = "";
+          removePopupUponSelectingAnEvolution();
 
           checkIfFromBranchedEvolution(location);
         });
@@ -331,22 +301,14 @@ export async function evolvePokemon(location){
   
                 document.querySelector(`.js-evolve-${location}-button`).style.display = "none";
                 
-                // TODO: Make this into a function
-                // set .active to off
-                document.querySelector(".js-popup-1").classList.remove("active");
-  
-                // Reset innerHTML everytime the popup window is closed
-                document.querySelector(".js-popup-1").innerHTML = "";
+                removePopupUponSelectingAnEvolution();
   
                 checkIfFromBranchedEvolution(location);
               });
-            })
-            
-
+            });
           }
-        })
+        });
 
-        
       }
       else{
         // Only two branches
@@ -401,12 +363,7 @@ export async function evolvePokemon(location){
             document.querySelector(`.js-evolve-${location}-button`).style.display = "none";
           }
 
-          // TODO: Make this into a function
-          // set .active to off
-          document.querySelector(".js-popup-1").classList.remove("active");
-
-          // Reset innerHTML everytime the popup window is closed
-          document.querySelector(".js-popup-1").innerHTML = "";
+          removePopupUponSelectingAnEvolution();
 
           checkIfFromBranchedEvolution(location);
         });
@@ -421,30 +378,14 @@ export async function evolvePokemon(location){
             document.querySelector(`.js-evolve-${location}-button`).style.display = "none";
           }
 
-          // TODO: Make this into a function
-          // set .active to off
-          document.querySelector(".js-popup-1").classList.remove("active");
-
-          // Reset innerHTML everytime the popup window is closed
-          document.querySelector(".js-popup-1").innerHTML = "";
+          removePopupUponSelectingAnEvolution();
 
           checkIfFromBranchedEvolution(location);
         });
       }
 
       // For the exit button of the popup screen
-
-      const popUpExitButton = document.querySelector('.js-close-btn');
-      popUpExitButton.addEventListener('click', () => {
-        // TODO: Make this into a function
-
-        // set .active to off
-        document.querySelector(".js-popup-1").classList.remove("active");
-
-        // Reset innerHTML everytime the popup window is closed
-        document.querySelector(".js-popup-1").innerHTML = "";
-        
-      });
+      addEventListenerToExitButton();
     }
 
     let evolveButton = document.querySelector(`.js-evolve-${location}-button`);
@@ -465,9 +406,6 @@ export async function evolvePokemon(location){
       evolveButton.style.display = "none";
     } 
     
-    // else if (!evolutionLine[evolutionLine.indexOf(currentPokemonInCombobox) + 1]){
-    //   document.querySelector(`.js-evolve-${location}-button`).style.display = "none";
-    // }
   };
 }
 

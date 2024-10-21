@@ -220,3 +220,18 @@ export function returnToMainScreen(){
   });
   // localStorage.setItem('userDecision', userDecision);
 }
+
+export function removePopupUponSelectingAnEvolution(){
+  // set .active to off
+  document.querySelector(".js-popup-1").classList.remove("active");
+
+  // Reset innerHTML everytime the popup window is closed
+  document.querySelector(".js-popup-1").innerHTML = "";
+}
+
+export function addEventListenerToExitButton(){
+  const popUpExitButton = document.querySelector('.js-close-btn');
+    popUpExitButton.addEventListener('click', () => {
+      removePopupUponSelectingAnEvolution();
+    });
+}
