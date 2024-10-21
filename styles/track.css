@@ -502,7 +502,7 @@ input.day-search-input::placeholder{
   transition: all 300ms ease-out;
 }
 
-.arrow-container-tyrogue{
+.arrow-container-tyrogue, .arrow-container-eevee{
   position: relative;
 
   height: 50px;
@@ -548,6 +548,21 @@ h1.content-h1{
 
   /* border: black 2px solid; */
 }
+
+/* .popup-img-container-eevee{
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+  height: 300px;
+  width: auto;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+
+} */
+
 
 .preevo-animation-img{
   /* transition: all 300ms ease-in-out; */
@@ -598,7 +613,7 @@ h1.content-h1{
   align-items: center;
 }
 
-.preevo-container-tyrogue{
+.preevo-container-tyrogue, .preevo-container-eevee{
   position: relative;
   top: 87%; 
 
@@ -607,7 +622,7 @@ h1.content-h1{
   align-items: center;
 }
 
-.nextevo-container-branch{
+.nextevo-container-branch, .nextevo-container-first-row{
   padding-top: 10px;
   height: 300px;
 }
