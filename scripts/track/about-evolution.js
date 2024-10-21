@@ -1,4 +1,4 @@
-// TODO: BRANCHED EVOLUTIONS FOR EEVEE; FINAL FEATURE BEFORE PUTTING THE PROJECT ON HOLD
+// TODO: Make the operations of the close button a function
 
 import { retrieveEvolutionLine, retrieveFrontDefaultSprite } from "./utils.js";
 
@@ -31,27 +31,6 @@ export async function evolvePokemon(location){
     } else if (currentPokemonInCombobox === "Eevee"){
       isEevee = true;
     }
-
-
-    // Modify the function variable
-    // evolveHandler = function(){
-    //   evolvePokemon(targetEncounterCombobox.value, evolutionLine, location, evolveHandler);
-    // }
-
-    // TODO: Put in a JSON file later; about pokemon with branched evolution lines
-
-    // let branchedEvolutionLines = [["Oddish", "Gloom", "Vileplume", "Bellossom"],
-    //                             ["Poliwag", "Poliwhirl", "Poliwrath", "Politoed"],
-    //                             ["Slowpoke", "Slowbro", "Slowking"],
-    //                             ["Eevee", "Vaporeon", "Jolteon", "Flareon", "Espeon", "Umbreon", "Leafeon", "Glaceon", "Sylveon"],
-    //                             ["Tyrogue", "Hitmonlee", "Hitmonchan", "Hitmontop"],
-    //                             ["Wurmple", "Silcoon", "Cascoon", "Beautifly", "Dustox"],
-    //                             ["Ralts", "Kirlia", "Gardevoir", "Gallade"],
-    //                             ["Nincada", "Ninjask", "Shedinja"],
-    //                             ["Snorunt", "Glalie", "Froslass"],
-    //                             ["Clamperl", "Huntail", "Gorebyss"]]
-
-    // TODO: Rename array to simpleBranchedEvolutionMarkers
 
     let branchedEvolutionMarkers = ["Oddish", "Poliwhirl", "Slowpoke", "Tyrogue", "Wurmple", "Kirlia", "Nincada", 
                                     "Snorunt", "Clamperl", "Eevee"]
@@ -135,7 +114,7 @@ export async function evolvePokemon(location){
       });
 
     } else if (evolutionLine[evolutionLine.indexOf(currentPokemonInCombobox) + 1] && evolutionLine[evolutionLine.indexOf(currentPokemonInCombobox) + 1] && hasBranchedEvolution){
-      // Evolutions with two branches
+      // Evolutions with two or more branches
 
       if (isTyrogue){
         let evolutionOfCurrentPokemonFirst = evolutionLine[evolutionLine.indexOf(currentPokemonInCombobox) + 1];
@@ -261,7 +240,7 @@ export async function evolvePokemon(location){
 
 
         let popupButtonContent = `<div class="overlay"></div>
-        <div class="content-tyrogue">
+        <div class="content-eevee">
           <div class="close-btn js-close-btn">&times;</div>
           <h1 class="content-h1">Evolve ${currentPokemonInCombobox}?</h1>
 
@@ -276,19 +255,19 @@ export async function evolvePokemon(location){
 
             <div class="nextevo-container-first-row">
               <div class="nextevo-container-first">
-                <img src="${pokemonNextEvoPicLinks[0]}" title="Evolve ${currentPokemonInCombobox} into ${evolutionLine[1]}" height="110px" class="js-nextevo-img-first nextevo-animation-img">
+                <img src="${pokemonNextEvoPicLinks[0]}" title="Evolve ${currentPokemonInCombobox} into ${evolutionLine[1]}" height="110px" class="js-nextevo-eevee nextevo-animation-img">
 
                 <p class="nextevo-text">${evolutionLine[1]}</p>
               </div>
 
               <div class="nextevo-container-second">
-                <img src="${pokemonNextEvoPicLinks[1]}" title="Evolve ${currentPokemonInCombobox} into ${evolutionLine[2]}" height="110px" class="js-nextevo-img-first nextevo-animation-img">
+                <img src="${pokemonNextEvoPicLinks[1]}" title="Evolve ${currentPokemonInCombobox} into ${evolutionLine[2]}" height="110px" class="js-nextevo-eevee nextevo-animation-img">
 
                 <p class="nextevo-text">${evolutionLine[2]}</p>
               </div>
 
               <div class="nextevo-container-first">
-                <img src="${pokemonNextEvoPicLinks[2]}" title="Evolve ${currentPokemonInCombobox} into ${evolutionLine[3]}" height="110px" class="js-nextevo-img-first nextevo-animation-img">
+                <img src="${pokemonNextEvoPicLinks[2]}" title="Evolve ${currentPokemonInCombobox} into ${evolutionLine[3]}" height="110px" class="js-nextevo-eevee nextevo-animation-img">
 
                 <p class="nextevo-text">${evolutionLine[3]}</p>
               </div>
@@ -297,13 +276,13 @@ export async function evolvePokemon(location){
             
             <div class="nextevo-container-second-row">
               <div class="nextevo-container-first">
-                <img src="${pokemonNextEvoPicLinks[3]}" title="Evolve ${currentPokemonInCombobox} into ${evolutionLine[4]}" height="110px" class="js-nextevo-img-first nextevo-animation-img">
+                <img src="${pokemonNextEvoPicLinks[3]}" title="Evolve ${currentPokemonInCombobox} into ${evolutionLine[4]}" height="110px" class="js-nextevo-eevee nextevo-animation-img">
 
                 <p class="nextevo-text">${evolutionLine[4]}</p>
               </div>
 
               <div class="nextevo-container-first">
-                <img src="${pokemonNextEvoPicLinks[4]}" title="Evolve ${currentPokemonInCombobox} into ${evolutionLine[5]}" height="110px" class="js-nextevo-img-first nextevo-animation-img">
+                <img src="${pokemonNextEvoPicLinks[4]}" title="Evolve ${currentPokemonInCombobox} into ${evolutionLine[5]}" height="110px" class="js-nextevo-eevee nextevo-animation-img">
 
                 <p class="nextevo-text">${evolutionLine[5]}</p>
               </div>
@@ -312,13 +291,13 @@ export async function evolvePokemon(location){
             
             <div class="nextevo-container-third-row">
               <div class="nextevo-container-first">
-                <img src="${pokemonNextEvoPicLinks[5]}" title="Evolve ${currentPokemonInCombobox} into ${evolutionLine[6]}" height="110px" class="js-nextevo-img-first nextevo-animation-img">
+                <img src="${pokemonNextEvoPicLinks[5]}" title="Evolve ${currentPokemonInCombobox} into ${evolutionLine[6]}" height="110px" class="js-nextevo-eevee nextevo-animation-img">
 
                 <p class="nextevo-text">${evolutionLine[6]}</p>
               </div>
 
               <div class="nextevo-container-first">
-                <img src="${pokemonNextEvoPicLinks[6]}" title="Evolve ${currentPokemonInCombobox} into ${evolutionLine[7]}" height="110px" class="js-nextevo-img-first nextevo-animation-img">
+                <img src="${pokemonNextEvoPicLinks[6]}" title="Evolve ${currentPokemonInCombobox} into ${evolutionLine[7]}" height="110px" class="js-nextevo-eevee nextevo-animation-img">
 
                 <p class="nextevo-text">${evolutionLine[7]}</p>
               </div>
@@ -329,67 +308,48 @@ export async function evolvePokemon(location){
 
         document.querySelector(".js-popup-1").innerHTML = popupButtonContent;
 
-        const nextevoImageFirst = document.querySelector('.js-nextevo-img-first');
-        nextevoImageFirst.addEventListener('click', () => {
-          targetEncounterCombobox.innerHTML += `<option value="${evolutionOfCurrentPokemonFirst}" class="js-${location}-encounter-display" selected disabled hidden>${evolutionOfCurrentPokemonFirst}</option>`;
 
-          targetEncounterCombobox.value = evolutionOfCurrentPokemonFirst;
+        evolutionLine.forEach(nextEvolution => {
+          if (nextEvolution === "Eevee" || nextEvolution === "Sylveon"){
+            return;
+          } else{
+            const nextevosOfEevee = document.querySelectorAll(`.js-nextevo-eevee`);
 
-          if (!evolutionLine[evolutionLine.indexOf(targetEncounterCombobox.value) + 1]){
-            document.querySelector(`.js-evolve-${location}-button`).style.display = "none";
+            nextevosOfEevee.forEach(nextevoOfEevee => {
+
+              nextevoOfEevee.addEventListener('click', () => {
+                const nextEvosOfEeveeArray = Array.prototype.slice.call(nextevosOfEevee)
+                
+                // To make the code less repetitive, get all elements in the class js-nextevo-eevee
+                // Convert the node list into an array so that the indexOf() method can be used
+                // Use the array to determine the position of the current node list, which will be used 
+                // to get the value from evolutionLine
+                
+                targetEncounterCombobox.innerHTML += `<option value="${evolutionLine[nextEvosOfEeveeArray.indexOf(nextevoOfEevee) + 1]}" class="js-${location}-encounter-display" selected disabled hidden>${evolutionLine[nextEvosOfEeveeArray.indexOf(nextevoOfEevee) + 1]}</option>`;
+  
+                targetEncounterCombobox.value = evolutionLine[nextEvosOfEeveeArray.indexOf(nextevoOfEevee) + 1];
+  
+                document.querySelector(`.js-evolve-${location}-button`).style.display = "none";
+                
+                // TODO: Make this into a function
+                // set .active to off
+                document.querySelector(".js-popup-1").classList.remove("active");
+  
+                // Reset innerHTML everytime the popup window is closed
+                document.querySelector(".js-popup-1").innerHTML = "";
+  
+                checkIfFromBranchedEvolution(location);
+              });
+            })
+            
+
           }
+        })
 
-          // TODO: Make this into a function
-          // set .active to off
-          document.querySelector(".js-popup-1").classList.remove("active");
-
-          // Reset innerHTML everytime the popup window is closed
-          document.querySelector(".js-popup-1").innerHTML = "";
-
-          checkIfFromBranchedEvolution(location);
-        });
-
-        const nextevoImageSecond = document.querySelector('.js-nextevo-img-second');
-        nextevoImageSecond.addEventListener('click', () => {
-          targetEncounterCombobox.innerHTML += `<option value="${evolutionOfCurrentPokemonSecond}" class="js-${location}-encounter-display" selected disabled hidden>${evolutionOfCurrentPokemonSecond}</option>`;
-
-          targetEncounterCombobox.value = evolutionOfCurrentPokemonSecond;
-
-          if (!evolutionLine[evolutionLine.indexOf(targetEncounterCombobox.value) + 1]){
-            document.querySelector(`.js-evolve-${location}-button`).style.display = "none";
-          }
-
-          // TODO: Make this into a function
-          // set .active to off
-          document.querySelector(".js-popup-1").classList.remove("active");
-
-          // Reset innerHTML everytime the popup window is closed
-          document.querySelector(".js-popup-1").innerHTML = "";
-
-          checkIfFromBranchedEvolution(location);
-        });
-
-        const nextevoImageThird = document.querySelector('.js-nextevo-img-third');
-        nextevoImageThird.addEventListener('click', () => {
-          targetEncounterCombobox.innerHTML += `<option value="${evolutionOfCurrentPokemonThird}" class="js-${location}-encounter-display" selected disabled hidden>${evolutionOfCurrentPokemonThird}</option>`;
-
-          targetEncounterCombobox.value = evolutionOfCurrentPokemonThird;
-
-          if (!evolutionLine[evolutionLine.indexOf(targetEncounterCombobox.value) + 1]){
-            document.querySelector(`.js-evolve-${location}-button`).style.display = "none";
-          }
-
-          // TODO: Make this into a function
-          // set .active to off
-          document.querySelector(".js-popup-1").classList.remove("active");
-
-          // Reset innerHTML everytime the popup window is closed
-          document.querySelector(".js-popup-1").innerHTML = "";
-
-          checkIfFromBranchedEvolution(location);
-        });
+        
       }
       else{
+        // Only two branches
         let evolutionOfCurrentPokemonFirst = evolutionLine[evolutionLine.indexOf(currentPokemonInCombobox) + 1];
         let evolutionOfCurrentPokemonSecond = evolutionLine[evolutionLine.indexOf(currentPokemonInCombobox) + 2];
 
@@ -471,10 +431,6 @@ export async function evolvePokemon(location){
           checkIfFromBranchedEvolution(location);
         });
       }
-
-      
-
-      // document.querySelector(".js-popup-1").classList.remove("active");
 
       // For the exit button of the popup screen
 
