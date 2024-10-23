@@ -1,4 +1,3 @@
-// TODO: Make the code for the Tyrouge branch evolution cleaner
 // TODO: Speed up the appearance of the evolve button
 
 import { retrieveEvolutionLine, retrieveFrontDefaultSprite, addEventListenerToExitButton, removePopupUponSelectingAnEvolution } from "./utils.js";
@@ -17,7 +16,7 @@ export async function evolvePokemon(location){
     let isTyrogue = false;
     let isEevee = false;
     
-    // Swap Beautifly with Cascoon
+    // For Wurmple evolution line, swap Beautifly with Cascoon
     if (currentPokemonInCombobox === "Wurmple"){
       let tempPokemonHolder = evolutionLine[3];
 
@@ -33,7 +32,7 @@ export async function evolvePokemon(location){
       isEevee = true;
     }
 
-    let branchedEvolutionMarkers = ["Oddish", "Poliwhirl", "Slowpoke", "Tyrogue", "Wurmple", "Kirlia", "Nincada", 
+    let branchedEvolutionMarkers = ["Gloom", "Poliwhirl", "Slowpoke", "Tyrogue", "Wurmple", "Kirlia", "Nincada", 
                                     "Snorunt", "Clamperl", "Eevee"]
                                   
     if (branchedEvolutionMarkers.includes(currentPokemonInCombobox)){
@@ -293,13 +292,13 @@ export async function evolvePokemon(location){
 
       } else{
         // Only two branches
-        let evolutionOfCurrentPokemonFirst = evolutionLine[evolutionLine.indexOf(currentPokemonInCombobox) + 1];
-        let evolutionOfCurrentPokemonSecond = evolutionLine[evolutionLine.indexOf(currentPokemonInCombobox) + 2];
 
         let pokemonPicLink = await retrieveFrontDefaultSprite(currentPokemonInCombobox);
 
-        let pokemonNextEvoPicFirstLink = await retrieveFrontDefaultSprite(evolutionOfCurrentPokemonFirst);
-        let pokemonNextEvoPicSecondLink = await retrieveFrontDefaultSprite(evolutionOfCurrentPokemonSecond);
+
+        let pokemonNextEvoPicLinks = [
+          await retrieveFrontDefaultSprite(evolutionLine[evolutionLine.indexOf(currentPokemonInCombobox) + 1]),
+          await retrieveFrontDefaultSprite(evolutionLine[evolutionLine.indexOf(currentPokemonInCombobox) + 2])];
 
         let popupButtonContent = `<div class="overlay"></div>
         <div class="content-branch">
@@ -317,15 +316,15 @@ export async function evolvePokemon(location){
 
             <div class="nextevo-container-branch">
               <div class="nextevo-container-first">
-                <img src="${pokemonNextEvoPicFirstLink}" title="Evolve ${currentPokemonInCombobox} into ${evolutionOfCurrentPokemonFirst}" height="110px" class="js-nextevo-img-first nextevo-animation-img">
+                <img src="${pokemonNextEvoPicLinks[0]}" title="Evolve ${currentPokemonInCombobox} into ${evolutionLine[evolutionLine.indexOf(currentPokemonInCombobox) + 1]}" height="110px" class="js-nextevo-img  nextevo-animation-img">
 
-                <p class="nextevo-text">${evolutionOfCurrentPokemonFirst}</p>
+                <p class="nextevo-text">${evolutionLine[evolutionLine.indexOf(currentPokemonInCombobox) + 1]}</p>
               </div>
 
               <div class="nextevo-container-second">
-                <img src="${pokemonNextEvoPicSecondLink}" title="Evolve ${currentPokemonInCombobox} into ${evolutionOfCurrentPokemonSecond}" height="110px" class="js-nextevo-img-second nextevo-animation-img">
+                <img src="${pokemonNextEvoPicLinks[1]}" title="Evolve ${currentPokemonInCombobox} into ${evolutionLine[evolutionLine.indexOf(currentPokemonInCombobox) + 2]}" height="110px" class="js-nextevo-img nextevo-animation-img">
 
-                <p class="nextevo-text">${evolutionOfCurrentPokemonSecond}</p>
+                <p class="nextevo-text">${evolutionLine[evolutionLine.indexOf(currentPokemonInCombobox) + 2]}</p>
               </div>
               
             </div>  
@@ -334,40 +333,43 @@ export async function evolvePokemon(location){
 
         document.querySelector(".js-popup-1").innerHTML = popupButtonContent;
 
-        const nextevoImageFirst = document.querySelector('.js-nextevo-img-first');
-        nextevoImageFirst.addEventListener('click', () => {
-          targetEncounterCombobox.innerHTML += `<option value="${evolutionOfCurrentPokemonFirst}" class="js-${location}-encounter-display" selected disabled hidden>${evolutionOfCurrentPokemonFirst}</option>`;
+        evolutionLine.forEach(nextEvolution => {
+          const nextevosOfPokemon = document.querySelectorAll(`.js-nextevo-img`);
 
-          targetEncounterCombobox.value = evolutionOfCurrentPokemonFirst;
+          nextevosOfPokemon.forEach(nextevoOfPokemon => {
+            // Special case for Gloom, Poliwhirl, and Kirlia, as they are middle evolutions
+            // 1 is true, 0 is false
 
-          if (!evolutionLine[evolutionLine.indexOf(targetEncounterCombobox.value) + 1]){
-            document.querySelector(`.js-evolve-${location}-button`).style.display = "none";
-          }
+            const isMiddleEvo = (currentPokemonInCombobox == "Gloom" || currentPokemonInCombobox == "Poliwhirl" || currentPokemonInCombobox == "Kirlia") ? 1 : 0;
 
-          removePopupUponSelectingAnEvolution();
+            nextevoOfPokemon.addEventListener('click', () => {
+              const nextevosOfPokemonArray = Array.prototype.slice.call(nextevosOfPokemon)
+              
+              // To make the code less repetitive, get all elements in the class js-nextevo-eevee
+              // Convert the node list into an array so that the indexOf() method can be used
+              // Use the array to determine the position of the current node list, which will be used 
+              // to get the value from evolutionLine
+              
+              targetEncounterCombobox.innerHTML += `<option value="${evolutionLine[nextevosOfPokemonArray.indexOf(nextevoOfPokemon) + 1 + isMiddleEvo]}" class="js-${location}-encounter-display" selected disabled hidden>${evolutionLine[nextevosOfPokemonArray.indexOf(nextevoOfPokemon) + 1 + isMiddleEvo]}</option>`;
 
-          checkIfFromBranchedEvolution(location);
+              targetEncounterCombobox.value = evolutionLine[nextevosOfPokemonArray.indexOf(nextevoOfPokemon) + 1 + isMiddleEvo];
+
+              document.querySelector(`.js-evolve-${location}-button`).style.display = "none";
+              
+              removePopupUponSelectingAnEvolution();
+
+              checkIfFromBranchedEvolution(location);
+            });
+
+          });
         });
 
-        const nextevoImageSecond = document.querySelector('.js-nextevo-img-second');
-        nextevoImageSecond.addEventListener('click', () => {
-          targetEncounterCombobox.innerHTML += `<option value="${evolutionOfCurrentPokemonSecond}" class="js-${location}-encounter-display" selected disabled hidden>${evolutionOfCurrentPokemonSecond}</option>`;
-
-          targetEncounterCombobox.value = evolutionOfCurrentPokemonSecond;
-
-          if (!evolutionLine[evolutionLine.indexOf(targetEncounterCombobox.value) + 1]){
-            document.querySelector(`.js-evolve-${location}-button`).style.display = "none";
-          }
-
-          removePopupUponSelectingAnEvolution();
-
-          checkIfFromBranchedEvolution(location);
-        });
+        // // For the exit button of the popup screen
+        // addEventListenerToExitButton();
       }
-
-      // For the exit button of the popup screen
-      addEventListenerToExitButton();
     }
+
+    addEventListenerToExitButton();
 
     let evolveButton = document.querySelector(`.js-evolve-${location}-button`);
 
@@ -381,7 +383,6 @@ export async function evolvePokemon(location){
     if (fromBranchedEvolutions.includes(currentPokemonInCombobox)){
       fromBranchedEvolution = true;
     }
-
 
     if (fromBranchedEvolution){
       evolveButton.style.display = "none";
