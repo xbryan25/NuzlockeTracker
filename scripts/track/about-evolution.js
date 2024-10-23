@@ -1,4 +1,5 @@
-// TODO: Make the operations of the close button a function
+// TODO: Make the code for the Tyrouge branch evolution cleaner
+// TODO: Speed up the appearance of the evolve button
 
 import { retrieveEvolutionLine, retrieveFrontDefaultSprite, addEventListenerToExitButton, removePopupUponSelectingAnEvolution } from "./utils.js";
 
@@ -102,15 +103,11 @@ export async function evolvePokemon(location){
       // Evolutions with two or more branches
 
       if (isTyrogue){
-        let evolutionOfCurrentPokemonFirst = evolutionLine[evolutionLine.indexOf(currentPokemonInCombobox) + 1];
-        let evolutionOfCurrentPokemonSecond = evolutionLine[evolutionLine.indexOf(currentPokemonInCombobox) + 2];
-        let evolutionOfCurrentPokemonThird = evolutionLine[evolutionLine.indexOf(currentPokemonInCombobox) + 3];
-
         let pokemonPicLink = await retrieveFrontDefaultSprite(currentPokemonInCombobox);
 
-        let pokemonNextEvoPicFirstLink = await retrieveFrontDefaultSprite(evolutionOfCurrentPokemonFirst);
-        let pokemonNextEvoPicSecondLink = await retrieveFrontDefaultSprite(evolutionOfCurrentPokemonSecond);
-        let pokemonNextEvoPicThirdLink = await retrieveFrontDefaultSprite(evolutionOfCurrentPokemonThird);
+        let pokemonNextEvoPicLinks = [await retrieveFrontDefaultSprite(evolutionLine[1]),
+                                      await retrieveFrontDefaultSprite(evolutionLine[2]),
+                                      await retrieveFrontDefaultSprite(evolutionLine[3])];
 
         let popupButtonContent = `<div class="overlay"></div>
         <div class="content-tyrogue">
@@ -128,21 +125,21 @@ export async function evolvePokemon(location){
 
             <div class="nextevo-container-branch">
               <div class="nextevo-container-first">
-                <img src="${pokemonNextEvoPicFirstLink}" title="Evolve ${currentPokemonInCombobox} into ${evolutionOfCurrentPokemonFirst}" height="110px" class="js-nextevo-img-first nextevo-animation-img">
+                <img src="${pokemonNextEvoPicLinks[0]}" title="Evolve ${currentPokemonInCombobox} into ${evolutionLine[1]}" height="110px" class="js-nextevo-tyrogue nextevo-animation-img">
 
-                <p class="nextevo-text">${evolutionOfCurrentPokemonFirst}</p>
+                <p class="nextevo-text">${evolutionLine[1]}</p>
               </div>
 
               <div class="nextevo-container-second">
-                <img src="${pokemonNextEvoPicSecondLink}" title="Evolve ${currentPokemonInCombobox} into ${evolutionOfCurrentPokemonSecond}" height="110px" class="js-nextevo-img-second nextevo-animation-img">
+                <img src="${pokemonNextEvoPicLinks[1]}" title="Evolve ${currentPokemonInCombobox} into ${evolutionLine[2]}" height="110px" class="js-nextevo-tyrogue nextevo-animation-img">
 
-                <p class="nextevo-text">${evolutionOfCurrentPokemonSecond}</p>
+                <p class="nextevo-text">${evolutionLine[2]}</p>
               </div>
 
               <div class="nextevo-container-third">
-                <img src="${pokemonNextEvoPicThirdLink}" title="Evolve ${currentPokemonInCombobox} into ${evolutionOfCurrentPokemonThird}" height="110px" class="js-nextevo-img-third nextevo-animation-img">
+                <img src="${pokemonNextEvoPicLinks[2]}" title="Evolve ${currentPokemonInCombobox} into ${evolutionLine[3]}" height="110px" class="js-nextevo-tyrogue nextevo-animation-img">
 
-                <p class="nextevo-text">${evolutionOfCurrentPokemonThird}</p>
+                <p class="nextevo-text">${evolutionLine[3]}</p>
               </div>
               
             </div>  
@@ -151,49 +148,34 @@ export async function evolvePokemon(location){
 
         document.querySelector(".js-popup-1").innerHTML = popupButtonContent;
 
-        const nextevoImageFirst = document.querySelector('.js-nextevo-img-first');
-        nextevoImageFirst.addEventListener('click', () => {
-          targetEncounterCombobox.innerHTML += `<option value="${evolutionOfCurrentPokemonFirst}" class="js-${location}-encounter-display" selected disabled hidden>${evolutionOfCurrentPokemonFirst}</option>`;
+        evolutionLine.forEach(nextEvolution => {
+          if (nextEvolution === "Tyrogue"){
+            return;
+          } else{
+            const nextevosOfTyrogue = document.querySelectorAll(`.js-nextevo-tyrogue`);
 
-          targetEncounterCombobox.value = evolutionOfCurrentPokemonFirst;
+            nextevosOfTyrogue.forEach(nextevoOfTyrogue => {
 
-          if (!evolutionLine[evolutionLine.indexOf(targetEncounterCombobox.value) + 1]){
-            document.querySelector(`.js-evolve-${location}-button`).style.display = "none";
+              nextevoOfTyrogue.addEventListener('click', () => {
+                const nextevosOfTyrogueArray = Array.prototype.slice.call(nextevosOfTyrogue)
+                
+                // To make the code less repetitive, get all elements in the class js-nextevo-eevee
+                // Convert the node list into an array so that the indexOf() method can be used
+                // Use the array to determine the position of the current node list, which will be used 
+                // to get the value from evolutionLine
+                
+                targetEncounterCombobox.innerHTML += `<option value="${evolutionLine[nextevosOfTyrogueArray.indexOf(nextevoOfTyrogue) + 1]}" class="js-${location}-encounter-display" selected disabled hidden>${evolutionLine[nextevosOfTyrogueArray.indexOf(nextevoOfTyrogue) + 1]}</option>`;
+  
+                targetEncounterCombobox.value = evolutionLine[nextevosOfTyrogueArray.indexOf(nextevoOfTyrogue) + 1];
+  
+                document.querySelector(`.js-evolve-${location}-button`).style.display = "none";
+                
+                removePopupUponSelectingAnEvolution();
+  
+                checkIfFromBranchedEvolution(location);
+              });
+            });
           }
-
-          removePopupUponSelectingAnEvolution();
-
-          checkIfFromBranchedEvolution(location);
-        });
-
-        const nextevoImageSecond = document.querySelector('.js-nextevo-img-second');
-        nextevoImageSecond.addEventListener('click', () => {
-          targetEncounterCombobox.innerHTML += `<option value="${evolutionOfCurrentPokemonSecond}" class="js-${location}-encounter-display" selected disabled hidden>${evolutionOfCurrentPokemonSecond}</option>`;
-
-          targetEncounterCombobox.value = evolutionOfCurrentPokemonSecond;
-
-          if (!evolutionLine[evolutionLine.indexOf(targetEncounterCombobox.value) + 1]){
-            document.querySelector(`.js-evolve-${location}-button`).style.display = "none";
-          }
-
-          removePopupUponSelectingAnEvolution();
-
-          checkIfFromBranchedEvolution(location);
-        });
-
-        const nextevoImageThird = document.querySelector('.js-nextevo-img-third');
-        nextevoImageThird.addEventListener('click', () => {
-          targetEncounterCombobox.innerHTML += `<option value="${evolutionOfCurrentPokemonThird}" class="js-${location}-encounter-display" selected disabled hidden>${evolutionOfCurrentPokemonThird}</option>`;
-
-          targetEncounterCombobox.value = evolutionOfCurrentPokemonThird;
-
-          if (!evolutionLine[evolutionLine.indexOf(targetEncounterCombobox.value) + 1]){
-            document.querySelector(`.js-evolve-${location}-button`).style.display = "none";
-          }
-
-          removePopupUponSelectingAnEvolution();
-
-          checkIfFromBranchedEvolution(location);
         });
 
       } else if (isEevee){
@@ -309,8 +291,7 @@ export async function evolvePokemon(location){
           }
         });
 
-      }
-      else{
+      } else{
         // Only two branches
         let evolutionOfCurrentPokemonFirst = evolutionLine[evolutionLine.indexOf(currentPokemonInCombobox) + 1];
         let evolutionOfCurrentPokemonSecond = evolutionLine[evolutionLine.indexOf(currentPokemonInCombobox) + 2];
