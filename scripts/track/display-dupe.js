@@ -187,6 +187,8 @@ export function updateDupeSubstring(encounterRoutes){
         encounterOption.classList.remove("dupe-option");
       }
     });
+
+    allDupeInRouteChecker(encounterRoutes);
   }
 }
 

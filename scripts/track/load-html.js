@@ -1,5 +1,5 @@
 import {availablePokemonHTMLCreator, statusHTMLCreator, naturesHTMLCreator, clearEncounterHTMLCreator} from "./html-creators.js";
-import {removeEncounterDisplays, returnToMainScreen, activeStatusOrNature} from "./utils.js"
+import {removeEncounterDisplays, returnToMainScreen, activeStatusOrNature, searchForPokemonOrLocation} from "./utils.js"
 import {displayDupe} from "./display-dupe.js"
 import {showKillPokemonButton, showEvolvePokemonButton} from "./show-buttons.js";
 import {clearEncounter, clearAllEncounters} from "./clear-encounter.js";

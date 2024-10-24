@@ -107,7 +107,7 @@ export async function retrieveEvolutionLine(location){
   return getEvolutionLineOfSelectedPokemon;
 }
 
-function searchForPokemonOrLocation(encounterRouteObjects){
+export function searchForPokemonOrLocation(encounterRouteObjects){
   let getSearchInputValue = document.querySelector('.js-search-input').value.toLowerCase();
 
   let hasMatch = false;
