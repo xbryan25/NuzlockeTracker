@@ -1,9 +1,13 @@
+// Add icons to tabs
+// Add button to download progress in csv/pdf
+// Add button to import progress using csv
+
 import {availablePokemonHTMLCreator, statusHTMLCreator, naturesHTMLCreator, clearEncounterHTMLCreator} from "./html-creators.js";
 import {removeEncounterDisplays, returnToMainScreen, activeStatusOrNature, searchForPokemonOrLocation} from "./utils.js"
 import {displayDupe} from "./display-dupe.js"
 import {showKillPokemonButton, showEvolvePokemonButton} from "./show-buttons.js";
 import {clearEncounter, clearAllEncounters} from "./clear-encounter.js";
-import {changeStatusToDead} from "./edit-html.js";
+import {changeStatusToDead, changeDayNightLook} from "./edit-html.js";
 import {evolvePokemon} from "./about-evolution.js";
 
 

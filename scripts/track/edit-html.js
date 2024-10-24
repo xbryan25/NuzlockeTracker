@@ -2,7 +2,7 @@ export function changeStatusToDead(location){
   document.querySelectorAll(`.js-${location}-status-and-nature-combobox`)[0].value = "Dead";
 }
 
-function changeDayNightLook(encounterRouteObjects){
+export function changeDayNightLook(encounterRouteObjects){
   let dayNightLookIcon = document.querySelector('.js-change-day-night-look');
 
   if (dayNightLookIcon.innerHTML === "☀"){
